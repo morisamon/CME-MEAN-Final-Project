@@ -1,0 +1,8 @@
+body, html {height: 100%}
+
+body {
+    background-color: coral;
+    min-height: 100%;
+    background-position: center;
+    background-size: cover; 
+}
