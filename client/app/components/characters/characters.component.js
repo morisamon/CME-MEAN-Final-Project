@@ -35,8 +35,8 @@ var CharactersComponent = /** @class */ (function () {
                 break;
             case "3":
                 this.level1 = false;
-                this.level2 = true;
-                this.level3 = false;
+                this.level2 = false;
+                this.level3 = true;
                 break;
         }
     };
