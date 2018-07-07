@@ -17,11 +17,15 @@ app.engine('html', require('ejs').renderFile);
 // Set Static Folder
 app.use(express.static(path.join(__dirname, 'client')));
 
+// Set Static Folder for assets
+app.use('/assets',express.static(path.join(__dirname, '/assets')));
+
 // Body Parser MW
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
 app.use('/', index);
+app.use('*', index);
 app.use('/api', tasks);
 
 app.listen(port, function(){

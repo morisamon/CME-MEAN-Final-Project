@@ -1,4 +1,6 @@
 import { Component, OnInit, NgModule } from '@angular/core';
+import { Router } from '@angular/router';
+import { LevelsComponent } from '../levels-menu/levels.component';
 
 @Component({
   moduleId: module.id,
@@ -17,12 +19,10 @@ export class DisplayComponent implements OnInit {
 
   public StartTrain(){
     console.log("start train!");
-    this.displayLinks=false;
   }
   
   public StartGame(){
     console.log("start game!");
-    this.displayLinks=false;
   }
 
 }

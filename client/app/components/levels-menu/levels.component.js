@@ -10,28 +10,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var DisplayComponent = /** @class */ (function () {
-    function DisplayComponent() {
+var LevelsComponent = /** @class */ (function () {
+    function LevelsComponent() {
     }
-    DisplayComponent.prototype.ngOnInit = function () {
-        this.displayLinks = true;
+    LevelsComponent.prototype.ngOnInit = function () {
     };
-    DisplayComponent.prototype.StartTrain = function () {
-        console.log("start train!");
-    };
-    DisplayComponent.prototype.StartGame = function () {
-        console.log("start game!");
-    };
-    DisplayComponent = __decorate([
+    LevelsComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
-            selector: 'display',
-            templateUrl: 'display.component.html',
-            styleUrls: ['./display.component.css']
+            selector: 'my-levels',
+            templateUrl: 'levels.component.html',
+            styleUrls: ['./levels.component.css']
         }),
         __metadata("design:paramtypes", [])
-    ], DisplayComponent);
-    return DisplayComponent;
+    ], LevelsComponent);
+    return LevelsComponent;
 }());
-exports.DisplayComponent = DisplayComponent;
-//# sourceMappingURL=display.component.js.map
+exports.LevelsComponent = LevelsComponent;
+//# sourceMappingURL=levels.component.js.map

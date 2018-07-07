@@ -10,6 +10,27 @@ var core_1 = require("@angular/core");
 var NavComponent = /** @class */ (function () {
     function NavComponent() {
     }
+    NavComponent.prototype.StopBtnClicked = function () {
+        console.log("StopBtnClicked");
+    };
+    NavComponent.prototype.PlayBtnClicked = function () {
+        console.log("PlayBtnClicked");
+    };
+    NavComponent.prototype.ReplayBtnClicked = function () {
+        console.log("ReplayBtnClicked");
+    };
+    NavComponent.prototype.ChangeCharacterBtnClicked = function () {
+        console.log("ChangeCharacterBtnClicked");
+    };
+    NavComponent.prototype.PrevBtnClicked = function () {
+        console.log("PrevBtnClicked");
+    };
+    NavComponent.prototype.NextBtnClicked = function () {
+        console.log("NextBtnClicked");
+    };
+    NavComponent.prototype.HomeBtnClicked = function () {
+        console.log("HomeBtnClicked");
+    };
     NavComponent = __decorate([
         core_1.Component({
             moduleId: module.id,

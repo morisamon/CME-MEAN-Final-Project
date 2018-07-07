@@ -10,11 +10,13 @@ var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var display_component_1 = require("./components/display/display.component");
 var copyright_component_1 = require("./components/copyright & about/copyright.component");
+var levels_component_1 = require("./components/levels-menu/levels.component");
 var routes = [
-    { path: 'links', component: display_component_1.DisplayComponent },
+    { path: 'home', component: display_component_1.DisplayComponent },
     { path: 'copyrigh', component: copyright_component_1.CopyrightComponent },
+    { path: 'levels', component: levels_component_1.LevelsComponent },
     { path: '',
-        redirectTo: '/links',
+        redirectTo: '/home',
         pathMatch: 'full'
     },
 ];
@@ -30,5 +32,5 @@ var AppRoutingModule = /** @class */ (function () {
     return AppRoutingModule;
 }());
 exports.AppRoutingModule = AppRoutingModule;
-exports.routingComponents = [display_component_1.DisplayComponent, copyright_component_1.CopyrightComponent];
+exports.routingComponents = [display_component_1.DisplayComponent, copyright_component_1.CopyrightComponent, levels_component_1.LevelsComponent];
 //# sourceMappingURL=app-routing.module.js.map

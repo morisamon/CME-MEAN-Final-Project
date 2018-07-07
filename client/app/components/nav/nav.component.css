@@ -1,6 +1,15 @@
-p{
-    background-color: yellow;
+html{
+    background-color: rgba(98, 143, 194, 0.774);
+
 }
-div{
-    background-color: bisque;
+
+.Row
+{
+    display: table;
+    width: 100%; /*Optional*/
+    border-spacing: 1px; /*Optional*/
+}
+.Column
+{
+    display: table-cell;
 }
