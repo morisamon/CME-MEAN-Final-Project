@@ -1,5 +1,5 @@
 import { Component, OnInit, NgModule } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   moduleId: module.id,
@@ -13,7 +13,7 @@ export class CharactersComponent implements OnInit {
   private level2: Boolean;
   private level3: Boolean;
 
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute, private router:Router) {
     this.route.params.subscribe(params => this.showRelevantLevel(params));
   }
 
@@ -40,5 +40,10 @@ export class CharactersComponent implements OnInit {
       this.level3 = true;
       break;
     }
+  }
+
+  public PlayGame(str){
+    console.log(str);
+    this.router.navigate(['home/game/', str]);
   }
 }

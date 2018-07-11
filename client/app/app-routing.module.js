@@ -12,11 +12,14 @@ var display_component_1 = require("./components/display/display.component");
 var copyright_component_1 = require("./components/copyright & about/copyright.component");
 var levels_component_1 = require("./components/levels-menu/levels.component");
 var characters_component_1 = require("./components/characters/characters.component");
+var gamezone_component_1 = require("./components/game-zone/gamezone.component");
 var routes = [
+    { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: 'home', component: display_component_1.DisplayComponent },
-    { path: 'copyrigh', component: copyright_component_1.CopyrightComponent },
+    { path: 'copyright', component: copyright_component_1.CopyrightComponent },
     { path: 'home/levels', component: levels_component_1.LevelsComponent },
     { path: 'home/levels/characters/:levelNumber', component: characters_component_1.CharactersComponent },
+    { path: 'home/game/:id', component: gamezone_component_1.GameZoneAreaComponent },
     { path: '',
         redirectTo: '/home',
         pathMatch: 'full'
@@ -34,5 +37,5 @@ var AppRoutingModule = /** @class */ (function () {
     return AppRoutingModule;
 }());
 exports.AppRoutingModule = AppRoutingModule;
-exports.routingComponents = [display_component_1.DisplayComponent, copyright_component_1.CopyrightComponent, levels_component_1.LevelsComponent, characters_component_1.CharactersComponent];
+exports.routingComponents = [display_component_1.DisplayComponent, copyright_component_1.CopyrightComponent, levels_component_1.LevelsComponent, characters_component_1.CharactersComponent, gamezone_component_1.GameZoneAreaComponent];
 //# sourceMappingURL=app-routing.module.js.map

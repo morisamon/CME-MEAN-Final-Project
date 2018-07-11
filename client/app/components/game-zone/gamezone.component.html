@@ -1,3 +1,58 @@
-<p>
-  gamezone works!
-</p>
+<html>
+
+
+    <div class="w3-center">    
+      <div class="row">
+        <div class="fullscreen-bg__video">				
+          <div style="position: absolute;width: 100%;height: 100%;">
+            <div class="row" style="position: relative;z-index: 9999;height: 50%;">
+              
+              <div class="col-md-4 nopadding" style="float: left;width: 33%;height: 100%;">
+                <button type="button" id="btn73" onclick="Click(id);" class=" btn-cover" ng-click="Cancel()" aria-haspopup="true" aria-expanded="false" style="width: 100%;height: 100%;border: none;"><font size="6"></font></button>
+              </div>
+              
+              <div class="col-md-4 nopadding" style="float: left;width: 33%;height: 100%;">
+                <button type="button" id="btn74" onclick="Click(id);" class="btn-cover" ng-click="Proceed()" aria-haspopup="true" aria-expanded="false" style="width:100%;height: 100%;border: none;"><font size="6"></font></button>
+              </div>
+              
+              <div class="col-md-4 nopadding" style="float: left;width: 33%;height: 100%;">
+                <button type="button" id="btn75" onclick="Click(id);" class="btn-cover" ng-click="Proceed()" aria-haspopup="true" aria-expanded="false" style="width:100%;height: 100%;border: none;"><font size="6"></font></button>
+              </div>
+            </div>
+            
+            <div class="row" style="position: absolute;z-index: 999;width: 100%;height: 50%">
+              <div class="col-md-4 nopadding" style="float: left;width: 33.3%;height: 100%;">
+                <button type="button" id="btn76" onclick="Click(id);" class="btn-cover" ng-click="Cancel()" aria-haspopup="true" aria-expanded="false" style="width:100%;height: 100%;border: none;"><font size="6"></font></button>
+              </div>
+
+              <div class="col-md-4 nopadding" style="float: left;width: 33.3%;height: 100%;">
+                <button type="button" id="btn77" onclick="Click(id);" class="btn-cover" ng-click="Proceed()" aria-haspopup="true" aria-expanded="false" style="width:100%;height: 100%;border: none;"><font size="6"></font></button>
+              </div>
+              
+              <div class="col-md-4 nopadding" style="float: left;width: 33.3%;height: 100%;">
+                <button type="button" id="btn78" onclick="Click(id);" class="btn-cover" ng-click="Proceed()" aria-haspopup="true" aria-expanded="false" style="width:100%;height: 100%;border: none;"><font size="6"></font></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <img class="fullscreen-bg__video" id="myImage" src="/assets/videos/player_1.1.png" *ngIf="showImage">
+
+      <video id="myVideo" *ngIf="showVidoe">
+          <source src="/assets/videos/player_1.1.mp4" type="video/mp4">
+      </video>
+      
+    </div>
+
+    <button [ngStyle] = "myFaceBtnStyles" id="faceBtn" onclick="" type="button" class="btn btn-primary btn-lg" >
+
+    </button>
+    
+    <button [ngStyle] = "myEyeBtnStyles" id="eyeBtn" onclick="" type="button" class="btn btn-primary btn-lg" >
+  
+    </button>
+  
+
+
+</html>>

@@ -12,9 +12,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var CharactersComponent = /** @class */ (function () {
-    function CharactersComponent(route) {
+    function CharactersComponent(route, router) {
         var _this = this;
         this.route = route;
+        this.router = router;
         this.route.params.subscribe(function (params) { return _this.showRelevantLevel(params); });
     }
     CharactersComponent.prototype.ngOnInit = function () {
@@ -40,6 +41,10 @@ var CharactersComponent = /** @class */ (function () {
                 break;
         }
     };
+    CharactersComponent.prototype.PlayGame = function (str) {
+        console.log(str);
+        this.router.navigate(['home/game/', str]);
+    };
     CharactersComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
@@ -47,7 +52,7 @@ var CharactersComponent = /** @class */ (function () {
             templateUrl: './characters.component.html',
             styleUrls: ['./characters.component.css']
         }),
-        __metadata("design:paramtypes", [router_1.ActivatedRoute])
+        __metadata("design:paramtypes", [router_1.ActivatedRoute, router_1.Router])
     ], CharactersComponent);
     return CharactersComponent;
 }());
