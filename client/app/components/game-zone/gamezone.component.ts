@@ -5,7 +5,6 @@ import { Json } from '@angular/core/src/facade/lang';
 
 
 const SRC:String="/assets/videos/";
-const MAX_LEVEL = 3;
 
 @Component({
   moduleId: module.id,
@@ -78,7 +77,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
 
   StartVideo(){
     this.ShowVideo();
-    if(this.subLevel<=MAX_LEVEL){
+    if(this.subLevel<=3){
       this.videoplayer.nativeElement.play();
     }
   }
@@ -86,7 +85,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
   VideoEnded(){
     console.log("The video is stoped");
     this.subLevel++;
-    if(this.subLevel<=MAX_LEVEL){
+    if(this.subLevel<=3){
       this.ChangeSources(this.subLevel);
       this.ShowImage();
     }
@@ -106,6 +105,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
   ChangeSources(count){
     this.imageSRC = SRC + this.charType(this.videoName.id) + "/" + this.char + "_" + this.level + "." + this.subLevel + '.png';
     this.videoSRC = SRC + this.charType(this.videoName.id) + "/" + this.char + "_" + this.level + "." + this.subLevel + '.mp4';
+    this.videoplayer.nativeElement.src = this.videoSRC;
   }
 
 }

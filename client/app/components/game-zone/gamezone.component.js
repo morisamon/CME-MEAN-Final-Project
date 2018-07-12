@@ -12,7 +12,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var SRC = "/assets/videos/";
-var MAX_LEVEL = 3;
 var GameZoneAreaComponent = /** @class */ (function () {
     function GameZoneAreaComponent(route, router, elementRef) {
         var _this = this;
@@ -61,12 +60,14 @@ var GameZoneAreaComponent = /** @class */ (function () {
     };
     GameZoneAreaComponent.prototype.StartVideo = function () {
         this.ShowVideo();
-        this.videoplayer.nativeElement.play(); //works!
+        if (this.subLevel <= 3) {
+            this.videoplayer.nativeElement.play();
+        }
     };
     GameZoneAreaComponent.prototype.VideoEnded = function () {
         console.log("The video is stoped");
         this.subLevel++;
-        if (this.subLevel <= MAX_LEVEL) {
+        if (this.subLevel <= 3) {
             this.ChangeSources(this.subLevel);
             this.ShowImage();
         }
@@ -82,6 +83,7 @@ var GameZoneAreaComponent = /** @class */ (function () {
     GameZoneAreaComponent.prototype.ChangeSources = function (count) {
         this.imageSRC = SRC + this.charType(this.videoName.id) + "/" + this.char + "_" + this.level + "." + this.subLevel + '.png';
         this.videoSRC = SRC + this.charType(this.videoName.id) + "/" + this.char + "_" + this.level + "." + this.subLevel + '.mp4';
+        this.videoplayer.nativeElement.src = this.videoSRC;
     };
     __decorate([
         core_1.ViewChild('videoPlayer'),
