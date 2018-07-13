@@ -13,10 +13,9 @@
         <input type="image" (click)="PrevBtnClicked()" border="0" src="/assets/prev.png" style="text-decoration:none;width:40px; height:40px">&nbsp;&nbsp;&nbsp;&nbsp;
         <input type="image" (click)="NextBtnClicked()" border="0" src="/assets/next.png" style="text-decoration:none;width:40px; height:40px">&nbsp;&nbsp;&nbsp;&nbsp;
         <input type="image" (click)="HomeBtnClicked()" border="0" src="/assets/home.png" style="text-decoration:none;width:40px; height:40px">&nbsp;&nbsp;&nbsp;&nbsp;
-    </div>
-    <div class="Column" align="right">
         <a class="btn btn-primary" routerLink="/home/register">Register</a>
-        <a class="btn btn-primary" routerLink="/login">Login</a>
+        <a class="btn btn-primary" routerLink="/home/login">Login</a>
+        <a class="btn btn-primary" (click)="onLogoutClick()">Logout</a>
     </div>
 </div>
 </html>

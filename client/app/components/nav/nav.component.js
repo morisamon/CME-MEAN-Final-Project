@@ -11,10 +11,24 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var data_service_1 = require("../../services/DataService/data.service");
+var auth_service_1 = require("../../services/authService/auth.service");
+var router_1 = require("@angular/router");
 var NavComponent = /** @class */ (function () {
-    function NavComponent(data) {
+    function NavComponent(data, authService, router) {
         this.data = data;
+        this.authService = authService;
+        this.router = router;
     }
+    NavComponent.prototype.onLogoutClick = function () {
+        this.authService.logout();
+        console.log("You are logged out");
+        //this.flashMessage.show('You are logged out', {
+        //  cssClass:'alert-success',
+        //  timeout: 3000
+        //});
+        this.router.navigate(['/home/login']);
+        return false;
+    };
     NavComponent.prototype.StopBtnClicked = function () {
         this.data.changeMessage("stop");
     };
@@ -44,7 +58,9 @@ var NavComponent = /** @class */ (function () {
             styleUrls: ['./nav.component.css'],
             providers: [data_service_1.DataService]
         }),
-        __metadata("design:paramtypes", [data_service_1.DataService])
+        __metadata("design:paramtypes", [data_service_1.DataService,
+            auth_service_1.AuthService,
+            router_1.Router])
     ], NavComponent);
     return NavComponent;
 }());

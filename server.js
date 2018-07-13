@@ -1,13 +1,29 @@
 var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
+const passport = require('./config/passport');
+const mongoose = require('mongoose');
+const config = require('./config/database');
 
 var index = require('./routes/index');
-var tasks = require('./routes/tasks');
+var users = require('./routes/users');
 
 var port = 4200;
 
 var app = express();
+
+// Connect To Database
+mongoose.connect(config.database);
+
+// On Connection
+mongoose.connection.on('connected', () => {
+  console.log('Connected to database '+config.database);
+});
+
+// On Error
+mongoose.connection.on('error', (err) => {
+  console.log('Database error: '+err);
+});
 
 //View Engine
 app.set('views', path.join(__dirname, 'views'));
@@ -27,7 +43,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 app.use('/', index);
 app.use('*', index);
-app.use('/api', tasks);
+app.use('/api', users);
 
 app.listen(port, function(){
     console.log('Server started on port '+port);

@@ -11,21 +11,58 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
+var validate_service_1 = require("../../services/validateService/validate.service");
+var auth_service_1 = require("../../services/authService/auth.service");
 var RegisterComponent = /** @class */ (function () {
-    function RegisterComponent(route, router) {
+    function RegisterComponent(validateService, authService, route, router) {
+        this.validateService = validateService;
+        this.authService = authService;
         this.route = route;
         this.router = router;
     }
     RegisterComponent.prototype.ngOnInit = function () {
     };
+    RegisterComponent.prototype.onRegisterSubmit = function () {
+        var _this = this;
+        var user = {
+            name: this.name,
+            email: this.email,
+            username: this.username,
+            password: this.password
+        };
+        // Required Fields
+        if (!this.validateService.validateRegister(user)) {
+            //this.flashMessage.show('Please fill in all fields', {cssClass: 'alert-danger', timeout: 3000});
+            console.log("Please fill in all fields");
+            return false;
+        }
+        // Validate Email
+        if (!this.validateService.validateEmail(user.email)) {
+            //this.flashMessage.show('Please use a valid email', {cssClass: 'alert-danger', timeout: 3000});
+            console.log("Please use a valid email");
+            return false;
+        }
+        // Register user
+        this.authService.registerUser(user).subscribe(function (data) {
+            console.log(data.msg);
+            if (data.success) {
+                //this.flashMessage.show('You are now registered and can log in', {cssClass: 'alert-success', timeout: 3000});
+                _this.router.navigate(['/home/register']);
+            }
+            else {
+                //this.flashMessage.show('Something went wrong', {cssClass: 'alert-danger', timeout: 3000});
+                _this.router.navigate(['/home/register']);
+            }
+        });
+    };
     RegisterComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
-            selector: 'register',
+            selector: 'app-register',
             templateUrl: 'register.component.html',
             styleUrls: ['./register.component.css']
         }),
-        __metadata("design:paramtypes", [router_1.ActivatedRoute, router_1.Router])
+        __metadata("design:paramtypes", [validate_service_1.ValidateService, auth_service_1.AuthService, router_1.ActivatedRoute, router_1.Router])
     ], RegisterComponent);
     return RegisterComponent;
 }());

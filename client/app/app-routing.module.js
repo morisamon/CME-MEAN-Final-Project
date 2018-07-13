@@ -14,6 +14,7 @@ var levels_component_1 = require("./components/levels-menu/levels.component");
 var characters_component_1 = require("./components/characters/characters.component");
 var gamezone_component_1 = require("./components/game-zone/gamezone.component");
 var register_component_1 = require("./components/register/register.component");
+var login_component_1 = require("./components/login/login.component");
 var routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: 'home', component: display_component_1.DisplayComponent },
@@ -22,6 +23,7 @@ var routes = [
     { path: 'home', component: display_component_1.DisplayComponent },
     { path: 'home/levels/characters/:levelNumber', component: characters_component_1.CharactersComponent },
     { path: 'home/register', component: register_component_1.RegisterComponent },
+    { path: 'home/login', component: login_component_1.LoginComponent },
     { path: '',
         redirectTo: '/home',
         pathMatch: 'full'

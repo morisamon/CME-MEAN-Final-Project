@@ -8,12 +8,34 @@ import { NavComponent } from './components/nav/nav.component';
 import { DisplayComponent } from './components/display/display.component';
 import { CopyrightComponent } from './components/copyright & about/copyright.component';
 import { RegisterComponent } from './components/register/register.component';
+import { LoginComponent } from './components/login/login.component';
 import { RouterModule, Routes } from '@angular/router';
 import { AppRoutingModule, routingComponents } from './app-routing.module';
 
+import { ValidateService } from './services/validateService/validate.service';
+import { AuthService } from './services/authService/auth.service';
+
 @NgModule({
-  imports:      [ BrowserModule, HttpModule, FormsModule, AppRoutingModule],
-  declarations: [AppComponent, TasksComponent, NavComponent, DisplayComponent, CopyrightComponent, routingComponents, RegisterComponent],
+  imports:      [ 
+    BrowserModule, 
+    HttpModule, 
+    FormsModule, 
+    AppRoutingModule
+  ],
+  declarations: [
+    AppComponent, 
+    TasksComponent, 
+    NavComponent, 
+    DisplayComponent, 
+    CopyrightComponent, 
+    routingComponents, 
+    RegisterComponent,
+    LoginComponent
+  ],
+  providers: [
+    ValidateService,
+    AuthService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
