@@ -1,41 +1,41 @@
 import { Component } from '@angular/core';
-
+import { DataService } from '../../services/DataService/data.service';
 
 @Component({
   moduleId: module.id,
   selector: 'my-menu',
   templateUrl: 'nav.component.html',
-  styleUrls: ['./nav.component.css']
+  styleUrls: ['./nav.component.css'],
+  providers: [DataService]
 })
+
+
+
 
 export class NavComponent  {
 
+  constructor(private data: DataService) {}
+
   public StopBtnClicked(){
-    console.log("StopBtnClicked");
+    this.data.changeMessage("stop");
   }
   public PlayBtnClicked(){
-    console.log("PlayBtnClicked");
-
+    this.data.changeMessage("play");
   }
   public ReplayBtnClicked(){
-    console.log("ReplayBtnClicked");
-
+    this.data.changeMessage("replay");
   }
   public ChangeCharacterBtnClicked(){
-    console.log("ChangeCharacterBtnClicked");
-
+    this.data.changeMessage("char");
   }
   public PrevBtnClicked(){
-    console.log("PrevBtnClicked");
-
+    this.data.changeMessage("prev");
   }
   public NextBtnClicked(){
-    console.log("NextBtnClicked");
-
+    this.data.changeMessage("next");
   }
   public HomeBtnClicked(){
-    console.log("HomeBtnClicked");
-
+    this.data.changeMessage("home");
   }
 
 }

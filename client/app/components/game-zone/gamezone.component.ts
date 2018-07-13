@@ -1,6 +1,7 @@
 import { Component, OnInit, NgModule, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Json } from '@angular/core/src/facade/lang';
+import { DataService } from '../../services/DataService/data.service';
 
 
 
@@ -10,7 +11,8 @@ const SRC:String="/assets/videos/";
   moduleId: module.id,
   selector: 'app-gamezone',
   templateUrl: './gamezone.component.html',
-  styleUrls: ['./gamezone.component.css']
+  styleUrls: ['./gamezone.component.css'],
+  providers: [DataService]
 })
 
 
@@ -33,7 +35,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
   public char: String
 
   
-  constructor(private route: ActivatedRoute, private router:Router,private elementRef: ElementRef) {
+  constructor(private route: ActivatedRoute, private router:Router,private elementRef: ElementRef, private data: DataService) {
     this.route.params.subscribe((params) =>{
       this.videoName = params
       this.char = params.id.split('_')[0];

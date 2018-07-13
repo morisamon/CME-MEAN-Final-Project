@@ -11,11 +11,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
+var data_service_1 = require("../../services/DataService/data.service");
 var CharactersComponent = /** @class */ (function () {
-    function CharactersComponent(route, router) {
+    function CharactersComponent(route, router, data) {
         var _this = this;
         this.route = route;
         this.router = router;
+        this.data = data;
         this.route.params.subscribe(function (params) { return _this.showRelevantLevel(params); });
     }
     CharactersComponent.prototype.ngOnInit = function () {
@@ -50,9 +52,10 @@ var CharactersComponent = /** @class */ (function () {
             moduleId: module.id,
             selector: 'my-characters',
             templateUrl: './characters.component.html',
-            styleUrls: ['./characters.component.css']
+            styleUrls: ['./characters.component.css'],
+            providers: [data_service_1.DataService]
         }),
-        __metadata("design:paramtypes", [router_1.ActivatedRoute, router_1.Router])
+        __metadata("design:paramtypes", [router_1.ActivatedRoute, router_1.Router, data_service_1.DataService])
     ], CharactersComponent);
     return CharactersComponent;
 }());

@@ -1,11 +1,13 @@
 import { Component, OnInit, NgModule } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DataService } from '../../services/DataService/data.service';
 
 @Component({
   moduleId: module.id,
   selector: 'my-characters',
   templateUrl: './characters.component.html',
-  styleUrls: ['./characters.component.css']
+  styleUrls: ['./characters.component.css'],
+  providers: [DataService]
 })
 export class CharactersComponent implements OnInit {
 
@@ -13,8 +15,8 @@ export class CharactersComponent implements OnInit {
   private level2: Boolean;
   private level3: Boolean;
 
-  constructor(private route: ActivatedRoute, private router:Router) {
-    this.route.params.subscribe(params => this.showRelevantLevel(params));
+  constructor(private route: ActivatedRoute, private router:Router, private data: DataService) {
+    this.route.params.subscribe((params) => this.showRelevantLevel(params));
   }
 
   ngOnInit() {
@@ -22,6 +24,7 @@ export class CharactersComponent implements OnInit {
 
   private showRelevantLevel(params){
     console.log(params.levelNumber);
+
     switch(params.levelNumber){
       case "1":
       console.log(this.level1);

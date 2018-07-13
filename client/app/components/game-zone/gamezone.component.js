@@ -11,13 +11,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
+var data_service_1 = require("../../services/DataService/data.service");
 var SRC = "/assets/videos/";
 var GameZoneAreaComponent = /** @class */ (function () {
-    function GameZoneAreaComponent(route, router, elementRef) {
+    function GameZoneAreaComponent(route, router, elementRef, data) {
         var _this = this;
         this.route = route;
         this.router = router;
         this.elementRef = elementRef;
+        this.data = data;
         this.subLevel = 1;
         this.route.params.subscribe(function (params) {
             _this.videoName = params;
@@ -94,9 +96,10 @@ var GameZoneAreaComponent = /** @class */ (function () {
             moduleId: module.id,
             selector: 'app-gamezone',
             templateUrl: './gamezone.component.html',
-            styleUrls: ['./gamezone.component.css']
+            styleUrls: ['./gamezone.component.css'],
+            providers: [data_service_1.DataService]
         }),
-        __metadata("design:paramtypes", [router_1.ActivatedRoute, router_1.Router, core_1.ElementRef])
+        __metadata("design:paramtypes", [router_1.ActivatedRoute, router_1.Router, core_1.ElementRef, data_service_1.DataService])
     ], GameZoneAreaComponent);
     return GameZoneAreaComponent;
 }());
