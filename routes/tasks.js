@@ -24,6 +24,12 @@ router.get('/task/:id', function(req, res, next){
     });
 });
 
+
+module.exports.getUserByUsername = function(username, callback){
+    const query = {username: username}
+    User.findOne(query, callback);
+  }
+
 //Save Task
 router.post('/task', function(req, res, next){
     var task = req.body;
