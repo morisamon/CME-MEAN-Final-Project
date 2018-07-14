@@ -16,28 +16,20 @@ var router_1 = require("@angular/router");
 var NavComponent = /** @class */ (function () {
     function NavComponent(data, authService, router) {
         this.data = data;
-<<<<<<< HEAD
-        this.flag = false;
+        this.authService = authService;
+        this.router = router;
     }
     NavComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.data.currentButtonDisplayFlag.subscribe(function (flag) {
             _this.flag = flag;
         });
-=======
-        this.authService = authService;
-        this.router = router;
-    }
+    };
     NavComponent.prototype.onLogoutClick = function () {
         this.authService.logout();
         console.log("You are logged out");
-        //this.flashMessage.show('You are logged out', {
-        //  cssClass:'alert-success',
-        //  timeout: 3000
-        //});
         this.router.navigate(['/home/login']);
         return false;
->>>>>>> cee5c4e5e4c1b74f3db5c97edc10aea5288bdafc
     };
     NavComponent.prototype.StopBtnClicked = function () {
         this.data.changeMessage("stop");

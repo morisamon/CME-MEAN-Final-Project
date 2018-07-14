@@ -4,7 +4,10 @@ import { FormsModule} from '@angular/forms';
 
 import { AdminRoutingModule } from './admin.routing';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { AuthGuard } from '../admin/auth.guards'
+import { AuthGuard } from './auth.guards'
+import { AddKidComponent } from './components/addkid/addkid.component';
+import { KidsService } from './services/kids.service';
+import { KidsListComponent } from './components/kids-list/kids-list.component';
 
 @NgModule({
     imports:      [ 
@@ -13,10 +16,13 @@ import { AuthGuard } from '../admin/auth.guards'
       AdminRoutingModule
     ],
     declarations: [
-      DashboardComponent
+      DashboardComponent,
+      AddKidComponent,
+      KidsListComponent
     ],
     providers: [
-      AuthGuard
+      AuthGuard,
+      KidsService
     ]
 })
 

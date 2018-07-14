@@ -1,0 +1,50 @@
+<h2 class="page-header">Kids List</h2>
+<a class="btn btn-primary" (click)="onAddKid()">Add Kid</a>
+<br><br>
+
+<div class="kids-list center" style="width: 80%">
+
+    <div>
+        <div class="col-md-2">
+            ID    
+        </div> 
+        <div class="col-md-2">
+            Name  
+        </div> 
+        <div class="col-md-2">
+            Gender  
+        </div> 
+        <div class="col-md-2">
+            Age   
+        </div> 
+        <div class="col-md-2">
+            Address  
+        </div> 
+        <div class="col-md-2">
+            Delete?   
+        </div>
+    </div>
+    <br>
+    <hr>
+    <div *ngFor="let kid of kids">
+        <div class="col-md-2">
+            {{kid._id}}    
+        </div> 
+        <div class="col-md-2">
+            {{kid.name}}   
+        </div> 
+        <div class="col-md-2">
+            {{kid.gender}}  
+        </div> 
+        <div class="col-md-2">
+            {{kid.age}}    
+        </div> 
+        <div class="col-md-2">
+            {{kid.address}} 
+        </div> 
+        <div class="col-md-2">
+            <input type="button" (click)="deleteKid(kid._id)" value="Delete" class="btn btn-danger">    
+        </div>
+        <br><br>
+    </div>
+</div>

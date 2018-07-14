@@ -2,12 +2,15 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { AuthGuard } from '../admin/auth.guards'
-
+import { AuthGuard } from './auth.guards'
+import { AddKidComponent } from './components/addkid/addkid.component';
+import { KidsListComponent } from './components/kids-list/kids-list.component';
 
 const routes: Routes = [
     { path: 'admin/dashboard', component: DashboardComponent, canActivate:[AuthGuard] },
-  ];
+    { path: 'admin/addkid', component: AddKidComponent, canActivate:[AuthGuard] },
+    { path: 'admin/kidslist', component: KidsListComponent, canActivate:[AuthGuard] },
+];
   
 @NgModule({
     imports: [RouterModule.forChild(routes)],

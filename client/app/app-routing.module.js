@@ -13,6 +13,7 @@ var copyright_component_1 = require("./components/copyright & about/copyright.co
 var levels_component_1 = require("./components/levels-menu/levels.component");
 var characters_component_1 = require("./components/characters/characters.component");
 var gamezone_component_1 = require("./components/game-zone/gamezone.component");
+var register_component_1 = require("./authentication/components/register/register.component");
 var routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: 'home', component: display_component_1.DisplayComponent },
@@ -20,11 +21,8 @@ var routes = [
     { path: 'home/levels', component: levels_component_1.LevelsComponent },
     { path: 'home', component: display_component_1.DisplayComponent },
     { path: 'home/levels/characters/:levelNumber', component: characters_component_1.CharactersComponent },
-<<<<<<< HEAD
     { path: 'home/game/:id', component: gamezone_component_1.GameZoneAreaComponent },
     { path: 'home/register', component: register_component_1.RegisterComponent },
-=======
->>>>>>> cee5c4e5e4c1b74f3db5c97edc10aea5288bdafc
     { path: '',
         redirectTo: '/home',
         pathMatch: 'full'

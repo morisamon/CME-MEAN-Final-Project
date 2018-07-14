@@ -1,0 +1,12 @@
+div, h2 {
+    color: aliceblue;
+    background-color: transparent;
+
+}
+
+.center {
+    margin: auto;
+    width: 60%;
+    border: 3px solid #ffffff;
+    padding: 10px;
+}
