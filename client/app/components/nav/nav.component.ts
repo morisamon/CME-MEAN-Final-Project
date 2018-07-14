@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { DataService } from '../../services/DataService/data.service';
-import { AuthService } from '../../services/authService/auth.service';
+import { AuthService } from '../../authentication/services/authService/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -15,7 +15,7 @@ export class NavComponent  {
 
   constructor(
     private data: DataService,
-    private authService:AuthService,
+    private authService: AuthService,
     private router:Router
   ) {}
 

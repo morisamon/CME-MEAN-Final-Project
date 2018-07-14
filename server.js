@@ -1,7 +1,7 @@
 var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
-const passport = require('./config/passport');
+const passport = require('passport');
 const mongoose = require('mongoose');
 const config = require('./config/database');
 
@@ -40,6 +40,15 @@ app.use('/assets/videos',express.static(path.join(__dirname, '/assets/videos')))
 // Body Parser MW
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
+
+// Body Parser Middleware
+app.use(bodyParser.json());
+
+// Passport Middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
+require('./config/passport')(passport);
 
 app.use('/', index);
 app.use('*', index);

@@ -1,15 +1,23 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule} from '@angular/forms';
 
-import { AdminRoutingModule } from './admin-routing.module';
-import { AdminComponent } from './admin.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { AdminRoutingModule } from './admin.routing';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { AuthGuard } from '../admin/auth.guards'
 
 @NgModule({
-  imports: [
-    CommonModule,
-    AdminRoutingModule
-  ],
-  declarations: [AdminComponent, DashboardComponent]
+    imports:      [ 
+      BrowserModule, 
+      FormsModule,
+      AdminRoutingModule
+    ],
+    declarations: [
+      DashboardComponent
+    ],
+    providers: [
+      AuthGuard
+    ]
 })
+
 export class AdminModule { }
