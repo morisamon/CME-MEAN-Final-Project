@@ -11,6 +11,11 @@ export class DataService {
     private levelSource = new BehaviorSubject<string>("0");
     currentLevel = this.levelSource.asObservable();
 
+    private buttonDisplayFlagSource = new BehaviorSubject<boolean>(false);
+    currentButtonDisplayFlag = this.buttonDisplayFlagSource.asObservable();
+
+    private currLevel;
+
     constructor(private route: ActivatedRoute, private router:Router) {}
 
     changeMessage(message: string){
@@ -38,7 +43,7 @@ export class DataService {
             case "char":
             console.log("char from nav to service");
             this.levelSource.next("getLevel");
-            //this.router.navigate(['/home/levels/characters', ]);
+            this.router.navigate(['/home/levels/characters', this.currentLevel]);
             break;
 
             case "prev":
@@ -63,5 +68,12 @@ export class DataService {
     }
     changeChar(level){
         console.log("change to char" + level);
+    }
+    SetLevel(level){
+        this.currentLevel = level;
+        this.levelSource.next(level);
+    }
+    SetEnableNavButtons(){
+
     }
 }

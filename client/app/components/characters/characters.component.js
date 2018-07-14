@@ -24,6 +24,7 @@ var CharactersComponent = /** @class */ (function () {
     };
     CharactersComponent.prototype.showRelevantLevel = function (params) {
         console.log(params.levelNumber);
+        this.data.SetLevel(params.levelNumber);
         switch (params.levelNumber) {
             case "1":
                 console.log(this.level1);
@@ -53,7 +54,6 @@ var CharactersComponent = /** @class */ (function () {
             selector: 'my-characters',
             templateUrl: './characters.component.html',
             styleUrls: ['./characters.component.css'],
-            providers: [data_service_1.DataService]
         }),
         __metadata("design:paramtypes", [router_1.ActivatedRoute, router_1.Router, data_service_1.DataService])
     ], CharactersComponent);

@@ -7,7 +7,6 @@ import { DataService } from '../../services/DataService/data.service';
   selector: 'my-characters',
   templateUrl: './characters.component.html',
   styleUrls: ['./characters.component.css'],
-  providers: [DataService]
 })
 export class CharactersComponent implements OnInit {
 
@@ -24,6 +23,7 @@ export class CharactersComponent implements OnInit {
 
   private showRelevantLevel(params){
     console.log(params.levelNumber);
+    this.data.SetLevel(params.levelNumber);
 
     switch(params.levelNumber){
       case "1":

@@ -6,17 +6,18 @@
 
     </div>
     <div class="Column" align="right">
-        <input type="image" (click)="StopBtnClicked()"  border="0" src="/assets/stop.png" style="text-decoration:none;width:40px; height:40px">&nbsp;&nbsp;&nbsp;&nbsp;
-        <input type="image" (click)="PlayBtnClicked()"  border="0" src="/assets/play.png" style="text-decoration:none;width:40px; height:40px">&nbsp;&nbsp;&nbsp;&nbsp;
-        <input type="image" (click)="ReplayBtnClicked()"  border="0" src="/assets/replay.png" style="text-decoration:none;width:40px; height:40px">&nbsp;&nbsp;&nbsp;&nbsp;
-        <input type="image" (click)="ChangeCharacterBtnClicked()"  border="0" src="/assets/character.png" style="text-decoration:none;width:40px; height:40px">&nbsp;&nbsp;&nbsp;&nbsp;
-        <input type="image" (click)="PrevBtnClicked()" border="0" src="/assets/prev.png" style="text-decoration:none;width:40px; height:40px">&nbsp;&nbsp;&nbsp;&nbsp;
-        <input type="image" (click)="NextBtnClicked()" border="0" src="/assets/next.png" style="text-decoration:none;width:40px; height:40px">&nbsp;&nbsp;&nbsp;&nbsp;
+        <input [hidden]="flag" type="image" (click)="StopBtnClicked()"  border="0" src="/assets/stop.png" style="text-decoration:none;width:40px; height:40px">&nbsp;&nbsp;&nbsp;&nbsp;
+        <input [hidden]="flag" type="image" (click)="PlayBtnClicked()"  border="0" src="/assets/play.png" style="text-decoration:none;width:40px; height:40px">&nbsp;&nbsp;&nbsp;&nbsp;
+        <input [hidden]="flag" type="image" (click)="ReplayBtnClicked()"  border="0" src="/assets/replay.png" style="text-decoration:none;width:40px; height:40px">&nbsp;&nbsp;&nbsp;&nbsp;
+        <input [hidden]="flag" type="image" (click)="ChangeCharacterBtnClicked()"  border="0" src="/assets/character.png" style="text-decoration:none;width:40px; height:40px">&nbsp;&nbsp;&nbsp;&nbsp;
+        <input [hidden]="flag" type="image" (click)="PrevBtnClicked()" border="0" src="/assets/prev.png" style="text-decoration:none;width:40px; height:40px">&nbsp;&nbsp;&nbsp;&nbsp;
+        <input [hidden]="flag" type="image" (click)="NextBtnClicked()" border="0" src="/assets/next.png" style="text-decoration:none;width:40px; height:40px">&nbsp;&nbsp;&nbsp;&nbsp;
         <input type="image" (click)="HomeBtnClicked()" border="0" src="/assets/home.png" style="text-decoration:none;width:40px; height:40px">&nbsp;&nbsp;&nbsp;&nbsp;
     </div>
     <div class="Column" align="right">
         <a class="btn btn-primary" routerLink="/home/register">Register</a>
         <a class="btn btn-primary" routerLink="/login">Login</a>
     </div>
+    
 </div>
 </html>

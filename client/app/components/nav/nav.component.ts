@@ -1,20 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, NgModule } from '@angular/core';
 import { DataService } from '../../services/DataService/data.service';
 
 @Component({
   moduleId: module.id,
   selector: 'my-menu',
   templateUrl: 'nav.component.html',
-  styleUrls: ['./nav.component.css'],
-  providers: [DataService]
+  styleUrls: ['./nav.component.css']
 })
 
+export class NavComponent implements OnInit {
+  flag: boolean;
+  
+  constructor(private data: DataService) {this.flag=false;}
+  
 
-
-
-export class NavComponent  {
-
-  constructor(private data: DataService) {}
+  ngOnInit(){
+    this.data.currentButtonDisplayFlag.subscribe((flag) => {
+      this.flag=flag;
+    });
+  }
 
   public StopBtnClicked(){
     this.data.changeMessage("stop");

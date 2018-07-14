@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { DataService } from '../../services/DataService/data.service';
 
 @Component({
   moduleId: module.id,
@@ -11,7 +12,7 @@ export class LevelsComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit() {
+  ngOnInit(){
   }
 
 }

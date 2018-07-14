@@ -28,6 +28,10 @@ var GameZoneAreaComponent = /** @class */ (function () {
             _this.videoSRC = _this.getSrcToShow('.mp4');
             _this.imageSRC = _this.getSrcToShow('.png');
         });
+        this.data.currentMessage.subscribe(function (message) {
+            _this.ExecuteMessageCommand(message);
+        });
+        this.data.SetEnableNavButtons();
         this.ShowImage();
     }
     GameZoneAreaComponent.prototype.ngAfterViewInit = function () {
@@ -70,7 +74,7 @@ var GameZoneAreaComponent = /** @class */ (function () {
         console.log("The video is stoped");
         this.subLevel++;
         if (this.subLevel <= 3) {
-            this.ChangeSources(this.subLevel);
+            this.ChangeSources();
             this.ShowImage();
         }
     };
@@ -82,10 +86,43 @@ var GameZoneAreaComponent = /** @class */ (function () {
         this.hiddenImage = true;
         this.hiddenVideo = false;
     };
-    GameZoneAreaComponent.prototype.ChangeSources = function (count) {
+    GameZoneAreaComponent.prototype.ChangeSources = function () {
         this.imageSRC = SRC + this.charType(this.videoName.id) + "/" + this.char + "_" + this.level + "." + this.subLevel + '.png';
         this.videoSRC = SRC + this.charType(this.videoName.id) + "/" + this.char + "_" + this.level + "." + this.subLevel + '.mp4';
         this.videoplayer.nativeElement.src = this.videoSRC;
+    };
+    GameZoneAreaComponent.prototype.NextLevel = function (level) {
+        this.imageSRC = SRC + this.charType(this.videoName.id) + "/" + this.char + "_" + level + "." + 1 + '.png';
+        this.videoSRC = SRC + this.charType(this.videoName.id) + "/" + this.char + "_" + level + "." + 1 + '.mp4';
+        this.videoplayer.nativeElement.src = this.videoSRC;
+    };
+    GameZoneAreaComponent.prototype.ExecuteMessageCommand = function (command) {
+        switch (command) {
+            case "next":
+                var newnumber = Number(this.level);
+                newnumber++;
+                if (newnumber <= 3) {
+                    this.level = String(newnumber);
+                    this.subLevel = 1;
+                    this.ChangeSources();
+                }
+                break;
+            case "prev":
+                var newnumber = Number(this.level);
+                newnumber--;
+                if (newnumber > 0) {
+                    this.level = String(newnumber);
+                    this.subLevel = 1;
+                    this.ChangeSources();
+                }
+                break;
+            case "play":
+                break;
+            case "replay":
+                break;
+            case "stop":
+                break;
+        }
     };
     __decorate([
         core_1.ViewChild('videoPlayer'),
@@ -96,8 +133,7 @@ var GameZoneAreaComponent = /** @class */ (function () {
             moduleId: module.id,
             selector: 'app-gamezone',
             templateUrl: './gamezone.component.html',
-            styleUrls: ['./gamezone.component.css'],
-            providers: [data_service_1.DataService]
+            styleUrls: ['./gamezone.component.css']
         }),
         __metadata("design:paramtypes", [router_1.ActivatedRoute, router_1.Router, core_1.ElementRef, data_service_1.DataService])
     ], GameZoneAreaComponent);

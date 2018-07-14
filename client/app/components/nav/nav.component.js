@@ -14,7 +14,14 @@ var data_service_1 = require("../../services/DataService/data.service");
 var NavComponent = /** @class */ (function () {
     function NavComponent(data) {
         this.data = data;
+        this.flag = false;
     }
+    NavComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.data.currentButtonDisplayFlag.subscribe(function (flag) {
+            _this.flag = flag;
+        });
+    };
     NavComponent.prototype.StopBtnClicked = function () {
         this.data.changeMessage("stop");
     };
@@ -41,8 +48,7 @@ var NavComponent = /** @class */ (function () {
             moduleId: module.id,
             selector: 'my-menu',
             templateUrl: 'nav.component.html',
-            styleUrls: ['./nav.component.css'],
-            providers: [data_service_1.DataService]
+            styleUrls: ['./nav.component.css']
         }),
         __metadata("design:paramtypes", [data_service_1.DataService])
     ], NavComponent);

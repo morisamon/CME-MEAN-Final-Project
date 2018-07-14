@@ -11,8 +11,7 @@ const SRC:String="/assets/videos/";
   moduleId: module.id,
   selector: 'app-gamezone',
   templateUrl: './gamezone.component.html',
-  styleUrls: ['./gamezone.component.css'],
-  providers: [DataService]
+  styleUrls: ['./gamezone.component.css']
 })
 
 
@@ -43,6 +42,10 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
       this.videoSRC = this.getSrcToShow('.mp4');
       this.imageSRC = this.getSrcToShow('.png');
     });
+    this.data.currentMessage.subscribe((message) => {
+      this.ExecuteMessageCommand(message);
+    });
+    this.data.SetEnableNavButtons();
     this.ShowImage();
   }
 
@@ -88,7 +91,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
     console.log("The video is stoped");
     this.subLevel++;
     if(this.subLevel<=3){
-      this.ChangeSources(this.subLevel);
+      this.ChangeSources();
       this.ShowImage();
     }
 
@@ -104,10 +107,47 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
     this.hiddenVideo = false;
   }
 
-  ChangeSources(count){
+  ChangeSources(){
     this.imageSRC = SRC + this.charType(this.videoName.id) + "/" + this.char + "_" + this.level + "." + this.subLevel + '.png';
     this.videoSRC = SRC + this.charType(this.videoName.id) + "/" + this.char + "_" + this.level + "." + this.subLevel + '.mp4';
     this.videoplayer.nativeElement.src = this.videoSRC;
+  }
+
+  NextLevel(level){
+    this.imageSRC = SRC + this.charType(this.videoName.id) + "/" + this.char + "_" + level + "." + 1 + '.png';
+    this.videoSRC = SRC + this.charType(this.videoName.id) + "/" + this.char + "_" + level + "." + 1 + '.mp4';
+    this.videoplayer.nativeElement.src = this.videoSRC;
+  }
+
+  ExecuteMessageCommand(command){
+    switch(command){
+      case "next":
+      var newnumber = Number(this.level);
+      newnumber++;
+      if(newnumber<=3)
+      {
+        this.level = String(newnumber);
+        this.subLevel = 1;
+        this.ChangeSources();
+      }
+      break;
+      case "prev":
+      var newnumber = Number(this.level);
+      newnumber--;
+      if(newnumber>0)
+      {
+        this.level = String(newnumber);
+        this.subLevel = 1;
+        this.ChangeSources();
+      }
+      break;
+      case "play":
+      break;
+      case "replay":
+      break;
+      case "stop":
+      break;
+    }
   }
 
 }

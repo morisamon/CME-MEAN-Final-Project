@@ -14,6 +14,7 @@ const routes: Routes = [
   { path: 'home/levels', component: LevelsComponent},
   { path: 'home', component: DisplayComponent},
   { path: 'home/levels/characters/:levelNumber', component: CharactersComponent},
+  { path: 'home/game/:id', component: GameZoneAreaComponent},
   { path: 'home/register', component: RegisterComponent},
   
   { path: '',

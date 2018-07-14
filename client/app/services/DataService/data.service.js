@@ -20,6 +20,8 @@ var DataService = /** @class */ (function () {
         this.currentMessage = this.messageSource.asObservable();
         this.levelSource = new BehaviorSubject_1.BehaviorSubject("0");
         this.currentLevel = this.levelSource.asObservable();
+        this.buttonDisplayFlagSource = new BehaviorSubject_1.BehaviorSubject(false);
+        this.currentButtonDisplayFlag = this.buttonDisplayFlagSource.asObservable();
     }
     DataService.prototype.changeMessage = function (message) {
         this.executeCommand(message);
@@ -41,7 +43,7 @@ var DataService = /** @class */ (function () {
             case "char":
                 console.log("char from nav to service");
                 this.levelSource.next("getLevel");
-                //this.router.navigate(['/home/levels/characters', ]);
+                this.router.navigate(['/home/levels/characters', this.currentLevel]);
                 break;
             case "prev":
                 console.log("prev from nav to service");
@@ -62,6 +64,12 @@ var DataService = /** @class */ (function () {
     };
     DataService.prototype.changeChar = function (level) {
         console.log("change to char" + level);
+    };
+    DataService.prototype.SetLevel = function (level) {
+        this.currentLevel = level;
+        this.levelSource.next(level);
+    };
+    DataService.prototype.SetEnableNavButtons = function () {
     };
     DataService = __decorate([
         core_1.Injectable(),

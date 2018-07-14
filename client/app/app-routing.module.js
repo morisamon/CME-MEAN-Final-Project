@@ -21,6 +21,7 @@ var routes = [
     { path: 'home/levels', component: levels_component_1.LevelsComponent },
     { path: 'home', component: display_component_1.DisplayComponent },
     { path: 'home/levels/characters/:levelNumber', component: characters_component_1.CharactersComponent },
+    { path: 'home/game/:id', component: gamezone_component_1.GameZoneAreaComponent },
     { path: 'home/register', component: register_component_1.RegisterComponent },
     { path: '',
         redirectTo: '/home',
