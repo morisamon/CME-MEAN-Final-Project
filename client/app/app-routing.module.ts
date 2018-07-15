@@ -36,5 +36,6 @@ export const routingComponents = [
   CopyrightComponent,
   LevelsComponent,
   CharactersComponent,
-  GameZoneAreaComponent
+  GameZoneAreaComponent,
+  
 ]

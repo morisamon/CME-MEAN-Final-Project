@@ -25,13 +25,14 @@ var GameZoneAreaComponent = /** @class */ (function () {
             _this.videoName = params;
             _this.char = params.id.split('_')[0];
             _this.level = params.id.split('_')[1].split('.')[0];
+            _this.subLevel = 1;
             _this.videoSRC = _this.getSrcToShow('.mp4');
             _this.imageSRC = _this.getSrcToShow('.png');
         });
         this.data.currentMessage.subscribe(function (message) {
             _this.ExecuteMessageCommand(message);
         });
-        this.data.SetEnableNavButtons();
+        this.data.HiddenNavButtons(false);
         this.ShowImage();
     }
     GameZoneAreaComponent.prototype.ngAfterViewInit = function () {
@@ -89,12 +90,22 @@ var GameZoneAreaComponent = /** @class */ (function () {
     GameZoneAreaComponent.prototype.ChangeSources = function () {
         this.imageSRC = SRC + this.charType(this.videoName.id) + "/" + this.char + "_" + this.level + "." + this.subLevel + '.png';
         this.videoSRC = SRC + this.charType(this.videoName.id) + "/" + this.char + "_" + this.level + "." + this.subLevel + '.mp4';
-        this.videoplayer.nativeElement.src = this.videoSRC;
+        if (this.videoplayer != undefined) {
+            this.videoplayer.nativeElement.src = this.videoSRC;
+        }
+        else {
+            console.log("videoplayer is undefined!!!!");
+        }
     };
     GameZoneAreaComponent.prototype.NextLevel = function (level) {
         this.imageSRC = SRC + this.charType(this.videoName.id) + "/" + this.char + "_" + level + "." + 1 + '.png';
         this.videoSRC = SRC + this.charType(this.videoName.id) + "/" + this.char + "_" + level + "." + 1 + '.mp4';
-        this.videoplayer.nativeElement.src = this.videoSRC;
+        if (this.videoplayer != undefined) {
+            this.videoplayer.nativeElement.src = this.videoSRC;
+        }
+        else {
+            console.log("videoplayer is undefined!!!!");
+        }
     };
     GameZoneAreaComponent.prototype.ExecuteMessageCommand = function (command) {
         switch (command) {
@@ -106,6 +117,7 @@ var GameZoneAreaComponent = /** @class */ (function () {
                     this.subLevel = 1;
                     this.ChangeSources();
                 }
+                this.data.CancelLastAction();
                 break;
             case "prev":
                 var newnumber = Number(this.level);

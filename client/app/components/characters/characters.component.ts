@@ -28,19 +28,19 @@ export class CharactersComponent implements OnInit {
     switch(params.levelNumber){
       case "1":
       console.log(this.level1);
-      this.level1 = true;
-      this.level2 = false;
-      this.level3 = false;
-      break;
-      case "2":
       this.level1 = false;
       this.level2 = true;
-      this.level3 = false;
+      this.level3 = true;
       break;
-      case "3":
-      this.level1 = false;
+      case "2":
+      this.level1 = true;
       this.level2 = false;
       this.level3 = true;
+      break;
+      case "3":
+      this.level1 = true;
+      this.level2 = true;
+      this.level3 = false;
       break;
     }
   }

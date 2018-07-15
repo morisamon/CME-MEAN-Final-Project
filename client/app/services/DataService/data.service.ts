@@ -15,6 +15,7 @@ export class DataService {
     currentButtonDisplayFlag = this.buttonDisplayFlagSource.asObservable();
 
     private currLevel;
+    private gender;
 
     constructor(private route: ActivatedRoute, private router:Router) {}
 
@@ -73,7 +74,16 @@ export class DataService {
         this.currentLevel = level;
         this.levelSource.next(level);
     }
-    SetEnableNavButtons(){
 
+    HiddenNavButtons(flag){
+        this.buttonDisplayFlagSource.next(flag);
+    }
+
+    CancelLastAction(){
+        this.messageSource.next("default message");
+    }
+
+    SetGender(gender){
+        this.gender = gender;
     }
 }

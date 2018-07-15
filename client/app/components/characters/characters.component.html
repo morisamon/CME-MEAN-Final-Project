@@ -1,5 +1,5 @@
 
-<div class="w3-center" style="padding-top:150px;" *ngIf="level1">  
+<div class="w3-center" style="padding-top:150px;" [hidden]="level1">  
 
     <input (click)="PlayGame('player_1.1');" id="player_1.1" type="image" src="/assets/basketball _player2.PNG" alt="Basketball" style="width:250px;height:350px;padding-right: 10px">                     
    
@@ -13,10 +13,10 @@
 
 </div>
 
-<div class="w3-center" style="padding-top:150px;" *ngIf="level2">  
+<div class="w3-center" style="padding-top:150px;" [hidden]="level2">  
   <h1>level 2 - TBD</h1>
 </div>
 
-<div class="w3-center" style="padding-top:150px;" *ngIf="level3">  
+<div class="w3-center" style="padding-top:150px;" [hidden]="level3">  
     <h1>level 2 - TBD</h1>
 </div>

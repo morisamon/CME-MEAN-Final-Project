@@ -69,7 +69,14 @@ var DataService = /** @class */ (function () {
         this.currentLevel = level;
         this.levelSource.next(level);
     };
-    DataService.prototype.SetEnableNavButtons = function () {
+    DataService.prototype.HiddenNavButtons = function (flag) {
+        this.buttonDisplayFlagSource.next(flag);
+    };
+    DataService.prototype.CancelLastAction = function () {
+        this.messageSource.next("default message");
+    };
+    DataService.prototype.SetGender = function (gender) {
+        this.gender = gender;
     };
     DataService = __decorate([
         core_1.Injectable(),

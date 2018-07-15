@@ -3,8 +3,6 @@ import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Json } from '@angular/core/src/facade/lang';
 import { DataService } from '../../services/DataService/data.service';
 
-
-
 const SRC:String="/assets/videos/";
 
 @Component({
@@ -20,6 +18,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
   ngAfterViewInit(): void {
     //this.videoplayer.nativeElement.play(); //works!
   }
+
   @ViewChild('videoPlayer') videoplayer: any;
   
   public videoName: any;
@@ -39,13 +38,14 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
       this.videoName = params
       this.char = params.id.split('_')[0];
       this.level = params.id.split('_')[1].split('.')[0];
+      this.subLevel = 1;
       this.videoSRC = this.getSrcToShow('.mp4');
       this.imageSRC = this.getSrcToShow('.png');
     });
     this.data.currentMessage.subscribe((message) => {
       this.ExecuteMessageCommand(message);
     });
-    this.data.SetEnableNavButtons();
+    this.data.HiddenNavButtons(false);
     this.ShowImage();
   }
 
@@ -110,13 +110,24 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
   ChangeSources(){
     this.imageSRC = SRC + this.charType(this.videoName.id) + "/" + this.char + "_" + this.level + "." + this.subLevel + '.png';
     this.videoSRC = SRC + this.charType(this.videoName.id) + "/" + this.char + "_" + this.level + "." + this.subLevel + '.mp4';
-    this.videoplayer.nativeElement.src = this.videoSRC;
+    if(this.videoplayer != undefined){
+      this.videoplayer.nativeElement.src = this.videoSRC;
+    }
+    else{
+      console.log("videoplayer is undefined!!!!")
+    }
+      
   }
 
   NextLevel(level){
     this.imageSRC = SRC + this.charType(this.videoName.id) + "/" + this.char + "_" + level + "." + 1 + '.png';
     this.videoSRC = SRC + this.charType(this.videoName.id) + "/" + this.char + "_" + level + "." + 1 + '.mp4';
-    this.videoplayer.nativeElement.src = this.videoSRC;
+    if(this.videoplayer != undefined){
+      this.videoplayer.nativeElement.src = this.videoSRC;
+    }
+    else{
+      console.log("videoplayer is undefined!!!!")
+    }
   }
 
   ExecuteMessageCommand(command){
@@ -130,6 +141,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
         this.subLevel = 1;
         this.ChangeSources();
       }
+      this.data.CancelLastAction();
       break;
       case "prev":
       var newnumber = Number(this.level);
