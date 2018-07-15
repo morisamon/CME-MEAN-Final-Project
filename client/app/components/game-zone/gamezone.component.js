@@ -12,7 +12,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var data_service_1 = require("../../services/DataService/data.service");
-var SRC = "/assets/videos/";
+var VIDEO_SRC = "/assets/videos/";
+var AUDIO_SRC = "/assets/voices/";
+var BOY = "boy";
+var GIRL = "girl";
+var AUDIO_DEFAULT_BOY_START_SRC = "/assets/voices/general_boy_choose_start.wav";
+var AUDIO_DEFAULT_GIRL_START_SRC = "/assets/voices/general_girl_choose_start.wma";
+var TIMEOUT_BETWEEN_AUDIO_VOID = 1200;
 var GameZoneAreaComponent = /** @class */ (function () {
     function GameZoneAreaComponent(route, router, elementRef, data) {
         var _this = this;
@@ -21,6 +27,8 @@ var GameZoneAreaComponent = /** @class */ (function () {
         this.elementRef = elementRef;
         this.data = data;
         this.subLevel = 1;
+        this.startVoiceCount = 1;
+        this.gender = "girl";
         this.route.params.subscribe(function (params) {
             _this.videoName = params;
             _this.char = params.id.split('_')[0];
@@ -39,9 +47,10 @@ var GameZoneAreaComponent = /** @class */ (function () {
         //this.videoplayer.nativeElement.play(); //works!
     };
     GameZoneAreaComponent.prototype.ngOnInit = function () {
+        this.PlayDefaultStartAudio();
     };
     GameZoneAreaComponent.prototype.getSrcToShow = function (type) {
-        var finalSRC = SRC + this.charType(this.videoName.id) + "/" + this.videoName.id + type;
+        var finalSRC = VIDEO_SRC + this.charType(this.videoName.id) + "/" + this.videoName.id + type;
         console.log(finalSRC);
         return finalSRC;
     };
@@ -69,6 +78,23 @@ var GameZoneAreaComponent = /** @class */ (function () {
         this.ShowVideo();
         if (this.subLevel <= 3) {
             this.videoplayer.nativeElement.play();
+            if (this.subLevel == 3) {
+                this.audioSRC = AUDIO_SRC + this.char + "_" + this.gender + "_" + this.level + "_" + this.startVoiceCount + '.wav';
+                this.audioplayer.nativeElement.src = this.audioSRC;
+                this.audioplayer.nativeElement.play();
+            }
+        }
+    };
+    GameZoneAreaComponent.prototype.PlayDefaultStartAudio = function () {
+        if (this.level == "1" && this.subLevel == 1) {
+            if (this.gender == BOY) {
+                this.audioSRC = AUDIO_DEFAULT_BOY_START_SRC;
+            }
+            else if (this.gender == GIRL) {
+                this.audioSRC = AUDIO_DEFAULT_GIRL_START_SRC;
+            }
+            this.audioplayer.src = this.audioSRC;
+            this.audioplayer.nativeElement.play();
         }
     };
     GameZoneAreaComponent.prototype.VideoEnded = function () {
@@ -82,6 +108,18 @@ var GameZoneAreaComponent = /** @class */ (function () {
             this.playManually = false;
         }
     };
+    GameZoneAreaComponent.prototype.AudioEnded = function () {
+        var _this = this;
+        console.log("Audio is ended now");
+        if (this.startVoiceCount <= 3) {
+            setTimeout(function () {
+                _this.audioSRC = AUDIO_SRC + _this.char + "_" + _this.gender + "_" + _this.level + "_" + _this.startVoiceCount + '.wav';
+                _this.audioplayer.nativeElement.src = _this.audioSRC;
+                _this.audioplayer.nativeElement.play();
+                _this.startVoiceCount++;
+            }, TIMEOUT_BETWEEN_AUDIO_VOID);
+        }
+    };
     GameZoneAreaComponent.prototype.ShowImage = function () {
         this.hiddenImage = false;
         this.hiddenVideo = true;
@@ -91,8 +129,8 @@ var GameZoneAreaComponent = /** @class */ (function () {
         this.hiddenVideo = false;
     };
     GameZoneAreaComponent.prototype.ChangeSources = function () {
-        this.imageSRC = SRC + this.charType(this.videoName.id) + "/" + this.char + "_" + this.level + "." + this.subLevel + '.png';
-        this.videoSRC = SRC + this.charType(this.videoName.id) + "/" + this.char + "_" + this.level + "." + this.subLevel + '.mp4';
+        this.imageSRC = VIDEO_SRC + this.charType(this.videoName.id) + "/" + this.char + "_" + this.level + "." + this.subLevel + '.png';
+        this.videoSRC = VIDEO_SRC + this.charType(this.videoName.id) + "/" + this.char + "_" + this.level + "." + this.subLevel + '.mp4';
         if (this.videoplayer != undefined) {
             this.videoplayer.nativeElement.src = this.videoSRC;
         }
@@ -101,8 +139,8 @@ var GameZoneAreaComponent = /** @class */ (function () {
         }
     };
     GameZoneAreaComponent.prototype.NextLevel = function (level) {
-        this.imageSRC = SRC + this.charType(this.videoName.id) + "/" + this.char + "_" + level + "." + 1 + '.png';
-        this.videoSRC = SRC + this.charType(this.videoName.id) + "/" + this.char + "_" + level + "." + 1 + '.mp4';
+        this.imageSRC = VIDEO_SRC + this.charType(this.videoName.id) + "/" + this.char + "_" + level + "." + 1 + '.png';
+        this.videoSRC = VIDEO_SRC + this.charType(this.videoName.id) + "/" + this.char + "_" + level + "." + 1 + '.mp4';
         if (this.videoplayer != undefined) {
             this.videoplayer.nativeElement.src = this.videoSRC;
         }
@@ -120,6 +158,7 @@ var GameZoneAreaComponent = /** @class */ (function () {
                     this.subLevel = 1;
                     this.ChangeSources();
                 }
+                this.PlayDefaultStartAudio();
                 this.data.CancelLastAction();
                 break;
             case "prev":
@@ -130,6 +169,7 @@ var GameZoneAreaComponent = /** @class */ (function () {
                     this.subLevel = 1;
                     this.ChangeSources();
                 }
+                this.PlayDefaultStartAudio();
                 this.data.CancelLastAction();
                 break;
             case "play":

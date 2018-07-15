@@ -1,7 +1,7 @@
 <html>
 
-  <audio id="audio" #audioPlayer controls autoplay class="w3-right" hidden="true">
-    <source src="/assets/voices/general_boy_choose_start.wav" type="audio/mp3">
+  <audio id="audio" #audioPlayer (ended)="AudioEnded()" controls class="w3-right" hidden="true">
+    <source [(src)]="audioSRC" type="audio/mp3">
     Your browser does not support the audio element.
   </audio>
 

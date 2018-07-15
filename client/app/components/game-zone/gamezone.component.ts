@@ -3,7 +3,16 @@ import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Json } from '@angular/core/src/facade/lang';
 import { DataService } from '../../services/DataService/data.service';
 
-const SRC:String="/assets/videos/";
+const VIDEO_SRC: string="/assets/videos/";
+const AUDIO_SRC: string="/assets/voices/";
+
+const BOY: string = "boy";
+const GIRL: string = "girl";
+
+const AUDIO_DEFAULT_BOY_START_SRC:String = "/assets/voices/general_boy_choose_start.wav";
+const AUDIO_DEFAULT_GIRL_START_SRC:String = "/assets/voices/general_girl_choose_start.wma";
+
+const TIMEOUT_BETWEEN_AUDIO_VOID: number = 1200;
 
 @Component({
   moduleId: module.id,
@@ -30,10 +39,13 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
   public subLevel = 1;
   public videoSRC: String;
   public imageSRC: String;
+  public audioSRC: String;
   public level: String;
   public char: String
   public playManually: Boolean;
 
+  private startVoiceCount: number = 1;
+  private gender: String = "boy";
   
   constructor(private route: ActivatedRoute, private router:Router,private elementRef: ElementRef, private data: DataService) {
     this.route.params.subscribe((params) =>{
@@ -52,10 +64,11 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
   }
 
   ngOnInit() {
+    this.PlayDefaultStartAudio();
   }
 
   getSrcToShow(type: String){
-      var finalSRC = SRC + this.charType(this.videoName.id) + "/" + this.videoName.id + type;
+      var finalSRC = VIDEO_SRC + this.charType(this.videoName.id) + "/" + this.videoName.id + type;
       console.log(finalSRC);
       return finalSRC;
   }
@@ -86,7 +99,27 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
     this.ShowVideo();
     if(this.subLevel<=3){
       this.videoplayer.nativeElement.play();
+      if(this.subLevel==3){
+        this.audioSRC = AUDIO_SRC + this.char + "_" + this.gender + "_" + this.level + "_" + this.startVoiceCount + '.wav';
+        this.audioplayer.nativeElement.src = this.audioSRC;
+        this.audioplayer.nativeElement.play();
+      }
     }
+  }
+
+  PlayDefaultStartAudio(){
+    if(this.level == "1" && this.subLevel == 1){
+      if(this.gender == BOY){
+        this.audioSRC = AUDIO_DEFAULT_BOY_START_SRC;
+      }
+      else if (this.gender == GIRL){
+        this.audioSRC = AUDIO_DEFAULT_GIRL_START_SRC;
+      }
+    
+      this.audioplayer.src = this.audioSRC;
+      this.audioplayer.nativeElement.play();
+    }
+
   }
 
   VideoEnded(){
@@ -102,6 +135,19 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
 
   }
 
+  AudioEnded(){
+    console.log("Audio is ended now");
+    if(this.startVoiceCount <= 3){
+      setTimeout(() => {
+        this.audioSRC = AUDIO_SRC + this.char + "_" + this.gender + "_" + this.level + "_" + this.startVoiceCount + '.wav';
+        this.audioplayer.nativeElement.src = this.audioSRC;
+        this.audioplayer.nativeElement.play();
+        this.startVoiceCount++;
+      }, TIMEOUT_BETWEEN_AUDIO_VOID);
+
+    }
+  }
+
   ShowImage(){
     this.hiddenImage = false;
     this.hiddenVideo = true;
@@ -113,8 +159,8 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
   }
 
   ChangeSources(){
-    this.imageSRC = SRC + this.charType(this.videoName.id) + "/" + this.char + "_" + this.level + "." + this.subLevel + '.png';
-    this.videoSRC = SRC + this.charType(this.videoName.id) + "/" + this.char + "_" + this.level + "." + this.subLevel + '.mp4';
+    this.imageSRC = VIDEO_SRC + this.charType(this.videoName.id) + "/" + this.char + "_" + this.level + "." + this.subLevel + '.png';
+    this.videoSRC = VIDEO_SRC + this.charType(this.videoName.id) + "/" + this.char + "_" + this.level + "." + this.subLevel + '.mp4';
     if(this.videoplayer != undefined){
       this.videoplayer.nativeElement.src = this.videoSRC;
     }
@@ -125,8 +171,8 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
   }
 
   NextLevel(level){
-    this.imageSRC = SRC + this.charType(this.videoName.id) + "/" + this.char + "_" + level + "." + 1 + '.png';
-    this.videoSRC = SRC + this.charType(this.videoName.id) + "/" + this.char + "_" + level + "." + 1 + '.mp4';
+    this.imageSRC = VIDEO_SRC + this.charType(this.videoName.id) + "/" + this.char + "_" + level + "." + 1 + '.png';
+    this.videoSRC = VIDEO_SRC + this.charType(this.videoName.id) + "/" + this.char + "_" + level + "." + 1 + '.mp4';
     if(this.videoplayer != undefined){
       this.videoplayer.nativeElement.src = this.videoSRC;
     }
@@ -146,6 +192,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
         this.subLevel = 1;
         this.ChangeSources();
       }
+      this.PlayDefaultStartAudio();
       this.data.CancelLastAction();
       break;
       case "prev":
@@ -157,6 +204,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
         this.subLevel = 1;
         this.ChangeSources();
       }
+      this.PlayDefaultStartAudio();
       this.data.CancelLastAction();
       break;
       case "play":
@@ -176,5 +224,4 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
       break;
     }
   }
-
 }
