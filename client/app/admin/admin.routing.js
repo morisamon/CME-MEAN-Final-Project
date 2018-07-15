@@ -9,9 +9,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var dashboard_component_1 = require("./components/dashboard/dashboard.component");
-var auth_guards_1 = require("../admin/auth.guards");
+var auth_guards_1 = require("./auth.guards");
+var addkid_component_1 = require("./components/addkid/addkid.component");
+var kids_list_component_1 = require("./components/kids-list/kids-list.component");
 var routes = [
     { path: 'admin/dashboard', component: dashboard_component_1.DashboardComponent, canActivate: [auth_guards_1.AuthGuard] },
+    { path: 'admin/addkid', component: addkid_component_1.AddKidComponent, canActivate: [auth_guards_1.AuthGuard] },
+    { path: 'admin/kidslist', component: kids_list_component_1.KidsListComponent, canActivate: [auth_guards_1.AuthGuard] },
 ];
 var AdminRoutingModule = /** @class */ (function () {
     function AdminRoutingModule() {

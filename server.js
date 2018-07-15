@@ -7,6 +7,7 @@ const config = require('./config/database');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
+var kids = require('./routes/kids');
 
 var port = 4200;
 
@@ -51,8 +52,9 @@ app.use(passport.session());
 require('./config/passport')(passport);
 
 app.use('/', index);
-app.use('*', index);
 app.use('/api', users);
+app.use('/api', kids);
+app.use('*', index);
 
 app.listen(port, function(){
     console.log('Server started on port '+port);
