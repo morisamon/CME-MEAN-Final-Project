@@ -28,7 +28,7 @@ var GameZoneAreaComponent = /** @class */ (function () {
         this.data = data;
         this.subLevel = 1;
         this.startVoiceCount = 1;
-        this.gender = "girl";
+        this.gender = "boy";
         this.route.params.subscribe(function (params) {
             _this.videoName = params;
             _this.char = params.id.split('_')[0];
