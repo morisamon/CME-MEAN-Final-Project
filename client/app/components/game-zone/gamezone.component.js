@@ -75,8 +75,11 @@ var GameZoneAreaComponent = /** @class */ (function () {
         console.log("The video is stoped");
         this.subLevel++;
         if (this.subLevel <= 3) {
-            this.ChangeSources();
+            if (this.playManually == false) {
+                this.ChangeSources();
+            }
             this.ShowImage();
+            this.playManually = false;
         }
     };
     GameZoneAreaComponent.prototype.ShowImage = function () {
@@ -127,12 +130,22 @@ var GameZoneAreaComponent = /** @class */ (function () {
                     this.subLevel = 1;
                     this.ChangeSources();
                 }
+                this.data.CancelLastAction();
                 break;
             case "play":
+                this.playManually = true;
+                this.ShowVideo();
+                this.videoplayer.nativeElement.play();
+                this.data.CancelLastAction();
                 break;
             case "replay":
+                this.audioplayer.nativeElement.play();
+                this.data.CancelLastAction();
                 break;
             case "stop":
+                //write all click to mongo, clear temp memory and navigate
+                this.router.navigate(['home']);
+                this.data.CancelLastAction();
                 break;
         }
     };
@@ -140,6 +153,10 @@ var GameZoneAreaComponent = /** @class */ (function () {
         core_1.ViewChild('videoPlayer'),
         __metadata("design:type", Object)
     ], GameZoneAreaComponent.prototype, "videoplayer", void 0);
+    __decorate([
+        core_1.ViewChild('audioPlayer'),
+        __metadata("design:type", Object)
+    ], GameZoneAreaComponent.prototype, "audioplayer", void 0);
     GameZoneAreaComponent = __decorate([
         core_1.Component({
             moduleId: module.id,

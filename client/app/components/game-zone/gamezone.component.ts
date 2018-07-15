@@ -20,7 +20,8 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
   }
 
   @ViewChild('videoPlayer') videoplayer: any;
-  
+  @ViewChild('audioPlayer') audioplayer: any;
+
   public videoName: any;
   public hiddenImage: Boolean;
   public hiddenVideo: Boolean;
@@ -31,6 +32,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
   public imageSRC: String;
   public level: String;
   public char: String
+  public playManually: Boolean;
 
   
   constructor(private route: ActivatedRoute, private router:Router,private elementRef: ElementRef, private data: DataService) {
@@ -91,8 +93,11 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
     console.log("The video is stoped");
     this.subLevel++;
     if(this.subLevel<=3){
-      this.ChangeSources();
+      if(this.playManually==false){
+        this.ChangeSources();
+      }
       this.ShowImage();
+      this.playManually = false;
     }
 
   }
@@ -152,12 +157,22 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
         this.subLevel = 1;
         this.ChangeSources();
       }
+      this.data.CancelLastAction();
       break;
       case "play":
+      this.playManually = true;
+      this.ShowVideo();
+      this.videoplayer.nativeElement.play();
+      this.data.CancelLastAction();
       break;
       case "replay":
+      this.audioplayer.nativeElement.play();
+      this.data.CancelLastAction();
       break;
       case "stop":
+      //write all click to mongo, clear temp memory and navigate
+      this.router.navigate(['home']);
+      this.data.CancelLastAction();
       break;
     }
   }

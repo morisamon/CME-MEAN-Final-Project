@@ -37,6 +37,7 @@ app.use(express.static(path.join(__dirname, 'client')));
 // Set Static Folder for assets
 app.use('/assets',express.static(path.join(__dirname, '/assets')));
 app.use('/assets/videos',express.static(path.join(__dirname, '/assets/videos')));
+app.use('/assets/voices',express.static(path.join(__dirname, '/assets/voices')));
 
 // Body Parser MW
 app.use(bodyParser.json());
