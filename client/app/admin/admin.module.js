@@ -15,6 +15,7 @@ var auth_guards_1 = require("./auth.guards");
 var addkid_component_1 = require("./components/addkid/addkid.component");
 var kids_service_1 = require("./services/kids.service");
 var kids_list_component_1 = require("./components/kids-list/kids-list.component");
+var editkid_component_1 = require("./components/editkid/editkid.component");
 var AdminModule = /** @class */ (function () {
     function AdminModule() {
     }
@@ -28,7 +29,8 @@ var AdminModule = /** @class */ (function () {
             declarations: [
                 dashboard_component_1.DashboardComponent,
                 addkid_component_1.AddKidComponent,
-                kids_list_component_1.KidsListComponent
+                kids_list_component_1.KidsListComponent,
+                editkid_component_1.EditKidComponent
             ],
             providers: [
                 auth_guards_1.AuthGuard,

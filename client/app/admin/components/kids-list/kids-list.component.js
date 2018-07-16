@@ -36,6 +36,10 @@ var KidsListComponent = /** @class */ (function () {
         });
         this.refreshList();
     };
+    KidsListComponent.prototype.editKid = function (kid) {
+        this.kidsService.kidToEdit = kid;
+        this.router.navigate(['/admin/editkid/', kid._id]);
+    };
     KidsListComponent.prototype.refreshList = function () {
         var _this = this;
         this.kidsService.getKids()

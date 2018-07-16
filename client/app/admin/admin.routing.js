@@ -12,10 +12,12 @@ var dashboard_component_1 = require("./components/dashboard/dashboard.component"
 var auth_guards_1 = require("./auth.guards");
 var addkid_component_1 = require("./components/addkid/addkid.component");
 var kids_list_component_1 = require("./components/kids-list/kids-list.component");
+var editkid_component_1 = require("./components/editkid/editkid.component");
 var routes = [
     { path: 'admin/dashboard', component: dashboard_component_1.DashboardComponent, canActivate: [auth_guards_1.AuthGuard] },
     { path: 'admin/addkid', component: addkid_component_1.AddKidComponent, canActivate: [auth_guards_1.AuthGuard] },
     { path: 'admin/kidslist', component: kids_list_component_1.KidsListComponent, canActivate: [auth_guards_1.AuthGuard] },
+    { path: 'admin/editkid/:id', component: editkid_component_1.EditKidComponent, canActivate: [auth_guards_1.AuthGuard] },
 ];
 var AdminRoutingModule = /** @class */ (function () {
     function AdminRoutingModule() {

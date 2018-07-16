@@ -55,31 +55,22 @@ router.delete('/deletekid/:id', function(req, res, next){
 });
 
 // Update Task
-router.put('/kid/:id', function(req, res, next){
-    var task = req.body;
-    var updTask = {};
-    
-    if(task.isDone){
-        updTask.isDone = task.isDone;
-    }
-    
-    if(task.title){
-        updTask.title = task.title;
-    }
-    
-    if(!updTask){
-        res.status(400);
-        res.json({
-            "error":"Bad Data"
-        });
-    } else {
-        db.tasks.update({_id: mongojs.ObjectId(req.params.id)},updTask, {}, function(err, task){
-        if(err){
-            res.send(err);
-        }
-        res.json(task);
+router.put('/editkid/:id', function(req, res, next){
+    let updatedKid = new Kid({
+        _id: req.body._id,
+        name: req.body.name,
+        gender: req.body.gender,
+        age: req.body.age,
+        address: req.body.address
     });
-    }
+    
+    Kid.updateKid(updatedKid, (err) => {
+        if(err){
+            res.json({success: false, msg:'Failed to update kid'});
+        } else {
+            res.json({success: true, msg:'Kid updated'});
+        }
+    });
 });
 
 module.exports = router;

@@ -2,11 +2,14 @@ import { Injectable } from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import { HttpModule } from '@angular/http';
 import 'rxjs/add/operator/map';
+import { Kid } from '../Kid';
 
 @Injectable()
 export class KidsService {
+
     authToken: any;
     user: any;
+    kidToEdit: Kid;
 
     constructor(private http:Http) { }
 
@@ -24,6 +27,13 @@ export class KidsService {
         
     deleteKid(id){
         return this.http.delete('/api/deletekid/' + id)
+            .map(res => res.json());
+    }
+
+    editKid(kidToUpdate) {
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        return this.http.put('/api/editkid/'+kidToUpdate._id, kidToUpdate, {headers: headers})
             .map(res => res.json());
     }
 }

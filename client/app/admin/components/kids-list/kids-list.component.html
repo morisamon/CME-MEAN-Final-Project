@@ -1,50 +1,58 @@
-<h2 class="page-header">Kids List</h2>
-<a class="btn btn-primary" (click)="onAddKid()">Add Kid</a>
-<br><br>
-
-<div class="kids-list center" style="width: 80%">
-
-    <div>
-        <div class="col-md-2">
-            ID    
-        </div> 
-        <div class="col-md-2">
-            Name  
-        </div> 
-        <div class="col-md-2">
-            Gender  
-        </div> 
-        <div class="col-md-2">
-            Age   
-        </div> 
-        <div class="col-md-2">
-            Address  
-        </div> 
-        <div class="col-md-2">
-            Delete?   
-        </div>
+<div class="margin-auto width80">
+    <h2 class="page-header">Kids List</h2>
+    <div class="margin-auto width95">
+            <a class="btn btn-info" (click)="onAddKid()">Add Kid</a>
     </div>
     <br>
-    <hr>
-    <div *ngFor="let kid of kids">
-        <div class="col-md-2">
-            {{kid._id}}    
-        </div> 
-        <div class="col-md-2">
-            {{kid.name}}   
-        </div> 
-        <div class="col-md-2">
-            {{kid.gender}}  
-        </div> 
-        <div class="col-md-2">
-            {{kid.age}}    
-        </div> 
-        <div class="col-md-2">
-            {{kid.address}} 
-        </div> 
-        <div class="col-md-2">
-            <input type="button" (click)="deleteKid(kid._id)" value="Delete" class="btn btn-danger">    
+    <div class="kids-list center border width95">
+        <div class="bold-text">
+            <div class="col-md-2">
+                ID    
+            </div> 
+            <div class="col-md-2">
+                Name  
+            </div> 
+            <div class="col-md-2">
+                Gender  
+            </div> 
+            <div class="col-md-2">
+                Age   
+            </div> 
+            <div class="col-md-2">
+                Address  
+            </div> 
+            <div class="col-md-2">   
+            </div>
         </div>
-        <br><br>
+        <hr>
+        <div *ngFor="let kid of kids">
+            <div class="col-md-2">
+                {{kid._id}}    
+            </div> 
+            <div class="col-md-2">
+                {{kid.name}}   
+            </div> 
+            <div class="col-md-2">
+                {{kid.gender}}  
+            </div> 
+            <div class="col-md-2">
+                {{kid.age}}    
+            </div> 
+            <div class="col-md-2">
+                {{kid.address}} 
+            </div> 
+            <div class="col-md-2"> 
+                <button type="submit" (click)="kidGameSessions(kid)" class="btn btn-success">
+                        <i class="glyphicon glyphicon-list-alt"></i>
+                </button>
+                <button type="submit" (click)="editKid(kid)" class="btn btn-warning">
+                        <i class="glyphicon glyphicon-pencil"></i>
+                </button>
+                <button type="submit" (click)="deleteKid(kid._id)" class="btn btn-danger">
+                        <i class="glyphicon glyphicon-trash"></i>
+                </button>
+            </div>
+            <br><br>
+        </div>
     </div>
 </div>

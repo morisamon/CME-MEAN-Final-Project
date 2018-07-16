@@ -42,6 +42,11 @@ export class KidsListComponent {
     this.refreshList();
   }
 
+  editKid(kid) {
+    this.kidsService.kidToEdit = kid;
+    this.router.navigate(['/admin/editkid/', kid._id]);   
+  }
+
   refreshList() {
     this.kidsService.getKids()
     .subscribe(kids => {

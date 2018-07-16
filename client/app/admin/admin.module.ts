@@ -8,6 +8,7 @@ import { AuthGuard } from './auth.guards'
 import { AddKidComponent } from './components/addkid/addkid.component';
 import { KidsService } from './services/kids.service';
 import { KidsListComponent } from './components/kids-list/kids-list.component';
+import { EditKidComponent } from './components/editkid/editkid.component';
 
 @NgModule({
     imports:      [ 
@@ -18,7 +19,8 @@ import { KidsListComponent } from './components/kids-list/kids-list.component';
     declarations: [
       DashboardComponent,
       AddKidComponent,
-      KidsListComponent
+      KidsListComponent,
+      EditKidComponent
     ],
     providers: [
       AuthGuard,

@@ -30,6 +30,10 @@ module.exports.addKid = function(newKid, callback){
   newKid.save(callback);
 }
 
+module.exports.updateKid = function(updatedKid, callback){
+  Kid.findByIdAndUpdate(updatedKid._id, updatedKid, { new: true }, callback);
+}
+
 module.exports.deleteKid = function(_id, callback){
   Kid.findOneAndRemove(_id, callback);
 }

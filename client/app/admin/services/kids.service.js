@@ -30,6 +30,12 @@ var KidsService = /** @class */ (function () {
         return this.http.delete('/api/deletekid/' + id)
             .map(function (res) { return res.json(); });
     };
+    KidsService.prototype.editKid = function (kidToUpdate) {
+        var headers = new http_1.Headers();
+        headers.append('Content-Type', 'application/json');
+        return this.http.put('/api/editkid/' + kidToUpdate._id, kidToUpdate, { headers: headers })
+            .map(function (res) { return res.json(); });
+    };
     KidsService = __decorate([
         core_1.Injectable(),
         __metadata("design:paramtypes", [http_1.Http])

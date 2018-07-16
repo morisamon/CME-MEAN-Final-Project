@@ -20,6 +20,9 @@ var DashboardComponent = /** @class */ (function () {
     DashboardComponent.prototype.ngOnInit = function () {
         this.user = JSON.parse(localStorage.getItem("user"));
     };
+    DashboardComponent.prototype.onKidsListClicked = function () {
+        this.router.navigate(['/admin/kidslist']);
+    };
     DashboardComponent = __decorate([
         core_1.Component({
             moduleId: module.id,

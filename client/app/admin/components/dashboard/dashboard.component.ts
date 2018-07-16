@@ -21,4 +21,8 @@ export class DashboardComponent implements OnInit {
     this.user = JSON.parse(localStorage.getItem("user"));
   }
 
+  onKidsListClicked() {
+    this.router.navigate(['/admin/kidslist']);
+  }
+
 }
