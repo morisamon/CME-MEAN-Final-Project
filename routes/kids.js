@@ -31,7 +31,9 @@ router.post('/addkid', function(req, res, next){
         name: req.body.name,
         gender: req.body.gender,
         age: req.body.age,
-        address: req.body.address
+        address: req.body.address,
+        lat: req.body.lat,
+        lng: req.body.lng
     });
   
     Kid.addKid(newKid, (err) => {
@@ -61,7 +63,9 @@ router.put('/editkid/:id', function(req, res, next){
         name: req.body.name,
         gender: req.body.gender,
         age: req.body.age,
-        address: req.body.address
+        address: req.body.address,
+        lat: req.body.lat,
+        lng: req.body.lng
     });
     
     Kid.updateKid(updatedKid, (err) => {

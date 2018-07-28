@@ -4,4 +4,6 @@ export class Kid {
     gender: String
     age: Number;
     address: String;
+    lat: Number;
+    lng: Number;
 }

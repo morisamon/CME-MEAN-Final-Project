@@ -1,3 +1,14 @@
-<agm-map [latitude]="lat" [longitude]="lng">
-        <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
-      </agm-map>
+<br>
+<agm-map
+  [latitude]="lat"
+  [longitude]="lng"
+  [zoom]="zoom">
+        
+    <agm-marker 
+      *ngFor="let k of kids; let i = index"
+      [latitude]="k.lat"
+      [longitude]="k.lng"
+      (markerClick)="clickedMarker(k.name, i)">
+    </agm-marker>
+    
+</agm-map>

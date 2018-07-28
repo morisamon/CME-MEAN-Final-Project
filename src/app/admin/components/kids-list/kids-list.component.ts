@@ -26,6 +26,10 @@ export class KidsListComponent {
     this.router.navigate(['/admin/addkid']);
   }
 
+  onMap() {
+    this.router.navigate(['/admin/map']);
+  }
+
   deleteKid(id){
     var kids = this.kids;
     

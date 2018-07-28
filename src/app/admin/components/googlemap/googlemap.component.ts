@@ -13,8 +13,13 @@ import { Kid } from '../../Kid';
 export class GoogleMapComponent { 
 
   kids: Kid[];
-  lat: number = 51.678418;
-  lng: number = 7.809007;
+  zoom: number = 9;
+  lat: number = 32.071636;
+  lng: number = 34.778535;
+
+  markers: marker[] = [
+    
+  ]
   
   constructor(
     private kidsService: KidsService,
@@ -28,6 +33,9 @@ export class GoogleMapComponent {
     });  
   }
 
+}
 
-
+interface marker {
+	lat: number;
+	lng: number;
 }
