@@ -19,6 +19,18 @@ export class KidsService {
             map(res => res.json()));
     }
 
+    getKidsWithFilter(ageFilter, genderFilter, nameFilter) {
+        if (!ageFilter)
+            ageFilter = 100;
+        if (!genderFilter)
+            genderFilter = "All";
+        if (!nameFilter)
+            nameFilter = "";
+        var filter = { age: Number(ageFilter), gender: genderFilter, name: nameFilter }
+        return this.http.get('/api/kidsfilter', { params: filter }).pipe(
+            map(res => res.json()));
+    }
+
     addNewKid(newKid) {
         var headers = new Headers();
         headers.append('Content-Type','application/json');

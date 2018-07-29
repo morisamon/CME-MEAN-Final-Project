@@ -12,6 +12,9 @@ import { Kid } from '../../Kid';
 export class KidsListComponent { 
 
   kids: Kid[];
+  ageFilter: Number;
+  genderFilter: String;
+  nameFilter: String
   
   constructor(
     private kidsService: KidsService,
@@ -20,6 +23,13 @@ export class KidsListComponent {
 
   ngOnInit() {      
     this.refreshList();
+  }
+
+  onFilter() {
+    this.kidsService.getKidsWithFilter(this.ageFilter, this.genderFilter, this.nameFilter)
+    .subscribe(kids => {
+        this.kids = kids;
+    });
   }
 
   onAddKid() {

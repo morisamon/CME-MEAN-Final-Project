@@ -1,9 +1,19 @@
 <div class="margin-auto width80">
     <h2 class="page-header">Kids List</h2>
     <div class="margin-auto width95">
-            <a class="btn btn-info" (click)="onAddKid()">Add Kid</a><a class="btn btn-info" (click)="onMap()">Map</a>
+        <a class="btn btn-info" (click)="onAddKid()">Add Kid</a>&nbsp;<a class="btn btn-info" (click)="onMap()">Map</a>
     </div>
-    <br>
+    <div class="margin-auto width40">
+        Max Age:<input type="number" [(ngModel)]="ageFilter" name="ageFilter" class="form-control">
+        Gender:<select name="genderFilter" [(ngModel)]="genderFilter" class="form-control">
+            <option value="" selected>All</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+        Kid's name:<input type="text" [(ngModel)]="nameFilter" name="nameFilter" class="form-control">
+        <a class="btn btn-primary btn-sm" (click)="onFilter()">Filter</a>
+    </div>
+    <br><br>
     <div class="kids-list center border width95">
         <div class="bold-text">
             <div class="col-md-2">

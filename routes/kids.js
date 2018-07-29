@@ -14,6 +14,23 @@ router.get('/kids', function(req, res, next) {
     })
 });
 
+// Get All Kids With Filter
+router.get('/kidsfilter', function(req, res, next) {
+    if (req.query.gender.length < 4) {
+        var query = { age: { $lt: req.query.age }, $or: [ { gender: "Male" }, { gender: "Female" } ] };
+    } else {
+        var query = { age: { $lt: req.query.age }, gender: req.query.gender };
+    }
+    if (req.query.name.length > 0)
+        query.name = req.query.name;
+    Kid.find(query, function(err, kids) {
+        if(err) {
+            res.send("Error");
+        }
+        res.json(kids);
+    })
+});
+
 // Get Single Task
 router.get('/kid/:id', function(req, res, next){
     db.kids.findOne({_id: mongojs.ObjectId(req.params.id)}, function(err, kid){
