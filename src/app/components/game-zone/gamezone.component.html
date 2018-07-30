@@ -12,29 +12,29 @@
             <div class="row" style="position: relative;z-index: 9999;height: 50%;">
               
               <div class="col-md-4 nopadding" style="float: left;width: 33%;height: 100%;">
-                <button type="button" id="btn73" onclick="Click(id);" class=" btn-cover" ng-click="Cancel()" aria-haspopup="true" aria-expanded="false" style="width: 100%;height: 100%;border: none;"><font size="6"></font></button>
+                <button type="button" (click)="Click('1');" class=" btn-cover" ng-click="Cancel()" aria-haspopup="true" aria-expanded="false" style="width: 100%;height: 100%;border: none;"><font size="6"></font></button>
               </div>
               
               <div class="col-md-4 nopadding" style="float: left;width: 33%;height: 100%;">
-                <button type="button" id="btn74" onclick="Click(id);" class="btn-cover" ng-click="Proceed()" aria-haspopup="true" aria-expanded="false" style="width:100%;height: 100%;border: none;"><font size="6"></font></button>
+                <button type="button" (click)="Click('2');" class="btn-cover" ng-click="Proceed()" aria-haspopup="true" aria-expanded="false" style="width:100%;height: 100%;border: none;"><font size="6"></font></button>
               </div>
               
               <div class="col-md-4 nopadding" style="float: left;width: 33%;height: 100%;">
-                <button type="button" id="btn75" onclick="Click(id);" class="btn-cover" ng-click="Proceed()" aria-haspopup="true" aria-expanded="false" style="width:100%;height: 100%;border: none;"><font size="6"></font></button>
+                <button type="button" (click)="Click('3');" class="btn-cover" ng-click="Proceed()" aria-haspopup="true" aria-expanded="false" style="width:100%;height: 100%;border: none;"><font size="6"></font></button>
               </div>
             </div>
             
             <div class="row" style="position: absolute;z-index: 999;width: 100%;height: 50%">
               <div class="col-md-4 nopadding" style="float: left;width: 33.3%;height: 100%;">
-                <button type="button" id="btn76" onclick="Click(id);" class="btn-cover" ng-click="Cancel()" aria-haspopup="true" aria-expanded="false" style="width:100%;height: 100%;border: none;"><font size="6"></font></button>
+                <button type="button" (click)="Click('4');" class="btn-cover" ng-click="Cancel()" aria-haspopup="true" aria-expanded="false" style="width:100%;height: 100%;border: none;"><font size="6"></font></button>
               </div>
 
               <div class="col-md-4 nopadding" style="float: left;width: 33.3%;height: 100%;">
-                <button type="button" id="btn77" onclick="Click(id);" class="btn-cover" ng-click="Proceed()" aria-haspopup="true" aria-expanded="false" style="width:100%;height: 100%;border: none;"><font size="6"></font></button>
+                <button type="button" (click)="Click('5');" class="btn-cover" ng-click="Proceed()" aria-haspopup="true" aria-expanded="false" style="width:100%;height: 100%;border: none;"><font size="6"></font></button>
               </div>
               
               <div class="col-md-4 nopadding" style="float: left;width: 33.3%;height: 100%;">
-                <button type="button" id="btn78" onclick="Click(id);" class="btn-cover" ng-click="Proceed()" aria-haspopup="true" aria-expanded="false" style="width:100%;height: 100%;border: none;"><font size="6"></font></button>
+                <button type="button" (click)="Click('6');" class="btn-cover" ng-click="Proceed()" aria-haspopup="true" aria-expanded="false" style="width:100%;height: 100%;border: none;"><font size="6"></font></button>
               </div>
             </div>
           </div>
@@ -50,7 +50,7 @@
 
     </div>
 
-    <button [ngStyle] = "myFaceBtnStyles" id="faceBtn" type="button" class="btn btn-primary btn-lg" >
+    <button [ngStyle] = "myFaceBtnStyles" id="faceBtn" (click)="Click('face');" type="button" class="btn btn-primary btn-lg" >
 
     </button>
     

@@ -14,6 +14,24 @@ router.get('/kids', function(req, res, next) {
     })
 });
 
+// Get Kids Counter (Group By Query)
+router.get('/kidscount', function(req, res, next) {
+    Kid.aggregate([
+		{"$group" : {_id:"$source", count:{$sum:1}}}
+	]).
+    then(function (result) {
+        res.json(result);
+      });
+    /*db.kids.aggregate([
+		{"$group" : {_id:"$source", count:{$sum:1}}}
+	], function(err, result) {
+        if(err) {
+            res.send("Error");
+        }
+        res.json(result);
+    })*/
+});
+
 // Get All Kids With Filter
 router.get('/kidsfilter', function(req, res, next) {
     if (req.query.gender.length < 4) {

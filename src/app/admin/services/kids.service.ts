@@ -14,8 +14,13 @@ export class KidsService {
 
     constructor(private http:Http) { }
 
-    getKids(){
+    getKids() {
         return this.http.get('/api/kids').pipe(
+            map(res => res.json()));
+    }
+
+    getKidsCountGroupBy() {
+        return this.http.get('/api/kidscount').pipe(
             map(res => res.json()));
     }
 

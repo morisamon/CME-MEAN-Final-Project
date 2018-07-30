@@ -41,6 +41,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
   public level: String;
   public char: String
   public playManually: Boolean;
+  public map = new Map<string, number>();
 
   private startVoiceCount: number = 1;
   private gender: String = "boy";
@@ -93,8 +94,26 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
       return "Superwoman";
   }
 
+  Click(area){
+    var clickarea = this.GetArea(area);
+    if(!this.map.has(area)){
+      this.map.set(area,1);
+    }
+    else{
+      var count = this.map.get(area);
+      this.map.set(area,count+1);
+    }
+    console.log(area);
+    console.log(count);
+  }
+
+  private GetArea(area) : String{
+    return this.char +" "+ this.level + "area" + " " + area;
+  }
+
   StartVideo(){
     this.ShowVideo();
+    this.Click("eye");
     if(this.subLevel<=3){
       this.videoplayer.nativeElement.play();
       if(this.subLevel==3){

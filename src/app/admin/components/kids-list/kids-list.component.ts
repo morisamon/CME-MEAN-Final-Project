@@ -14,7 +14,8 @@ export class KidsListComponent {
   kids: Kid[];
   ageFilter: Number;
   genderFilter: String;
-  nameFilter: String
+  nameFilter: String;
+  numOfKids: Number;
   
   constructor(
     private kidsService: KidsService,
@@ -23,6 +24,10 @@ export class KidsListComponent {
 
   ngOnInit() {      
     this.refreshList();
+    this.kidsService.getKidsCountGroupBy()
+      .subscribe(result => {
+        this.numOfKids = result.count;
+      })
   }
 
   onFilter() {
