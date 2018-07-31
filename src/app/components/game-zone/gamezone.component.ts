@@ -1,6 +1,7 @@
 import { Component, OnInit, NgModule, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { DataService } from '../../services/DataService/data.service';
+import { GameSessionService } from '../../admin/services/gamesession.service';
 
 const VIDEO_SRC: string="/assets/videos/";
 const AUDIO_SRC: string="/assets/voices/";
@@ -46,7 +47,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
   private startVoiceCount: number = 1;
   private gender: String = "boy";
   
-  constructor(private route: ActivatedRoute, private router:Router,private elementRef: ElementRef, private data: DataService) {
+  constructor(private route: ActivatedRoute, private router:Router,private elementRef: ElementRef, private data: DataService, private sessionService: GameSessionService) {
     this.route.params.subscribe((params) =>{
       this.videoName = params
       this.char = params.id.split('_')[0];
@@ -236,7 +237,22 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
       break;
       case "stop":
       //write all click to mongo, clear temp memory and navigate
-      this.router.navigate(['home']);
+      
+      const session={
+        kidid: 0,
+        start_time: new Date(),
+        end_time: new Date(),
+        video_duration: 120,
+        areas: { "area": "face", "count": 1}
+      }
+      this.sessionService.addNewSessionForKid(session).subscribe(data => {
+        console.log(data.msg);
+        if(data.success){
+          this.router.navigate(['home']);
+        } else {
+          alert("Error while writting the session to mongo db");
+        }
+      });
       this.data.CancelLastAction();
       break;
     }

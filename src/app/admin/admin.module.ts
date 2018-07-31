@@ -12,6 +12,7 @@ import { EditKidComponent } from './components/editkid/editkid.component';
 import { GoogleMapComponent } from './components/googlemap/googlemap.component';
 import { AgmCoreModule } from '@agm/core';
 import { GeocodingService } from './services/geocoding.service';
+import { GameSessionService } from './services/gamesession.service';
 
 @NgModule({
     imports:      [ 
@@ -27,12 +28,13 @@ import { GeocodingService } from './services/geocoding.service';
       AddKidComponent,
       KidsListComponent,
       EditKidComponent,
-      GoogleMapComponent
+      GoogleMapComponent,
     ],
     providers: [
       AuthGuard,
       KidsService,
-      GeocodingService
+      GeocodingService,
+      GameSessionService
     ]
 })
 

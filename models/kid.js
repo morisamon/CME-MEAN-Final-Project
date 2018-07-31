@@ -41,7 +41,7 @@ module.exports.updateKid = function(updatedKid, callback){
 }
 
 module.exports.deleteKid = function(_id, callback){
-  Kid.findOneAndRemove(_id, callback);
+  Kid.findByIdAndRemove(_id, callback);
 }
 
 module.exports.getAllKids = function(callback){

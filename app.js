@@ -13,6 +13,7 @@ mongoose.connect('mongodb://localhost/cme')
 var index = require('./routes/index');
 var users = require('./routes/users');
 var kids = require('./routes/kids');
+var sessions = require('./routes/sessions');
 
 var app = express();
 
@@ -28,6 +29,7 @@ app.use(express.static(path.join(__dirname, 'dist/mean-angular6')));
 app.use('/', express.static(path.join(__dirname, 'dist/mean-angular6')));
 app.use('/api', users);
 app.use('/api', kids);
+app.use('/api', sessions);
 app.use('*', express.static(path.join(__dirname, 'dist/mean-angular6')));
 
 // Passport Middleware

@@ -1,11 +1,11 @@
+
 export class GameSession {
-    _id: Number; //kid id
+    kidid: Number;
     start_time: Date;
     end_time: Date; 
-    areas: Area[];
-    sumofvideoduration: Number;
+    video_duration: Number;
+    areas: JSON;
 }
-
 
 export class Area{
     area: String;
