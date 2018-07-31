@@ -24,10 +24,6 @@ export class KidsListComponent {
 
   ngOnInit() {      
     this.refreshList();
-    this.kidsService.getKidsCountGroupBy()
-      .subscribe(result => {
-        this.numOfKids = result.count;
-      })
   }
 
   onFilter() {
@@ -65,11 +61,20 @@ export class KidsListComponent {
     this.router.navigate(['/admin/editkid/', kid._id]);   
   }
 
+  kidGameSessions(kid) {
+    this.kidsService.kidToShowSessions = kid;
+    this.router.navigate(['/admin/kidsessions/', kid._id]);
+  }
+
   refreshList() {
     this.kidsService.getKids()
     .subscribe(kids => {
         this.kids = kids;
     });
+    this.kidsService.getKidsCountGroupBy()
+    .subscribe(result => {
+      this.numOfKids = result;
+    })
   }
 
 }

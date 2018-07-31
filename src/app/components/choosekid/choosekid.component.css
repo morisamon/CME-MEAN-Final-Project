@@ -1,0 +1,13 @@
+.margin-auto {
+    margin: auto;
+}
+
+.width40 {
+    width: 40%;
+}
+
+div, h3 {
+    color: aliceblue;
+    background-color: transparent;
+
+}

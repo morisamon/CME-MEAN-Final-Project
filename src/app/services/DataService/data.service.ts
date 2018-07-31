@@ -15,7 +15,10 @@ export class DataService {
     currentButtonDisplayFlag = this.buttonDisplayFlagSource.asObservable();
 
     private currLevel;
-    private gender;
+    private gender: String;
+    private kidid: Number;
+    private gameStrated: Boolean = false;
+    private start_time: Date;
 
     constructor(private route: ActivatedRoute, private router:Router) {}
 
@@ -85,5 +88,17 @@ export class DataService {
 
     SetGender(gender){
         this.gender = gender;
+    }
+    SetKidID(kidid){
+        this.kidid = kidid;
+    }
+    StartAndStopSession(flag){
+        this.gameStrated = flag;
+    }
+    SessionISStrated(): Boolean{
+        return this.gameStrated;
+    }
+    SetStartTime(time){
+        this.start_time = time;
     }
 }

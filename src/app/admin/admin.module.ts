@@ -13,6 +13,7 @@ import { GoogleMapComponent } from './components/googlemap/googlemap.component';
 import { AgmCoreModule } from '@agm/core';
 import { GeocodingService } from './services/geocoding.service';
 import { GameSessionService } from './services/gamesession.service';
+import { KidSessionsListComponent } from './components/kid-sessions-list/kid-sessions-list.component';
 
 @NgModule({
     imports:      [ 
@@ -29,6 +30,7 @@ import { GameSessionService } from './services/gamesession.service';
       KidsListComponent,
       EditKidComponent,
       GoogleMapComponent,
+      KidSessionsListComponent,
     ],
     providers: [
       AuthGuard,

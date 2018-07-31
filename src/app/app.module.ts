@@ -12,6 +12,7 @@ import { AdminModule } from './admin/admin.module'
 
 import { RouterModule, Routes } from '@angular/router';
 import { AppRoutingModule, routingComponents } from './app-routing.module';
+import { ChoosekidComponent } from './components/choosekid/choosekid.component';
 
 @NgModule({
   imports:      [ 
@@ -27,7 +28,7 @@ import { AppRoutingModule, routingComponents } from './app-routing.module';
     NavComponent, 
     DisplayComponent, 
     CopyrightComponent, 
-    routingComponents
+    routingComponents, ChoosekidComponent
   ],
   providers: [
   ],

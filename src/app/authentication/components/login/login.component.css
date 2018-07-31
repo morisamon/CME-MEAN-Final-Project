@@ -3,3 +3,11 @@ div, h2 {
     background-color: transparent;
 
 }
+
+.margin-auto {
+    margin: auto;
+}
+
+.width40 {
+    width: 40%;
+}

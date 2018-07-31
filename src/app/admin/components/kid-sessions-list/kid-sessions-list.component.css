@@ -1,0 +1,35 @@
+div, h2 {
+    color: aliceblue;
+    background-color: transparent;
+}
+
+.center {
+    margin: auto;
+    text-align: center;
+}
+
+.border {
+    width: 60%;
+    border: 3px solid #ffffff;
+    padding: 10px;
+}
+
+.margin-auto {
+    margin: auto;
+}
+
+.width80 {
+    width: 80%;
+}
+
+.width40 {
+    width: 40%;
+}
+
+.width95 {
+    width: 95%;
+}
+
+.bold-text {
+    font-weight: bold;
+}

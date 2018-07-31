@@ -1,0 +1,9 @@
+<br><br><br><br>
+<div class="margin-auto width40">
+  <h3 class="page-header">Choose playing kid:</h3>
+  <select name="kidChosen" [(ngModel)]="kidChosen" class="form-control">
+    <option value="{{kid._id}}" *ngFor="let kid of kids">{{ kid._id }} - {{ kid.name }}</option>
+  </select>
+  <br>
+  <a class="btn btn-info" (click)="onStart()">Start</a>
+</div>

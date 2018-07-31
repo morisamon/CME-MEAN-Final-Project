@@ -11,6 +11,7 @@ export class KidsService {
     authToken: any;
     user: any;
     kidToEdit: Kid;
+    kidToShowSessions: Kid;
 
     constructor(private http:Http) { }
 

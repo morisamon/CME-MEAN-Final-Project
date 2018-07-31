@@ -1,0 +1,59 @@
+<div class="margin-auto width80">
+  <h2 class="page-header">Sessions List for {{ kid.name }}</h2>
+  <div class="margin-auto width40">
+      Max Age:<input type="number" [(ngModel)]="ageFilter" name="ageFilter" class="form-control">
+      Gender:<select name="genderFilter" [(ngModel)]="genderFilter" class="form-control">
+          <option value="" selected>All</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+        </select>
+      Kid's name:<input type="text" [(ngModel)]="nameFilter" name="nameFilter" class="form-control">
+      <a class="btn btn-primary btn-sm" (click)="onFilter()">Filter</a>
+  </div>
+  <br><br>
+  <div class="kids-list center border width95">
+      <div class="bold-text">
+          <div class="col-md-2">
+              ID    
+          </div> 
+          <div class="col-md-2">
+              Name  
+          </div> 
+          <div class="col-md-2">
+              Gender  
+          </div> 
+          <div class="col-md-2">
+              Age   
+          </div> 
+          <div class="col-md-2">
+              Address  
+          </div> 
+          <div class="col-md-2">   
+          </div>
+      </div>
+      <hr>
+      <div *ngFor="let session of sessions">
+          <div class="col-md-2">
+              {{session._id}}    
+          </div> 
+          <div class="col-md-2">
+              X  
+          </div> 
+          <div class="col-md-2">
+              X 
+          </div> 
+          <div class="col-md-2">
+              X   
+          </div> 
+          <div class="col-md-2">
+              X
+          </div> 
+          <div class="col-md-2"> 
+              <button type="submit" (click)="deleteSession(session._id)" class="btn btn-danger">
+                      <i class="glyphicon glyphicon-trash"></i>
+              </button>
+          </div>
+          <br><br>
+      </div>
+  </div>
+</div>

@@ -65,6 +65,11 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
 
   ngOnInit() {
     this.PlayDefaultStartAudio();
+    if(!this.data.SessionISStrated){
+      this.data.StartAndStopSession(true);
+      this.data.SetStartTime(new Date());
+    }
+
   }
 
   getSrcToShow(type: String){

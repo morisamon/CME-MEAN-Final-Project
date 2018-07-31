@@ -18,18 +18,10 @@ router.get('/kids', function(req, res, next) {
 router.get('/kidscount', function(req, res, next) {
     Kid.aggregate([
 		{"$group" : {_id:"$source", count:{$sum:1}}}
-	]).
-    then(function (result) {
-        res.json(result);
+	])
+    .then(function (result) {
+        res.json(result[0].count);
       });
-    /*db.kids.aggregate([
-		{"$group" : {_id:"$source", count:{$sum:1}}}
-	], function(err, result) {
-        if(err) {
-            res.send("Error");
-        }
-        res.json(result);
-    })*/
 });
 
 // Get All Kids With Filter

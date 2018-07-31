@@ -3,12 +3,12 @@ import { Http, Headers } from '@angular/http';
 import { map } from 'rxjs/operators';
 
 @Injectable()
-export class GameSessionService{
+export class GameSessionService {
 
     constructor(private http:Http) { }
 
     getSessionsByKidID(id) {
-        return this.http.get('/api/sessions',id).pipe(
+        return this.http.get('/api/sessions', id).pipe(
             map(res => res.json()));
     }
 
@@ -19,7 +19,7 @@ export class GameSessionService{
             map(res => res.json()));
     }
 
-    deleteSession(id, startTime){
+    deleteSession(id){
         return this.http.delete('/api/deletesession/' + id).pipe( //startTime? todo
             map(res => res.json()));
     }
