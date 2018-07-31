@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { KidsService } from '../../admin/services/kids.service';
 import { Kid } from '../../admin/Kid';
 import { Router } from '../../../../node_modules/@angular/router';
+import { DataService } from '../../services/DataService/data.service';
 
 @Component({
   selector: 'app-choosekid',
@@ -16,7 +17,8 @@ export class ChoosekidComponent implements OnInit {
 
   constructor(
     private kidsService: KidsService,
-    private router: Router
+    private router: Router,
+    private dataService: DataService,
   ) { }
 
   ngOnInit() {
@@ -32,6 +34,8 @@ export class ChoosekidComponent implements OnInit {
         this.genderChosen = element.gender;
       }
     });
+    this.dataService.SetKidID(this.kidChosen);
+    this.dataService.SetGender(this.genderChosen);
     this.router.navigate(['/home/levels']);
   }
 

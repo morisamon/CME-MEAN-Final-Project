@@ -43,7 +43,7 @@
 
       <img  [hidden]="hiddenImage" class="fullscreen-bg__video" id="myImage" [(src)]="imageSRC">
 
-      <video [hidden]="hiddenVideo" #videoPlayer (ended)="VideoEnded()">
+      <video [hidden]="hiddenVideo" #videoPlayer (ended)="VideoEnded($event, videoPlayer)" >
         <source [(src)]="videoSRC" type="video/mp4" />
       </video>
 

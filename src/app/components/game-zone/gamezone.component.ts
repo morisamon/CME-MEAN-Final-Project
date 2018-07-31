@@ -2,6 +2,7 @@ import { Component, OnInit, NgModule, ViewChild, ElementRef, AfterViewInit } fro
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { DataService } from '../../services/DataService/data.service';
 import { GameSessionService } from '../../admin/services/gamesession.service';
+import { Recoverable } from 'repl';
 
 const VIDEO_SRC: string="/assets/videos/";
 const AUDIO_SRC: string="/assets/voices/";
@@ -42,10 +43,10 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
   public level: String;
   public char: String
   public playManually: Boolean;
-  public map = new Map<string, number>();
 
   private startVoiceCount: number = 1;
-  private gender: String = "boy";
+  private gender: String;
+  private kidid: Number;
   
   constructor(private route: ActivatedRoute, private router:Router,private elementRef: ElementRef, private data: DataService, private sessionService: GameSessionService) {
     this.route.params.subscribe((params) =>{
@@ -65,11 +66,12 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
 
   ngOnInit() {
     this.PlayDefaultStartAudio();
-    if(!this.data.SessionISStrated){
+    if(!this.data.SessionISStrated()){
       this.data.StartAndStopSession(true);
       this.data.SetStartTime(new Date());
     }
-
+    this.kidid = this.data.GetKidID();
+    this.gender = this.data.GetGender();
   }
 
   getSrcToShow(type: String){
@@ -102,19 +104,19 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
 
   Click(area){
     var clickarea = this.GetArea(area);
-    if(!this.map.has(area)){
-      this.map.set(area,1);
+    if(!this.data.map.has(clickarea)){
+      this.data.map.set(clickarea,1);
     }
     else{
-      var count = this.map.get(area);
-      this.map.set(area,count+1);
+      var count = this.data.map.get(clickarea);
+      this.data.map.set(clickarea,count+1);
     }
     console.log(area);
     console.log(count);
   }
 
-  private GetArea(area) : String{
-    return this.char +" "+ this.level + "area" + " " + area;
+  private GetArea(area) : string{
+    return this.char +" "+ this.level + " " + "area" + " " + area;
   }
 
   StartVideo(){
@@ -145,7 +147,10 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
 
   }
 
-  VideoEnded(){
+  VideoEnded(e, video){
+    console.log('duration: ', video.duration);
+    this.data.videoDuration = video.duration;
+
     console.log("The video is stoped");
     this.subLevel++;
     if(this.subLevel<=3){
@@ -244,12 +249,14 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
       //write all click to mongo, clear temp memory and navigate
       
       const session={
-        kidid: 0,
-        start_time: new Date(),
+        kidid: this.data.GetKidID(),
+        start_time: this.data.start_time,
         end_time: new Date(),
-        video_duration: 120,
+        video_duration: this.data.videoDuration,
         areas: { "area": "face", "count": 1}
       }
+      this.data.StartAndStopSession(false);
+      console.log(session);
       this.sessionService.addNewSessionForKid(session).subscribe(data => {
         console.log(data.msg);
         if(data.success){

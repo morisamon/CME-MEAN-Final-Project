@@ -18,7 +18,10 @@ export class DataService {
     private gender: String;
     private kidid: Number;
     private gameStrated: Boolean = false;
-    private start_time: Date;
+    public start_time: Date;
+    public videoDuration: Number = 0;
+
+    public map = new Map<string, number>();
 
     constructor(private route: ActivatedRoute, private router:Router) {}
 
@@ -101,4 +104,17 @@ export class DataService {
     SetStartTime(time){
         this.start_time = time;
     }
+    GetKidID(): Number{
+        return this.kidid;
+    }
+    GetGender(): String{
+        if(this.gender == "Male"){
+            return "boy";
+        }
+        else{
+            return "girl";
+        }
+    }
+
+
 }
