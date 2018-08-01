@@ -2,7 +2,6 @@ import { Component, OnInit, NgModule, ViewChild, ElementRef, AfterViewInit } fro
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { DataService } from '../../services/DataService/data.service';
 import { GameSessionService } from '../../admin/services/gamesession.service';
-import { Recoverable } from 'repl';
 
 const VIDEO_SRC: string="/assets/videos/";
 const AUDIO_SRC: string="/assets/voices/";
