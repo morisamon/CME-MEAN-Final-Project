@@ -20,7 +20,7 @@ const TIMEOUT_BETWEEN_AUDIO_VOID: number = 1200;
   styleUrls: ['./gamezone.component.css']
 })
 
-
+//git
 export class GameZoneAreaComponent implements OnInit, AfterViewInit{
 
   ngAfterViewInit(): void {
