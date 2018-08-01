@@ -2,13 +2,9 @@
 export class GameSession {
     _id: Number;
     kidid: Number;
-    start_time: Date;
-    end_time: Date; 
+    character: String;
+    level: Number;
+    total_time: Number;
     video_duration: Number;
     areas: JSON;
-}
-
-export class Area{
-    area: String;
-    count: Number;
 }

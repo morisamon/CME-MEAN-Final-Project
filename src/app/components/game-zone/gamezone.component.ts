@@ -45,7 +45,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
   private startVoiceCount: number = 1;
   private gender: String;
   private kidid: Number;
-  
+
   constructor(private route: ActivatedRoute, private router:Router,private elementRef: ElementRef, private data: DataService, private sessionService: GameSessionService) {
     this.route.params.subscribe((params) =>{
       this.videoName = params
@@ -64,10 +64,11 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
 
   ngOnInit() {
     this.PlayDefaultStartAudio();
-    if(!this.data.SessionISStrated()){
+    /*if(!this.data.SessionISStrated()){
       this.data.StartAndStopSession(true);
       this.data.SetStartTime(new Date());
-    }
+    }*/
+    this.data.SetStartTime(new Date());
     this.kidid = this.data.GetKidID();
     this.gender = this.data.GetGender();
   }
@@ -101,13 +102,13 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
   }
 
   Click(area){
-    var clickarea = this.GetArea(area);
-    if(!this.data.map.has(clickarea)){
-      this.data.map.set(clickarea,1);
+    //var clickarea = this.GetArea(area);
+    if(!this.data.map.has(area)){
+      this.data.map.set(area,1);
     }
     else{
-      var count = this.data.map.get(clickarea);
-      this.data.map.set(clickarea,count+1);
+      var count: number = this.data.map.get(area);
+      this.data.map.set(area,count+1);
     }
     console.log(area);
     console.log(count);
@@ -147,7 +148,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
 
   VideoEnded(e, video){
     console.log('duration: ', video.duration);
-    this.data.videoDuration = video.duration;
+    this.data.videoDuration += video.duration;
 
     console.log("The video is stoped");
     this.subLevel++;
@@ -210,10 +211,15 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
   ExecuteMessageCommand(command){
     switch(command){
       case "next":
+
       var newnumber = Number(this.level);
       newnumber++;
       if(newnumber<=3)
       {
+        if(!this.ShowConfirmMessage())
+        {
+          return;
+        }
         this.level = String(newnumber);
         this.subLevel = 1;
         this.ChangeSources();
@@ -222,10 +228,15 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
       this.data.CancelLastAction();
       break;
       case "prev":
+
       var newnumber = Number(this.level);
       newnumber--;
       if(newnumber>0)
       {
+        if(!this.ShowConfirmMessage())
+        {
+          return;
+        }
         this.level = String(newnumber);
         this.subLevel = 1;
         this.ChangeSources();
@@ -244,27 +255,43 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
       this.data.CancelLastAction();
       break;
       case "stop":
-      //write all click to mongo, clear temp memory and navigate
-      
-      const session={
-        kidid: this.data.GetKidID(),
-        start_time: this.data.start_time,
-        end_time: new Date(),
-        video_duration: this.data.videoDuration,
-        areas: { "area": "face", "count": 1}
-      }
-      this.data.StartAndStopSession(false);
-      console.log(session);
-      this.sessionService.addNewSessionForKid(session).subscribe(data => {
-        console.log(data.msg);
-        if(data.success){
-          this.router.navigate(['home']);
-        } else {
-          alert("Error while writting the session to mongo db");
-        }
-      });
       this.data.CancelLastAction();
+      this.WriteAndResetSession("stop");
       break;
+    }
+  }
+
+  WriteAndResetSession(flag){
+    const session={
+      kidid: Number(this.data.GetKidID()),
+      character: this.char,
+      level: this.level,
+      total_time: new Date().getMilliseconds() - this.data.start_time.getMilliseconds(),
+      video_duration: this.data.videoDuration,
+      areas: this.data.map.toJSON()
+    }
+
+    //write current session to mongo db
+    console.log(session);
+    this.sessionService.addNewSessionForKid(session).subscribe(data => {
+      console.log(data.msg);
+      if(data.success){
+        if(flag == "stop"){
+          this.router.navigate(['home']);
+        }
+      } else {
+        alert("Error while writting the session to mongo db");
+      }
+      this.data.CleanSessionMetaData();
+    });
+  }
+
+  ShowConfirmMessage(): Boolean{
+    if (confirm("The session will stop, are you sure?")) {
+      this.WriteAndResetSession("skip");
+      return true;
+    } else {
+      return false;
     }
   }
 }

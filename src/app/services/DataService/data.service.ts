@@ -1,6 +1,7 @@
 import { Injectable} from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TSMap } from "typescript-map"
 
 @Injectable()
 export class DataService {
@@ -21,7 +22,7 @@ export class DataService {
     public start_time: Date;
     public videoDuration: Number = 0;
 
-    public map = new Map<string, number>();
+    public map = new TSMap<String,number>();
 
     constructor(private route: ActivatedRoute, private router:Router) {}
 
@@ -114,6 +115,10 @@ export class DataService {
         else{
             return "girl";
         }
+    }
+    CleanSessionMetaData(){
+        this.map.clear();
+        this.videoDuration =0;
     }
 
 

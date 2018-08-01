@@ -7,22 +7,31 @@ const GameSessionSchema = mongoose.Schema({
     required: true
   },
 
-  start_time: {
-    type: Date,
+  character: {
+    type: String,
     required: true
   },
-  end_time: {
-    type: Date,
+
+  level: {
+    type: Number,
     required: true
   },
+
+  total_time: {
+    type: Number,
+    required: true
+  },
+
   video_duration: {
     type: Number,
     required: true
   },
+
   areas: {
     type: JSON,
     required: true
-  }
+  },
+
 });
 
 const GameSession = module.exports = mongoose.model('GameSession', GameSessionSchema);

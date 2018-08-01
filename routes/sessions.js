@@ -17,11 +17,12 @@ router.get('/sessions/:kidid', function(req, res, next) {
 // Save Session
 router.post('/addsession', function(req, res, next){
     let newSession = new GameSession({
-        _id: req.body._id,
-        start_time: req.body.start_time,
-        end_time: req.body.end_time,
+        kidid: req.body.kidid,
+        character: req.body.character,
+        level: req.body.level,
+        total_time: req.body.total_time,
         video_duration: req.body.video_duration,
-        areas: req.body.areas,
+        areas: req.body.areas
     });
 
     GameSession.addSession(newSession, (err) => {
