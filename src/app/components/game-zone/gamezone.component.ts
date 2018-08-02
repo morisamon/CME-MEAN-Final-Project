@@ -171,13 +171,17 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
     console.log("Audio is ended now");
     if(this.startVoiceCount <= 3){
       setTimeout(() => {
-        this.audioSRC = AUDIO_SRC + this.char + "_" + this.gender + "_" + this.level + "_" + this.startVoiceCount + '.wav';
-        this.audioplayer.nativeElement.src = this.audioSRC;
-        this.audioplayer.nativeElement.play();
-        this.startVoiceCount++;
+        this.ChangeAudioSource();
       }, TIMEOUT_BETWEEN_AUDIO_VOID);
 
     }
+  }
+
+  ChangeAudioSource(){
+    this.audioSRC = AUDIO_SRC + this.char + "_" + this.gender + "_" + this.level + "_" + this.startVoiceCount + '.wav';
+    this.audioplayer.nativeElement.src = this.audioSRC;
+    this.audioplayer.nativeElement.play();
+    this.startVoiceCount++;
   }
 
   ShowImage(){
@@ -225,6 +229,9 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
         this.level = String(newnumber);
         this.subLevel = 1;
         this.data.start_time = new Date();
+        this.startVoiceCount = 1;
+        this.StopMedia();
+        this.ChangeAudioSource();
         this.ChangeSources();
         this.PlayDefaultStartAudio();
       }
@@ -240,6 +247,9 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
         this.level = String(newnumber);
         this.subLevel = 1;
         this.data.start_time = new Date();
+        this.startVoiceCount = 1;
+        this.StopMedia();
+        this.ChangeAudioSource();
         this.ChangeSources();
         this.PlayDefaultStartAudio();
       }
@@ -303,6 +313,11 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
       }
       this.data.ResetSessionMetaData();
     });
+  }
+
+  StopMedia(){
+    this.videoplayer.nativeElement.pause();
+    this.audioplayer.nativeElement.pause();
   }
 
 }
