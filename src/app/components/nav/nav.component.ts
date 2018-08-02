@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 export class NavComponent  implements OnInit {
 
   flag: boolean;
+  currentComponent: string;
 
   constructor(
     private data: DataService,
@@ -22,7 +23,9 @@ export class NavComponent  implements OnInit {
   ngOnInit(){
     this.data.currentButtonDisplayFlag.subscribe((flag) => {
       this.flag=flag;
+      console.log("nav component: Activation of gameZone component is: " + this.flag);
     });
+
   }
 
   onLogoutClick() {

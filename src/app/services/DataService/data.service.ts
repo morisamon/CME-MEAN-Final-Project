@@ -12,16 +12,17 @@ export class DataService {
     private levelSource = new BehaviorSubject<string>("0");
     currentLevel = this.levelSource.asObservable();
 
-    private buttonDisplayFlagSource = new BehaviorSubject<boolean>(false);
+    private buttonDisplayFlagSource = new BehaviorSubject<boolean>(true);
     currentButtonDisplayFlag = this.buttonDisplayFlagSource.asObservable();
-
+    
+    private currentComponent: String = "none";
     private currLevel;
     private gender: String;
     private kidid: Number;
     private gameStrated: Boolean = false;
+
     public start_time: Date;
     public videoDuration: Number = 0;
-
     public map = new TSMap<String,number>();
 
     constructor(private route: ActivatedRoute, private router:Router) {}
@@ -50,8 +51,7 @@ export class DataService {
 
             case "char":
             console.log("char from nav to service");
-            this.levelSource.next("getLevel");
-            this.router.navigate(['/home/levels/characters', this.currentLevel]);
+            this.levelSource.next("char");
             break;
 
             case "prev":
@@ -66,7 +66,12 @@ export class DataService {
 
             case "home":
             console.log("home from nav to service");
-            this.router.navigate(['/home']);
+            if(this.currentComponent == "none"){
+                this.router.navigate(["/home"]);
+            }
+            else{
+                this.messageSource.next(message);
+            }
             break;
 
             default:
@@ -119,6 +124,15 @@ export class DataService {
     CleanSessionMetaData(){
         this.map.clear();
         this.videoDuration =0;
+    }
+    UpdateCurrentComponent(component){
+        this.currentComponent = component;
+        if(component == "gameZone"){
+            this.buttonDisplayFlagSource.next(false);
+        }
+        else{
+            this.buttonDisplayFlagSource.next(true);
+        }
     }
 
 

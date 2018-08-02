@@ -1,4 +1,4 @@
-import { Component, OnInit, NgModule, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, NgModule, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { DataService } from '../../services/DataService/data.service';
 import { GameSessionService } from '../../admin/services/gamesession.service';
@@ -63,14 +63,15 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
   }
 
   ngOnInit() {
-    this.PlayDefaultStartAudio();
-    /*if(!this.data.SessionISStrated()){
-      this.data.StartAndStopSession(true);
-      this.data.SetStartTime(new Date());
-    }*/
     this.data.SetStartTime(new Date());
     this.kidid = this.data.GetKidID();
     this.gender = this.data.GetGender();
+    this.data.UpdateCurrentComponent("gameZone");
+    this.PlayDefaultStartAudio();
+  }
+
+  ngOnDestroy(){
+    this.data.UpdateCurrentComponent("none");
   }
 
   getSrcToShow(type: String){
@@ -222,13 +223,15 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
         }
         this.level = String(newnumber);
         this.subLevel = 1;
+        this.data.start_time = new Date();
+        this.StopAllMedia();
         this.ChangeSources();
+        this.PlayDefaultStartAudio();
       }
-      this.PlayDefaultStartAudio();
       this.data.CancelLastAction();
       break;
-      case "prev":
 
+      case "prev":
       var newnumber = Number(this.level);
       newnumber--;
       if(newnumber>0)
@@ -239,24 +242,49 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
         }
         this.level = String(newnumber);
         this.subLevel = 1;
+        this.data.start_time = new Date();
+        this.StopAllMedia();
         this.ChangeSources();
+        this.PlayDefaultStartAudio();
       }
-      this.PlayDefaultStartAudio();
       this.data.CancelLastAction();
       break;
+
       case "play":
       this.playManually = true;
       this.ShowVideo();
       this.videoplayer.nativeElement.play();
       this.data.CancelLastAction();
       break;
+
       case "replay":
       this.audioplayer.nativeElement.play();
       this.data.CancelLastAction();
       break;
+
       case "stop":
       this.data.CancelLastAction();
+      this.StopAllMedia();
       this.WriteAndResetSession("stop");
+      break;
+
+      case "char":
+      if(!this.ShowConfirmMessage())
+      {
+        return;
+      }
+      this.router.navigate(['/home/levels/characters', this.data.currentLevel]);
+      break;
+
+      case "home":
+      if(!this.ShowConfirmMessage())
+      {
+        return;
+      }
+      this.data.CancelLastAction();
+      this.WriteAndResetSession("stop");
+      this.StopAllMedia();
+      this.router.navigate(['/home']);
       break;
     }
   }
@@ -293,5 +321,10 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
     } else {
       return false;
     }
+  }
+
+  StopAllMedia(){
+    this.videoplayer.stop();
+    this.audioplayer.stop();
   }
 }
