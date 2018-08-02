@@ -45,6 +45,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
   private startVoiceCount: number = 1;
   private gender: String;
   private kidid: Number;
+  private sessionIfFinished: Boolean = false;
 
   constructor(private route: ActivatedRoute, private router:Router,private elementRef: ElementRef, private data: DataService, private sessionService: GameSessionService) {
     this.route.params.subscribe((params) =>{
@@ -156,6 +157,9 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
     if(this.subLevel<=3){
       if(this.playManually==false){
         this.ChangeSources();
+        if(this.subLevel ==3){
+          this.sessionIfFinished = true;
+        }
       }
       this.ShowImage();
       this.playManually = false;
@@ -217,14 +221,10 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
       newnumber++;
       if(newnumber<=3)
       {
-        if(!this.ShowConfirmMessage())
-        {
-          return;
-        }
+        this.WriteAndResetSession();
         this.level = String(newnumber);
         this.subLevel = 1;
         this.data.start_time = new Date();
-        this.StopAllMedia();
         this.ChangeSources();
         this.PlayDefaultStartAudio();
       }
@@ -236,14 +236,10 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
       newnumber--;
       if(newnumber>0)
       {
-        if(!this.ShowConfirmMessage())
-        {
-          return;
-        }
+        this.WriteAndResetSession();
         this.level = String(newnumber);
         this.subLevel = 1;
         this.data.start_time = new Date();
-        this.StopAllMedia();
         this.ChangeSources();
         this.PlayDefaultStartAudio();
       }
@@ -263,33 +259,30 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
       break;
 
       case "stop":
+      this.WriteAndResetSession();
+      this.router.navigate(["/home"]);
       this.data.CancelLastAction();
-      this.StopAllMedia();
-      this.WriteAndResetSession("stop");
       break;
 
       case "char":
-      if(!this.ShowConfirmMessage())
-      {
-        return;
-      }
+      this.WriteAndResetSession();
+      this.data.CancelLastAction();
       this.router.navigate(['/home/levels/characters', this.data.currentLevel]);
       break;
 
       case "home":
-      if(!this.ShowConfirmMessage())
-      {
-        return;
-      }
+      this.WriteAndResetSession();
       this.data.CancelLastAction();
-      this.WriteAndResetSession("stop");
-      this.StopAllMedia();
-      this.router.navigate(['/home']);
+      this.router.navigate(["/home"]);
       break;
     }
   }
 
-  WriteAndResetSession(flag){
+  WriteAndResetSession(){
+    if(this.sessionIfFinished == false){
+      return;
+    }
+    this.sessionIfFinished = false;
     const session={
       kidid: Number(this.data.GetKidID()),
       character: this.char,
@@ -304,27 +297,12 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
     this.sessionService.addNewSessionForKid(session).subscribe(data => {
       console.log(data.msg);
       if(data.success){
-        if(flag == "stop"){
-          this.router.navigate(['home']);
-        }
+        console.log("session inserted to mongo");
       } else {
         alert("Error while writting the session to mongo db");
       }
-      this.data.CleanSessionMetaData();
+      this.data.ResetSessionMetaData();
     });
   }
 
-  ShowConfirmMessage(): Boolean{
-    if (confirm("The session will stop, are you sure?")) {
-      this.WriteAndResetSession("skip");
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  StopAllMedia(){
-    this.videoplayer.stop();
-    this.audioplayer.stop();
-  }
 }

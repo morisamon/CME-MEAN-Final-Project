@@ -51,7 +51,8 @@ export class DataService {
 
             case "char":
             console.log("char from nav to service");
-            this.levelSource.next("char");
+            this.levelSource.next("getLevel");
+            this.messageSource.next("char");
             break;
 
             case "prev":
@@ -121,9 +122,10 @@ export class DataService {
             return "girl";
         }
     }
-    CleanSessionMetaData(){
+    ResetSessionMetaData(){
         this.map.clear();
-        this.videoDuration =0;
+        this.videoDuration = 0;
+        this.start_time = new Date();
     }
     UpdateCurrentComponent(component){
         this.currentComponent = component;
