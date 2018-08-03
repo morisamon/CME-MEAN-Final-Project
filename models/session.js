@@ -44,6 +44,6 @@ module.exports.deleteSession = function(_id, callback){
   GameSession.findByIdAndRemove(_id, callback);
 }
 
-module.exports.getAllSession = function(_id, callback){
-  GameSession.find(_id, callback);
+module.exports.getAllSessions = function(kidid, callback){
+  GameSession.find(kidid, callback);
 }

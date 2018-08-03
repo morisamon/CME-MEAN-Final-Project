@@ -8,7 +8,7 @@ export class GameSessionService {
     constructor(private http:Http) { }
 
     getSessionsByKidID(id) {
-        return this.http.get('/api/sessions', id).pipe(
+        return this.http.get('/api/sessions/' + id).pipe(
             map(res => res.json()));
     }
 

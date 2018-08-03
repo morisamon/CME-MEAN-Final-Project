@@ -14,46 +14,47 @@
   <div class="kids-list center border width95">
       <div class="bold-text">
           <div class="col-md-2">
-              ID    
+              Character    
           </div> 
           <div class="col-md-2">
-              Name  
+              Level  
           </div> 
           <div class="col-md-2">
-              Gender  
+              Total Time  
           </div> 
           <div class="col-md-2">
-              Age   
+              Video Duration   
           </div> 
           <div class="col-md-2">
-              Address  
-          </div> 
+            Areas
+          </div>
           <div class="col-md-2">   
           </div>
       </div>
       <hr>
       <div *ngFor="let session of sessions">
           <div class="col-md-2">
-              {{session._id}}    
+            {{ session.character }}
           </div> 
           <div class="col-md-2">
-              X  
+            {{ session.level }}
           </div> 
           <div class="col-md-2">
-              X 
+            {{ session.total_time }}
           </div> 
           <div class="col-md-2">
-              X   
+            {{ session.video_duration }}
           </div> 
           <div class="col-md-2">
-              X
+            eyes: {{ session.areas.areaeyes }}, face: {{ session.areas.areaface }}<br>
+            {{ session.areas.area1 }}, {{ session.areas.area2 }}, {{ session.areas.area3 }}, {{ session.areas.area4 }}, {{ session.areas.area5 }}, {{ session.areas.area6 }}<br>
           </div> 
           <div class="col-md-2"> 
               <button type="submit" (click)="deleteSession(session._id)" class="btn btn-danger">
                       <i class="glyphicon glyphicon-trash"></i>
               </button>
           </div>
-          <br><br>
+          <br><br><br>
       </div>
   </div>
 </div>

@@ -22,6 +22,7 @@ export class DataService {
     private gameStrated: Boolean = false;
 
     public start_time: Date;
+    public end_time: Date;
     public videoDuration: Number = 0;
     public map = new TSMap<String,number>();
 

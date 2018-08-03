@@ -61,10 +61,12 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
     });
     this.data.HiddenNavButtons(false);
     this.ShowImage();
+    var start = new Date();
+    console.log(start);
+    this.data.SetStartTime(start);
   }
 
   ngOnInit() {
-    this.data.SetStartTime(new Date());
     this.kidid = this.data.GetKidID();
     this.gender = this.data.GetGender();
     this.data.UpdateCurrentComponent("gameZone");
@@ -85,7 +87,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
     if(organ == "face"){
       //this.myFaceBtnStyles={'left':left,'top':top,'width':width,'height':height};
     }
-    else if(organ == "eye"){
+    else if(organ == "eyes"){
       //this.myEyeBtnStyles={'left':left,'top':top,'width':width,'height':height};
     }
   }
@@ -104,25 +106,23 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
   }
 
   Click(area){
-    //var clickarea = this.GetArea(area);
-    if(!this.data.map.has(area)){
-      this.data.map.set(area,1);
+    var clickarea = this.GetArea(area);
+    if(!this.data.map.has(clickarea)){
+      this.data.map.set(clickarea,1);
     }
     else{
-      var count: number = this.data.map.get(area);
-      this.data.map.set(area,count+1);
+      var count: number = this.data.map.get(clickarea);
+      this.data.map.set(clickarea,count+1);
     }
-    console.log(area);
-    console.log(count);
   }
 
   private GetArea(area) : string{
-    return this.char +" "+ this.level + " " + "area" + " " + area;
+    return "area" + area;
   }
 
   StartVideo(){
     this.ShowVideo();
-    this.Click("eye");
+    this.Click("eyes");
     if(this.subLevel<=3){
       this.videoplayer.nativeElement.play();
       if(this.subLevel==3){
@@ -152,13 +152,15 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
     console.log('duration: ', video.duration);
     this.data.videoDuration += video.duration;
 
-    console.log("The video is stoped");
+    console.log("The video is stopped");
     this.subLevel++;
     if(this.subLevel<=3){
       if(this.playManually==false){
         this.ChangeSources();
         if(this.subLevel ==3){
           this.sessionIfFinished = true;
+          this.data.end_time = new Date();
+          console.log(this.data.end_time);
         }
       }
       this.ShowImage();
@@ -298,7 +300,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
       kidid: Number(this.data.GetKidID()),
       character: this.char,
       level: this.level,
-      total_time: new Date().getMilliseconds() - this.data.start_time.getMilliseconds(),
+      total_time: (this.data.end_time.getTime() - this.data.start_time.getTime()) / 1000.0,
       video_duration: this.data.videoDuration,
       areas: this.data.map.toJSON()
     }

@@ -98,7 +98,7 @@ var GameZoneAreaComponent = /** @class */ (function () {
         }
     };
     GameZoneAreaComponent.prototype.VideoEnded = function () {
-        console.log("The video is stoped");
+        console.log("The video is stopped");
         this.subLevel++;
         if (this.subLevel <= 3) {
             if (this.playManually == false) {

@@ -1,12 +1,12 @@
 var express = require('express');
 var router = express.Router();
 var mongojs = require('mongojs');
-var db = mongojs('cme', ['sessions']);
+var db = mongojs('cme', ['gamesessions']);
 const GameSession = require('../models/session');
 
 // Get All Sessions By Kid ID
 router.get('/sessions/:kidid', function(req, res, next) {
-    GameSession.find({ kidid : req.params.kidid }, function(err, sessions) {
+    GameSession.find({ kidid : Number(req.params.kidid) }, function(err, sessions) {
         if(err) {
             res.send("Error");
         }
