@@ -142,7 +142,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
         this.audioSRC = AUDIO_DEFAULT_GIRL_START_SRC;
       }
     
-      this.audioplayer.src = this.audioSRC;
+      this.audioplayer.nativeElement.src = this.audioSRC;
       this.audioplayer.nativeElement.play();
     }
 
@@ -177,6 +177,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
     }
   }
 
+  
   ChangeAudioSource(){
     this.audioSRC = AUDIO_SRC + this.char + "_" + this.gender + "_" + this.level + "_" + this.startVoiceCount + '.wav';
     this.audioplayer.nativeElement.src = this.audioSRC;
@@ -203,7 +204,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
     else{
       console.log("videoplayer is undefined!!!!")
     }
-      
+    
   }
 
   NextLevel(level){
