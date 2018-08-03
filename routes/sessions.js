@@ -45,5 +45,20 @@ router.delete('/deletesession/:_id', function(req, res, next){
     })
 });
 
+// Get All sessions With Filter
+router.get('/sessionsfilter', function(req, res, next) {
+    var query = { total_time: { $lt: req.query.total_time } };
+    query.kidid = req.query.kidid;
+    if (Number(req.query.level) > 0)
+        query.level = req.query.level;
+    if (req.query.character.length > 0)
+        query.character = req.query.character;
+    GameSession.find(query, function(err, sessions) {
+        if(err) {
+            res.send("Error");
+        }
+        res.json(sessions);
+    })
+});
 
 module.exports = router;

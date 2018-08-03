@@ -13,6 +13,9 @@ export class KidSessionsListComponent implements OnInit {
 
   kid: Kid;
   sessions: GameSession[];
+  totalTimeFilter: Number;
+  levelFilter: Number;
+  characterFilter: String;
 
   constructor(
     private gameSessionsService: GameSessionService,
@@ -38,7 +41,10 @@ export class KidSessionsListComponent implements OnInit {
   }
 
   onFilter() {
-
+    this.gameSessionsService.getGameSessionsWithFilter(this.kid._id, this.totalTimeFilter, this.levelFilter, this.characterFilter)
+    .subscribe(sessions => {
+        this.sessions = sessions;
+    });
   }
 
   refreshList() {

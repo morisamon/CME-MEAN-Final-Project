@@ -1,7 +1,6 @@
 div, h2 {
     color: aliceblue;
     background-color: transparent;
-
 }
 
 .margin-auto {
@@ -10,4 +9,8 @@ div, h2 {
 
 .width40 {
     width: 40%;
+}
+
+.width90 {
+    width: 90%;
 }

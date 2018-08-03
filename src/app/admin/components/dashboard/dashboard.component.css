@@ -1,5 +1,12 @@
 div, h2 {
     color: aliceblue;
     background-color: transparent;
+}
 
+.margin-auto {
+    margin: auto;
+}
+
+.width40 {
+    width: 40%;
 }

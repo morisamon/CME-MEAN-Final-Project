@@ -1,5 +1,7 @@
-<h2 class="page-header">Dashboard</h2>
-<div *ngIf="user">
-    <h2 class="page-header">Welcome {{user.name}}!</h2>
-    <input type="button" (click)="onKidsListClicked()" value="Kids List" class="btn btn-info">    
+<div class="margin-auto width40">
+    <h2 class="page-header">Dashboard</h2>
+    <div *ngIf="user">
+        <h2 class="page-header">Welcome {{user.name}}!</h2>
+        <input type="button" (click)="onKidsListClicked()" value="Kids List" class="btn btn-info">    
+    </div>
 </div>

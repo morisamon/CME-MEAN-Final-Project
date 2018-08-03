@@ -53,7 +53,7 @@ export class EditKidComponent implements OnInit {
           kid.lat = data.results[0].geometry.location.lat;
           kid.lng = data.results[0].geometry.location.lng;
         }
-        this.kidsService.addNewKid(kid).subscribe(data => {
+        this.kidsService.editKid(kid).subscribe(data => {
           console.log(data.msg);
           if(data.success){
             this.router.navigate(['/admin/kidslist']);

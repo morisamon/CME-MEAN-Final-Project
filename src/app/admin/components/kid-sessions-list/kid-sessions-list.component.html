@@ -1,13 +1,14 @@
 <div class="margin-auto width80">
   <h2 class="page-header">Sessions List for {{ kid.name }}</h2>
   <div class="margin-auto width40">
-      Max Age:<input type="number" [(ngModel)]="ageFilter" name="ageFilter" class="form-control">
-      Gender:<select name="genderFilter" [(ngModel)]="genderFilter" class="form-control">
-          <option value="" selected>All</option>
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
-        </select>
-      Kid's name:<input type="text" [(ngModel)]="nameFilter" name="nameFilter" class="form-control">
+      Max Total Time:<input type="number" [(ngModel)]="totalTimeFilter" name="totalTimeFilter" class="form-control">
+      Level:<select name="levelFilter" [(ngModel)]="levelFilter" class="form-control">
+        <option value="0" selected>All</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+      </select>
+      Character:<input type="text" [(ngModel)]="characterFilter" name="characterFilter" class="form-control">
       <a class="btn btn-primary btn-sm" (click)="onFilter()">Filter</a>
   </div>
   <br><br>

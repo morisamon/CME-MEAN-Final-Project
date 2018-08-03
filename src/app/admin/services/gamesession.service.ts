@@ -24,4 +24,15 @@ export class GameSessionService {
             map(res => res.json()));
     }
 
+    getGameSessionsWithFilter(kidid, maxTotalTimeFilter, levelFilter, characterFilter) {
+        if (!maxTotalTimeFilter)
+            maxTotalTimeFilter = 9999999;
+        if (!levelFilter)
+            levelFilter = 0;
+        if (!characterFilter)
+            characterFilter = "";
+        var filter = { kidid: Number(kidid), total_time: Number(maxTotalTimeFilter), level: Number(levelFilter), character: characterFilter }
+        return this.http.get('/api/sessionsfilter', { params: filter }).pipe(
+            map(res => res.json()));
+    }
 }
