@@ -157,16 +157,15 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
     if(this.subLevel<=3){
       if(this.playManually==false){
         this.ChangeSources();
-        if(this.subLevel ==3){
-          this.sessionIfFinished = true;
-          this.data.end_time = new Date();
-          console.log(this.data.end_time);
-        }
       }
       this.ShowImage();
       this.playManually = false;
     }
-
+    if(this.subLevel == 4){
+      this.sessionIfFinished = true;
+      this.data.end_time = new Date();
+      console.log(this.data.end_time);
+    }
   }
 
   AudioEnded(){
