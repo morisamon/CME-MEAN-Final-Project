@@ -14,10 +14,11 @@ import { AgmCoreModule } from '@agm/core';
 import { GeocodingService } from './services/geocoding.service';
 import { GameSessionService } from './services/gamesession.service';
 import { KidSessionsListComponent } from './components/kid-sessions-list/kid-sessions-list.component';
+import { PieChartComponent, DoughnutChartComponent} from 'angular-d3-charts';
 
 @NgModule({
-    imports:      [ 
-      BrowserModule, 
+    imports:      [
+      BrowserModule,
       FormsModule,
       AdminRoutingModule,
       AgmCoreModule.forRoot({
@@ -31,6 +32,7 @@ import { KidSessionsListComponent } from './components/kid-sessions-list/kid-ses
       EditKidComponent,
       GoogleMapComponent,
       KidSessionsListComponent,
+      PieChartComponent,DoughnutChartComponent
     ],
     providers: [
       AuthGuard,

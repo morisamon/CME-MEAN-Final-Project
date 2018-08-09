@@ -1,68 +1,84 @@
 <div class="margin-auto width80">
     <h2 class="page-header">Kids List ({{ numOfKids }})</h2>
     <div class="margin-auto width95">
-        <a class="btn btn-info" (click)="onAddKid()">Add Kid</a>&nbsp;<a class="btn btn-info" (click)="onMap()">Map</a>
+        <a class="btn btn-info" (click)="onAddKid()">Add Kid</a>&nbsp;
+        <a class="btn btn-info" (click)="onMap()">Map</a>
     </div>
     <div class="margin-auto width40">
-        Max Age:<input type="number" [(ngModel)]="ageFilter" name="ageFilter" class="form-control">
-        Gender:<select name="genderFilter" [(ngModel)]="genderFilter" class="form-control">
+        Max Age:
+        <input type="number" [(ngModel)]="ageFilter" name="ageFilter" class="form-control"> Gender:
+        <select name="genderFilter" [(ngModel)]="genderFilter" class="form-control">
             <option value="" selected>All</option>
             <option value="Male">Male</option>
             <option value="Female">Female</option>
-          </select>
-        Kid's name:<input type="text" [(ngModel)]="nameFilter" name="nameFilter" class="form-control">
+        </select>
+        Kid's name:
+        <input type="text" [(ngModel)]="nameFilter" name="nameFilter" class="form-control">
         <a class="btn btn-primary btn-sm" (click)="onFilter()">Filter</a>
     </div>
-    <br><br>
+    <br>
+    <br>
     <div class="kids-list center border width95">
         <div class="bold-text">
             <div class="col-md-2">
-                ID    
-            </div> 
+                ID
+            </div>
             <div class="col-md-2">
-                Name  
-            </div> 
+                Name
+            </div>
             <div class="col-md-2">
-                Gender  
-            </div> 
+                Gender
+            </div>
             <div class="col-md-2">
-                Age   
-            </div> 
+                Age
+            </div>
             <div class="col-md-2">
-                Address  
-            </div> 
-            <div class="col-md-2">   
+                Address
+            </div>
+            <div class="col-md-2">
             </div>
         </div>
         <hr>
         <div *ngFor="let kid of kids">
             <div class="col-md-2">
-                {{kid._id}}    
-            </div> 
+                {{kid._id}}
+            </div>
             <div class="col-md-2">
-                {{kid.name}}   
-            </div> 
+                {{kid.name}}
+            </div>
             <div class="col-md-2">
-                {{kid.gender}}  
-            </div> 
+                {{kid.gender}}
+            </div>
             <div class="col-md-2">
-                {{kid.age}}    
-            </div> 
+                {{kid.age}}
+            </div>
             <div class="col-md-2">
-                {{kid.address}} 
-            </div> 
-            <div class="col-md-2"> 
+                {{kid.address}}
+            </div>
+            <div class="col-md-2">
                 <button type="submit" (click)="kidGameSessions(kid)" class="btn btn-success">
-                        <i class="glyphicon glyphicon-list-alt"></i>
+                    <i class="glyphicon glyphicon-list-alt"></i>
                 </button>
                 <button type="submit" (click)="editKid(kid)" class="btn btn-warning">
-                        <i class="glyphicon glyphicon-pencil"></i>
+                    <i class="glyphicon glyphicon-pencil"></i>
                 </button>
                 <button type="submit" (click)="deleteKid(kid._id)" class="btn btn-danger">
-                        <i class="glyphicon glyphicon-trash"></i>
+                    <i class="glyphicon glyphicon-trash"></i>
                 </button>
             </div>
-            <br><br>
+            <br>
+            <br>
         </div>
     </div>
+    <div>
+        <div style="width: 50%;float: left;">
+            <angular-d3-pie *ngIf="chartDataAddress" [id]="donutChartId" [data]="chartDataAddress"></angular-d3-pie>
+
+        </div>
+        <div style="width: 50%;float: right;">
+            <angular-d3-donut *ngIf="chartDataAge" [id]="donutChartId" [data]="chartDataAge"></angular-d3-donut>
+
+        </div>
+    </div>
+
 </div>
