@@ -345,7 +345,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
       var testlabel = this.svm.predict([this.vector]);
       alert("Your predict from SVM is: " + testlabel);
 
-      var svmVector = this.svmVectorService.ConvertVectorToObject(this.vector, testlabel);
+      var svmVector = this.svmVectorService.ConvertVectorToObject(this.vector[0], testlabel);
       this.svmVectorService.addNewVector(svmVector).subscribe(data => {
         console.log(data.msg);
         if(data.success){
