@@ -15,6 +15,7 @@ import { GeocodingService } from './services/geocoding.service';
 import { GameSessionService } from './services/gamesession.service';
 import { KidSessionsListComponent } from './components/kid-sessions-list/kid-sessions-list.component';
 import { PieChartComponent, DoughnutChartComponent} from 'angular-d3-charts';
+import { SvmVectorService } from './services/svmvectors.service';
 
 @NgModule({
     imports:      [
@@ -38,7 +39,8 @@ import { PieChartComponent, DoughnutChartComponent} from 'angular-d3-charts';
       AuthGuard,
       KidsService,
       GeocodingService,
-      GameSessionService
+      GameSessionService,
+      SvmVectorService
     ]
 })
 

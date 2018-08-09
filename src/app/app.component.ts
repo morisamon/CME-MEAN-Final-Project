@@ -167,7 +167,7 @@ const svmVector: SvmVector[] = [{
 "area6" : 0,
 "areaface" : 4,
 "areaeyes" : 3,
-"label" : 0
+"label" : -1
 },
 
 {
@@ -182,7 +182,7 @@ const svmVector: SvmVector[] = [{
 "area6" : 0,
 "areaface" : 0,
 "areaeyes" : 3,
-"label" : 0
+"label" : -1
 },
 
 {
@@ -197,7 +197,7 @@ const svmVector: SvmVector[] = [{
 "area6" : 22,
 "areaface" : 2,
 "areaeyes" : 3,
-"label" : 0
+"label" : -1
 },
 
 {
@@ -212,7 +212,7 @@ const svmVector: SvmVector[] = [{
   "area6" : 10,
   "areaface" : 1,
   "areaeyes" : 3,
-  "label" : 0
+  "label" : -1
 },
 
 {
@@ -227,7 +227,7 @@ const svmVector: SvmVector[] = [{
   "area6" : 21,
   "areaface" : 4,
   "areaeyes" : 3,
-  "label" : 0
+  "label" : -1
 }]
 
 
@@ -241,12 +241,20 @@ const svmVector: SvmVector[] = [{
 export class AppComponent {
 
   private svm: SVM = new SVM();
+  private dataset: Number[][] = [[]];
+  private labels: Number[] = [];
 
   constructor(private dataService : DataService) {
-
-    this.svm.train([[0,0], [0,1], [1,0], [1,1]], [-1, 1, 1, -1], {C: 1.0}); // C is a parameter to SVM
-    var testlabel = this.svm.predict([[0.0000478784545,0.778978979789]]);
-    console.log(testlabel);
+    //todo: check if the train data doesn't exist in mongo
+    var i=0;
+    for(var i=0;i<svmVector.length;i++){
+      var x = svmVector[i];
+      this.dataset[i]=[x.total_time, x.video_duration,x.vagrancy_time,x.area1,x.area2,x.area3,x.area4,x.area5,x.area6,x.areaface,x.areaeyes];
+      this.labels[i]=x.label;
+    }
+    this.svm.train(this.dataset, this.labels, {C: 1.0}); // C is a parameter to SVM
+    var testlabel = this.svm.predict([[72.049, 31.557333, 10.491667, 1, 4, 0, 0, 3, 1, 3, 3]]);
+    console.log(testlabel==1);
   }
 
   public StartTrain(){
