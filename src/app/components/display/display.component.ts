@@ -10,10 +10,11 @@ import { LevelsComponent } from '../levels-menu/levels.component';
 export class DisplayComponent implements OnInit {
 
   public displayLinks: boolean;
+
   constructor() { }
 
   ngOnInit() {
-    this.displayLinks=true;
+    this.displayLinks = true;
   }
 
   public StartTrain(){

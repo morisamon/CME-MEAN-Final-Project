@@ -46,7 +46,7 @@ export class EditKidComponent implements OnInit {
     if (kid.address != "") {
       this.geocodingService.codeAddress(kid.address).subscribe(data => {
         console.log(data);
-        if (data.status == "ZERO_RESULTS") {
+        if (data.status == "ZERO_RESULTS" || data.status == "OVER_QUERY_LIMIT") {
           kid.lat = 0;
           kid.lng = 0;
         } else {

@@ -7,7 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CopyrightComponent implements OnInit {
 
-  constructor() { }
+  copyrights: String;
+
+  constructor() {
+    this.copyrights = "All rights reserved to CME Team";
+  }
 
   ngOnInit() {
   }
