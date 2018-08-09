@@ -30,7 +30,7 @@ export class ChoosekidComponent implements OnInit {
   
   onStart() {
     this.kids.forEach(element => {
-      if (element._id = this.kidChosen) {
+      if (element._id == this.kidChosen) {
         this.genderChosen = element.gender;
       }
     });

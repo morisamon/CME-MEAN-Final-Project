@@ -341,11 +341,11 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
       this.InitDataSetToVector(this.dataSvmFromDB);
       //train
       this.svm.train(this.dataSet, this.labels, {C: 1.0});
-      //predict
-      var testlabel = this.svm.predict([this.vector]);
-      alert("Your predict from SVM is: " + testlabel);
+      //classifier
+      var testlabel = this.svm.predict(this.vector);
+      alert("SVM Classifier: " + testlabel);
 
-      var svmVector = this.svmVectorService.ConvertVectorToObject(this.vector[0], testlabel);
+      var svmVector = this.svmVectorService.ConvertVectorToObject(this.vector[0], testlabel[0]);
       this.svmVectorService.addNewVector(svmVector).subscribe(data => {
         console.log(data.msg);
         if(data.success){
