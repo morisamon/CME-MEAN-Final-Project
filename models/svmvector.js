@@ -1,14 +1,14 @@
 const mongoose = require('mongoose');
 
 // GameSession Schema
-const ScmVectorSchema = mongoose.Schema({
+const SvmVectorSchema = mongoose.Schema({
   total_time: {
     type: Number,
     required: true
   },
 
   video_duration: {
-    type: String,
+    type: Number,
     required: true
   },
 
@@ -64,7 +64,7 @@ const ScmVectorSchema = mongoose.Schema({
 
 });
 
-const SvmVector = module.exports = mongoose.model('SvmVector', ScmVectorSchema);
+const SvmVector = module.exports = mongoose.model('SvmVector', SvmVectorSchema);
 
 module.exports.addVector = function(newVector, callback){
   newVector.save(callback);

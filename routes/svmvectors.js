@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var mongojs = require('mongojs');
+var db = mongojs('cme', ['svmvectors']);
 const SvmVector = require('../models/svmvector');
 
 // Get All SVM Vectors

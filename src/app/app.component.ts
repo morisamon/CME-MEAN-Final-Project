@@ -3,6 +3,7 @@ import {TaskService} from './services/task.service';
 import { DataService } from './services/DataService/data.service';
 import { SvmVector } from './models/SvmVector';
 import { SVM } from 'svm';
+import { SvmVectorService } from './admin/services/svmvectors.service';
 
 const svmVector: SvmVector[] = [{
   "total_time" : 72.049,
@@ -244,17 +245,32 @@ export class AppComponent {
   private dataset: Number[][] = [[]];
   private labels: Number[] = [];
 
-  constructor(private dataService : DataService) {
-    //todo: check if the train data doesn't exist in mongo
-    var i=0;
+  constructor(private dataService : DataService, private svmVectorService : SvmVectorService) {
+    svmVectorService.getDataSet().subscribe(data => {
+      console.log(data);
+      this.InitDataSetToVector();
+      if(data.length == 0){
+        for(var i=0;i<svmVector.length;i++){
+          var x = this.svmVectorService.ConvertVectorToObject(this.dataset[i],this.labels[i]);
+          this.svmVectorService.addNewVector(x).subscribe(data => {
+            console.log(data.msg);
+            if(data.success){
+              console.log("svm vector inserted to mongo");
+            } else {
+              alert("Error while writting the svm vector to mongo db");
+            }
+          });
+        }
+      }
+    });
+  }
+
+  private InitDataSetToVector(){
     for(var i=0;i<svmVector.length;i++){
       var x = svmVector[i];
       this.dataset[i]=[x.total_time, x.video_duration,x.vagrancy_time,x.area1,x.area2,x.area3,x.area4,x.area5,x.area6,x.areaface,x.areaeyes];
       this.labels[i]=x.label;
     }
-    this.svm.train(this.dataset, this.labels, {C: 1.0}); // C is a parameter to SVM
-    var testlabel = this.svm.predict([[72.049, 31.557333, 10.491667, 1, 4, 0, 0, 3, 1, 3, 3]]);
-    console.log(testlabel==1);
   }
 
   public StartTrain(){

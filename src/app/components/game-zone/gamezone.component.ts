@@ -2,6 +2,9 @@ import { Component, OnInit, OnDestroy, NgModule, ViewChild, ElementRef, AfterVie
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { DataService } from '../../services/DataService/data.service';
 import { GameSessionService } from '../../admin/services/gamesession.service';
+import { SVM } from 'svm';
+import { SvmVectorService } from '../../admin/services/svmvectors.service';
+import { SvmVector } from '../../models/SvmVector';
 
 const VIDEO_SRC: string="/assets/videos/";
 const AUDIO_SRC: string="/assets/voices/";
@@ -47,8 +50,18 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
   private kidid: Number;
   private sessionIfFinished: Boolean = false;
   private ngIfButtons: Boolean = true;
+  private svm: SVM = new SVM();
+  private vector: Number[][] = [[]];
+  private dataSvmFromDB: SvmVector[];
+  private dataSet: Number[][] = [[]];
+  private labels: Number[] = [];
 
-  constructor(private route: ActivatedRoute, private router:Router,private elementRef: ElementRef, private data: DataService, private sessionService: GameSessionService) {
+
+  constructor(private route: ActivatedRoute, private router:Router,
+    private elementRef: ElementRef, private data: DataService,
+    private sessionService: GameSessionService,
+    private svmVectorService : SvmVectorService) {
+
     this.route.params.subscribe((params) =>{
       this.videoName = params
       this.char = params.id.split('_')[0];
@@ -305,6 +318,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
     if(this.sessionIfFinished == false){
       return;
     }
+
     this.sessionIfFinished = false;
     const session={
       kidid: Number(this.data.GetKidID()),
@@ -314,6 +328,33 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
       video_duration: this.data.videoDuration,
       areas: this.data.map.toJSON()
     }
+
+    //predict the kid permormance
+
+    //new vector
+    this.vector = [this.BuildVector(session.total_time, session.video_duration)];
+    
+    //get all dataset
+    this.svmVectorService.getDataSet().subscribe(data => {
+
+      this.dataSvmFromDB = data;
+      this.InitDataSetToVector(this.dataSvmFromDB);
+      //train
+      this.svm.train(this.dataSet, this.labels, {C: 1.0});
+      //predict
+      var testlabel = this.svm.predict([this.vector]);
+      alert("Your predict from SVM is: " + testlabel);
+
+      var svmVector = this.svmVectorService.ConvertVectorToObject(this.vector, testlabel);
+      this.svmVectorService.addNewVector(svmVector).subscribe(data => {
+        console.log(data.msg);
+        if(data.success){
+          console.log("svm vector inserted to mongo");
+        } else {
+          alert("Error while writting the svm vector to mongo db");
+        }
+      });
+    });
 
     //write current session to mongo db
     console.log(session);
@@ -331,6 +372,33 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
   StopMedia(){
     this.videoplayer.nativeElement.pause();
     this.audioplayer.nativeElement.pause();
+  }
+
+  BuildVector(total_time, video_duration) : Number[]{
+    var sumAreas = 0;
+
+    var area1 = this.data.map.get("area1");
+    var area2 = this.data.map.get("area2");
+    var area3 = this.data.map.get("area3");
+    var area4 = this.data.map.get("area4");
+    var area5 = this.data.map.get("area5");
+    var area6 = this.data.map.get("area6");
+    var areaface = this.data.map.get("areaface");
+    var areaeyes = this.data.map.get("areaeyes");
+    sumAreas = area1 + area2 + area3 + area4 + area5 + area6 + areaface + areaeyes;
+
+    var vagrancy_time = total_time - video_duration - (sumAreas*2);
+
+    return [total_time, video_duration, vagrancy_time, areaeyes, areaface,
+      area1, area2, area3, area4, area5 ,area6];
+  }
+
+  private InitDataSetToVector(dataSvmFromDB){
+    for(var i=0;i<dataSvmFromDB.length;i++){
+      var x = dataSvmFromDB[i];
+      this.dataSet[i]=[x.total_time, x.video_duration,x.vagrancy_time,x.area1,x.area2,x.area3,x.area4,x.area5,x.area6,x.areaface,x.areaeyes];
+      this.labels[i]=x.label;
+    }
   }
 
 }
