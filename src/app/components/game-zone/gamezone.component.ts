@@ -46,6 +46,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
   private gender: String;
   private kidid: Number;
   private sessionIfFinished: Boolean = false;
+  private ngIfButtons: Boolean = true;
 
   constructor(private route: ActivatedRoute, private router:Router,private elementRef: ElementRef, private data: DataService, private sessionService: GameSessionService) {
     this.route.params.subscribe((params) =>{
@@ -106,14 +107,14 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
   }
 
   Click(area){
+    
+    if(this.ngIfButtons == false || this.sessionIfFinished == true){
+      return;
+    }
+
     var clickarea = this.GetArea(area);
-    if(!this.data.map.has(clickarea)){
-      this.data.map.set(clickarea,1);
-    }
-    else{
-      var count: number = this.data.map.get(clickarea);
-      this.data.map.set(clickarea,count+1);
-    }
+    var count: number = this.data.map.get(clickarea);
+    this.data.map.set(clickarea,count+1);
   }
 
   private GetArea(area) : string{
@@ -131,6 +132,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
         this.audioplayer.nativeElement.play();
       }
     }
+    this.ngIfButtons = false;
   }
 
   PlayDefaultStartAudio(){
@@ -144,18 +146,19 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
     
       this.audioplayer.nativeElement.src = this.audioSRC;
       this.audioplayer.nativeElement.play();
+      this.ngIfButtons = false;
     }
 
   }
 
   VideoEnded(e, video){
-    console.log('duration: ', video.duration);
-    this.data.videoDuration += video.duration;
-
+    console.log('duration video: ', video.duration);
     console.log("The video is stopped");
+
     this.subLevel++;
     if(this.subLevel<=3){
       if(this.playManually==false){
+        this.data.videoDuration += video.duration;
         this.ChangeSources();
       }
       this.ShowImage();
@@ -163,19 +166,24 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
     }
     if(this.subLevel == 4){
       this.sessionIfFinished = true;
+      this.ngIfButtons = false;
       this.data.end_time = new Date();
       console.log(this.data.end_time);
     }
+    this.ngIfButtons = true;
   }
 
-  AudioEnded(){
+  AudioEnded(e, audio){
+    console.log('duration video: ', audio.duration);
     console.log("Audio is ended now");
     if(this.startVoiceCount <= 3){
+      this.data.videoDuration += audio.duration;
       setTimeout(() => {
         this.ChangeAudioSource();
       }, TIMEOUT_BETWEEN_AUDIO_VOID);
 
     }
+    this.ngIfButtons = true;
   }
 
   
@@ -183,6 +191,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
     this.audioSRC = AUDIO_SRC + this.char + "_" + this.gender + "_" + this.level + "_" + this.startVoiceCount + '.wav';
     this.audioplayer.nativeElement.src = this.audioSRC;
     this.audioplayer.nativeElement.play();
+    this.ngIfButtons = false;
     this.startVoiceCount++;
   }
 
@@ -262,11 +271,13 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
       this.playManually = true;
       this.ShowVideo();
       this.videoplayer.nativeElement.play();
+      this.ngIfButtons = false;
       this.data.CancelLastAction();
       break;
 
       case "replay":
       this.audioplayer.nativeElement.play();
+      this.ngIfButtons = false;
       this.data.CancelLastAction();
       break;
 

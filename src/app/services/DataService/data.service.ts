@@ -1,7 +1,10 @@
 import { Injectable} from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TSMap } from "typescript-map"
+import { TSMap } from "typescript-map";
+import { HttpClient } from '@angular/common/http';
+import { SvmVector } from '../../models/SvmVector';
+import { Observable } from '../../../../node_modules/rxjs';
 
 @Injectable()
 export class DataService {
@@ -15,6 +18,7 @@ export class DataService {
     private buttonDisplayFlagSource = new BehaviorSubject<boolean>(true);
     currentButtonDisplayFlag = this.buttonDisplayFlagSource.asObservable();
     
+    private DataUrl:string = '/assets/svm_train_data.json';
     private currentComponent: String = "none";
     private currLevel;
     private gender: String;
@@ -26,7 +30,19 @@ export class DataService {
     public videoDuration: Number = 0;
     public map = new TSMap<String,number>();
 
-    constructor(private route: ActivatedRoute, private router:Router) {}
+    constructor(private route: ActivatedRoute, private router:Router, private http: HttpClient) {
+        this.InitMap();
+    }
+
+    private InitMap() {
+
+        this.map.clear();
+        for (var i = 1; i <= 6; i++) {
+            this.map.set("area" + i, 0);
+        }
+        this.map.set("areaface", 0);
+        this.map.set("areaeyes", 0);
+    }
 
     changeMessage(message: string){
         this.executeCommand(message);
@@ -124,7 +140,7 @@ export class DataService {
         }
     }
     ResetSessionMetaData(){
-        this.map.clear();
+        this.InitMap();
         this.videoDuration = 0;
         this.start_time = new Date();
     }
@@ -137,6 +153,7 @@ export class DataService {
             this.buttonDisplayFlagSource.next(true);
         }
     }
+      
 
 
 }

@@ -77,7 +77,7 @@
               },
               "src/styles.css"
             ],
-            "scripts": [],
+            "scripts": ["src/assets/svm.js"],
             "assets": [
               "src/favicon.ico",
               "src/assets"

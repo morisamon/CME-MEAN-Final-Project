@@ -1,6 +1,6 @@
 <html>
 
-  <audio id="audio" #audioPlayer (ended)="AudioEnded()" controls class="w3-right" hidden="true">
+  <audio id="audio" #audioPlayer (ended)="AudioEnded($event, audioPlayer)" controls class="w3-right" hidden="true">
     <source [(src)]="audioSRC" type="audio/mp3">
     Your browser does not support the audio element.
   </audio>
@@ -12,29 +12,29 @@
             <div class="row" style="position: relative;z-index: 9999;height: 50%;">
               
               <div class="col-md-4 nopadding" style="float: left;width: 33%;height: 100%;">
-                <button type="button" (click)="Click('1');" class=" btn-cover" ng-click="Cancel()" aria-haspopup="true" aria-expanded="false" style="width: 100%;height: 100%;border: none;"><font size="6"></font></button>
+                <button *ngIf="ngIfButtons" type="button" (click)="Click('1');" class=" btn-cover" ng-click="Cancel()" aria-haspopup="true" aria-expanded="false" style="width: 100%;height: 100%;border: none;"><font size="6"></font></button>
               </div>
               
               <div class="col-md-4 nopadding" style="float: left;width: 33%;height: 100%;">
-                <button type="button" (click)="Click('2');" class="btn-cover" ng-click="Proceed()" aria-haspopup="true" aria-expanded="false" style="width:100%;height: 100%;border: none;"><font size="6"></font></button>
+                <button *ngIf="ngIfButtons" type="button" (click)="Click('2');" class="btn-cover" ng-click="Proceed()" aria-haspopup="true" aria-expanded="false" style="width:100%;height: 100%;border: none;"><font size="6"></font></button>
               </div>
               
               <div class="col-md-4 nopadding" style="float: left;width: 33%;height: 100%;">
-                <button type="button" (click)="Click('3');" class="btn-cover" ng-click="Proceed()" aria-haspopup="true" aria-expanded="false" style="width:100%;height: 100%;border: none;"><font size="6"></font></button>
+                <button *ngIf="ngIfButtons" type="button" (click)="Click('3');" class="btn-cover" ng-click="Proceed()" aria-haspopup="true" aria-expanded="false" style="width:100%;height: 100%;border: none;"><font size="6"></font></button>
               </div>
             </div>
             
             <div class="row" style="position: absolute;z-index: 999;width: 100%;height: 50%">
               <div class="col-md-4 nopadding" style="float: left;width: 33.3%;height: 100%;">
-                <button type="button" (click)="Click('4');" class="btn-cover" ng-click="Cancel()" aria-haspopup="true" aria-expanded="false" style="width:100%;height: 100%;border: none;"><font size="6"></font></button>
+                <button *ngIf="ngIfButtons" type="button" (click)="Click('4');" class="btn-cover" ng-click="Cancel()" aria-haspopup="true" aria-expanded="false" style="width:100%;height: 100%;border: none;"><font size="6"></font></button>
               </div>
 
               <div class="col-md-4 nopadding" style="float: left;width: 33.3%;height: 100%;">
-                <button type="button" (click)="Click('5');" class="btn-cover" ng-click="Proceed()" aria-haspopup="true" aria-expanded="false" style="width:100%;height: 100%;border: none;"><font size="6"></font></button>
+                <button *ngIf="ngIfButtons" type="button" (click)="Click('5');" class="btn-cover" ng-click="Proceed()" aria-haspopup="true" aria-expanded="false" style="width:100%;height: 100%;border: none;"><font size="6"></font></button>
               </div>
               
               <div class="col-md-4 nopadding" style="float: left;width: 33.3%;height: 100%;">
-                <button type="button" (click)="Click('6');" class="btn-cover" ng-click="Proceed()" aria-haspopup="true" aria-expanded="false" style="width:100%;height: 100%;border: none;"><font size="6"></font></button>
+                <button *ngIf="ngIfButtons" type="button" (click)="Click('6');" class="btn-cover" ng-click="Proceed()" aria-haspopup="true" aria-expanded="false" style="width:100%;height: 100%;border: none;"><font size="6"></font></button>
               </div>
             </div>
           </div>
@@ -50,13 +50,9 @@
 
     </div>
 
-    <button [ngStyle] = "myFaceBtnStyles" id="faceBtn" (click)="Click('face');" type="button" class="btn btn-primary btn-lg" >
-
-    </button>
+    <button *ngIf="ngIfButtons" [ngStyle] = "myFaceBtnStyles" id="faceBtn" (click)="Click('face');" type="button" class="btn btn-primary btn-lg"></button>
     
-    <button [ngStyle] = "myEyeBtnStyles" id="eyeBtn" (click)="StartVideo()" type="button" class="btn btn-primary btn-lg" >
-  
-    </button>
+    <button *ngIf="ngIfButtons" [ngStyle] = "myEyeBtnStyles" id="eyeBtn" (click)="StartVideo()" type="button" class="btn btn-primary btn-lg"></button>
   
 
 

@@ -13,6 +13,7 @@ import { AdminModule } from './admin/admin.module'
 import { RouterModule, Routes } from '@angular/router';
 import { AppRoutingModule, routingComponents } from './app-routing.module';
 import { ChoosekidComponent } from './components/choosekid/choosekid.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   imports:      [ 
@@ -21,14 +22,16 @@ import { ChoosekidComponent } from './components/choosekid/choosekid.component';
     FormsModule, 
     AppRoutingModule,
     AuthenticationModule,
-    AdminModule
+    AdminModule,
+    HttpClientModule
   ],
   declarations: [
     AppComponent, 
     NavComponent, 
     DisplayComponent, 
     CopyrightComponent, 
-    routingComponents, ChoosekidComponent
+    routingComponents,
+    ChoosekidComponent
   ],
   providers: [
   ],
