@@ -6,3 +6,8 @@ export class ButtonStyle {
     width: String;
     height: String;
 }
+
+export class LevelButtonStyle{
+    name: String;
+    style: ButtonStyle;
+}

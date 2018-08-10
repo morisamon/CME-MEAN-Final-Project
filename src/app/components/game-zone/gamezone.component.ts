@@ -5,7 +5,8 @@ import { GameSessionService } from '../../admin/services/gamesession.service';
 import { SVM } from 'svm';
 import { SvmVectorService } from '../../admin/services/svmvectors.service';
 import { SvmVector } from '../../models/SvmVector';
-import { ButtonStyle } from './button.style';
+import { ButtonStyle, LevelButtonStyle } from './button.style';
+import { TSMap } from "typescript-map";
 
 const VIDEO_SRC: string="/assets/videos/";
 const AUDIO_SRC: string="/assets/voices/";
@@ -17,6 +18,730 @@ const AUDIO_DEFAULT_BOY_START_SRC:String = "/assets/voices/general_boy_choose_st
 const AUDIO_DEFAULT_GIRL_START_SRC:String = "/assets/voices/general_girl_choose_start.wma";
 
 const TIMEOUT_BETWEEN_AUDIO_VOID: number = 1200;
+
+const faceSTYLE: LevelButtonStyle[] = [
+  {
+    "name": "player_1_1",
+    "style":{
+      "left": "1%",
+      "top": "39%",
+      "width": "15%",
+      "height": "23%"
+    }
+  },
+
+  {
+    "name": "player_1_2",
+    "style":{
+      "left": "1%",
+      "top": "39%",
+      "width": "15%",
+      "height": "23%"
+    }
+  },
+
+  {
+    "name": "player_1_3",
+    "style":{
+      "left": "32%",
+      "top": "35%",
+      "width": "15%",
+      "height": "24%"
+    }
+  },
+
+  {
+    "name": "player_2_1",
+    "style":{
+      "left": "35%",
+      "top": "19%",
+      "width": "20%",
+      "height": "35%"
+    }
+  },
+
+  {
+    "name": "player_2_2",
+    "style":{
+      "left": "35%",
+      "top": "19%",
+      "width": "20%",
+      "height": "35%"
+    }
+  },
+
+  {
+    "name": "player_2_3",
+    "style":{
+      "left": "35%",
+      "top": "19%",
+      "width": "20%",
+      "height": "35%"
+    }
+  },
+
+  {
+    "name": "player_3_1",
+    "style":{
+      "left": "22%",
+      "top": "54%",
+      "width": "15%",
+      "height": "25%"
+    }
+  },
+
+  {
+    "name": "player_3_2",
+    "style":{
+      "left": "22%",
+      "top": "54%",
+      "width": "15%",
+      "height": "25%"
+    }
+  },
+
+  {
+    "name": "player_3_3",
+    "style":{
+      "left": "22%",
+      "top": "54%",
+      "width": "15%",
+      "height": "25%"
+    }
+  },
+
+  {
+    "name": "fireman_1_1", //eyes: l 17 t 40 w 11 h 17
+    "style":{
+      "left": "12%",
+      "top": "33%",
+      "width": "18%",
+      "height": "32%"
+    }
+  },
+
+  {
+    "name": "fireman_1_2", //eyes: l 17 t 40 w 11 h 17
+    "style":{
+      "left": "12%",
+      "top": "33%",
+      "width": "18%",
+      "height": "32%"
+    }
+  },
+
+  {
+    "name": "fireman_1_3", //eyes: l 17 t 40 w 11 h 17
+    "style":{
+      "left": "12%",
+      "top": "33%",
+      "width": "18%",
+      "height": "32%"
+    }
+  },
+
+  {
+    "name": "fireman_2_1", //eyes: l 24 t 37 w 15 h 22
+    "style":{
+      "left": "20%",
+      "top": "33%",
+      "width": "21%",
+      "height": "42%"
+    }
+  },
+
+  {
+    "name": "fireman_2_2", //eyes: l 24 t 37 w 15 h 22
+    "style":{
+      "left": "51%",
+      "top": "9%",
+      "width": "21%",
+      "height": "42%"
+    }
+  },
+
+  {
+    "name": "fireman_2_3", //eyes: l 54 t 20 w 15 h 22
+    "style":{
+      "left": "51%",
+      "top": "9%",
+      "width": "21%",
+      "height": "42%"
+    }
+  },
+
+  {
+    "name": "fireman_3_1", //eyes: l 41 t 47 w 9 h 15
+    "style":{
+      "left": "38%",
+      "top": "46%",
+      "width": "15%",
+      "height": "25%"
+    }
+  },
+
+  {
+    "name": "fireman_3_2", //eyes: l 41 t 28 w 9 h 15
+    "style":{
+      "left": "40%",
+      "top": "26%",
+      "width": "15%",
+      "height": "25%"
+    }
+  },
+
+  {
+    "name": "fireman_3_3", //eyes: l 41 t 28 w 9 h 15
+    "style":{
+      "left": "40%",
+      "top": "26%",
+      "width": "15%",
+      "height": "25%"
+    }
+  },
+
+  {
+    "name": "superman_1_1", //eyes: l 20 t 70 w 9 h 15
+    "style":{
+      "left": "17%",
+      "top": "68%",
+      "width": "15%",
+      "height": "24%"
+    }
+  },
+
+  {
+    "name": "superman_1_2", //eyes: l 20 t 70 w 9 h 15
+    "style":{
+      "left": "17%",
+      "top": "68%",
+      "width": "15%",
+      "height": "24%"
+    }
+  },
+
+  {
+    "name": "superman_1_3", //eyes: l 20 t 70 w 9 h 15
+    "style":{
+      "left": "17%",
+      "top": "68%",
+      "width": "15%",
+      "height": "24%"
+    }
+  },
+
+  {
+    "name": "superman_2_1", //eyes: l 49 t 40 w 9 h 17
+    "style":{
+      "left": "46%",
+      "top": "38%",
+      "width": "15%",
+      "height": "24%"
+    }
+  },
+
+  {
+    "name": "superman_2_2", //eyes: l 49 t 40 w 9 h 17
+    "style":{
+      "left": "46%",
+      "top": "38%",
+      "width": "15%",
+      "height": "24%"
+    }
+  },
+
+  {
+    "name": "superman_2_3", //eyes: l 20 t 70 w 9 h 15
+    "style":{
+      "left": "46%",
+      "top": "47%",
+      "width": "15%",
+      "height": "24%"
+    }
+  },
+
+  {
+    "name": "superman_3_1", //eyes: l 24 t 49 w 9 h 15
+    "style":{
+      "left": "20%",
+      "top": "45%",
+      "width": "15%",
+      "height": "24%"
+    }
+  },
+
+  {
+    "name": "superman_3_2", //eyes: l 24 t 49 w 9 h 15
+    "style":{
+      "left": "20%",
+      "top": "45%",
+      "width": "15%",
+      "height": "24%"
+    }
+  },
+
+  {
+    "name": "superman_3_3", //eyes: l 46 t 40 w 9 h 17
+    "style":{
+      "left": "43%",
+      "top": "35%",
+      "width": "15%",
+      "height": "24%"
+    }
+  },
+
+  {
+    "name": "farmer_1_1", //eyes: l 29 t 30 w 14 h 17
+    "style":{
+      "left": "24%",
+      "top": "23%",
+      "width": "19%",
+      "height": "32%"
+    }
+  },
+
+  {
+    "name": "farmer_1_2", //eyes: l 29 t 30 w 14 h 17
+    "style":{
+      "left": "24%",
+      "top": "23%",
+      "width": "19%",
+      "height": "32%"
+    }
+  },
+
+  {
+    "name": "farmer_1_3", //eyes: l 34 t 39 w 14 h 17
+    "style":{
+      "left": "28%",
+      "top": "28%",
+      "width": "19%",
+      "height": "32%"
+    }
+  },
+
+  {
+    "name": "farmer_2_1", //eyes: l 19 t 74 w 14 h 17
+    "style":{
+      "left": "17%",
+      "top": "62%",
+      "width": "19%",
+      "height": "32%"
+    }
+  },
+
+  {
+    "name": "farmer_2_2", //eyes: l 19 t 74 w 14 h 17
+    "style":{
+      "left": "17%",
+      "top": "62%",
+      "width": "19%",
+      "height": "32%"
+    }
+  },
+
+  {
+    "name": "farmer_2_3", //eyes: l 42 t 29 w 14 h 17
+    "style":{
+      "left": "38%",
+      "top": "23%",
+      "width": "19%",
+      "height": "32%"
+    }
+  },
+
+  {
+    "name": "farmer_3_1", //eyes: l 12 t 37 w 10 h 15
+    "style":{
+      "left": "9%",
+      "top": "34%",
+      "width": "15%",
+      "height": "24%"
+    }
+  },
+
+  {
+    "name": "farmer_3_2", //eyes: l 12 t 37 w 10 h 15
+    "style":{
+      "left": "9%",
+      "top": "34%",
+      "width": "15%",
+      "height": "24%"
+    }
+  },
+
+  {
+    "name": "farmer_3_3", //eyes: l 24 t 37 w 10 h 15
+    "style":{
+      "left": "21%",
+      "top": "34%",
+      "width": "15%",
+      "height": "24%"
+    }
+  }
+];
+const eyesSTYLE: LevelButtonStyle[] = [
+  {
+    "name": "player_1_1",
+    "style":{
+      "left": "4%",
+      "top": "41%",
+      "width": "9%",
+      "height": "15%"
+    }
+  },
+
+  {
+    "name": "player_1_2",
+    "style":{
+      "left": "4%",
+      "top": "41%",
+      "width": "9%",
+      "height": "15%"
+    }
+  },
+
+  {
+    "name": "player_1_3",
+    "style":{
+      "left": "35%",
+      "top": "41%",
+      "width": "9%",
+      "height": "15%"
+    }
+  },
+
+  {
+    "name": "player_2_1",
+    "style":{
+      "left": "41%",
+      "top": "26%",
+      "width": "9%",
+      "height": "15%"
+    }
+  },
+
+  {
+    "name": "player_2_2",
+    "style":{
+      "left": "41%",
+      "top": "26%",
+      "width": "9%",
+      "height": "15%"
+    }
+  },
+
+  {
+    "name": "player_2_3",
+    "style":{
+      "left": "41%",
+      "top": "26%",
+      "width": "9%",
+      "height": "15%"
+    }
+  },
+
+  {
+    "name": "player_3_1",
+    "style":{
+      "left": "25%",
+      "top": "59%",
+      "width": "9%",
+      "height": "15%"
+    }
+  },
+
+  {
+    "name": "player_3_2",
+    "style":{
+      "left": "25%",
+      "top": "59%",
+      "width": "9%",
+      "height": "15%"
+    }
+  },
+
+  {
+    "name": "player_3_3",
+    "style":{
+      "left": "25%",
+      "top": "59%",
+      "width": "9%",
+      "height": "15%"
+    }
+  },
+
+  {
+    "name": "fireman_1_1",
+    "style":{
+      "left": "17%",
+      "top": "40%",
+      "width": "11%",
+      "height": "17%"
+    }
+  },
+
+  {
+    "name": "fireman_1_2",
+    "style":{
+      "left": "17%",
+      "top": "40%",
+      "width": "11%",
+      "height": "17%"
+    }
+  },
+
+  {
+    "name": "fireman_1_3",
+    "style":{
+      "left": "17%",
+      "top": "40%",
+      "width": "11%",
+      "height": "17%"
+    }
+  },
+
+  {
+    "name": "fireman_2_1",
+    "style":{
+      "left": "24%",
+      "top": "37%",
+      "width": "15%",
+      "height": "22%"
+    }
+  },
+
+  {
+    "name": "fireman_2_2",
+    "style":{
+      "left": "24%",
+      "top": "37%",
+      "width": "15%",
+      "height": "22%"
+    }
+  },
+
+  {
+    "name": "fireman_2_3",
+    "style":{
+      "left": "53%",
+      "top": "20%",
+      "width": "15%",
+      "height": "22%"
+    }
+  },
+
+  {
+    "name": "fireman_3_1",
+    "style":{
+      "left": "41%",
+      "top": "51%",
+      "width": "9%",
+      "height": "15%"
+    }
+  },
+
+  {
+    "name": "fireman_3_2",
+    "style":{
+      "left": "41%",
+      "top": "28%",
+      "width": "9%",
+      "height": "15%"
+    }
+  },
+
+  {
+    "name": "fireman_3_3",
+    "style":{
+      "left": "21%",
+      "top": "34%",
+      "width": "15%",
+      "height": "24%"
+    }
+  },
+
+  {
+    "name": "superman_1_1",
+    "style":{
+      "left": "20%",
+      "top": "70%",
+      "width": "9%",
+      "height": "15%"
+    }
+  },
+
+  {
+    "name": "superman_1_2",
+    "style":{
+      "left": "20%",
+      "top": "70%",
+      "width": "9%",
+      "height": "15%"
+    }
+  },
+
+  {
+    "name": "superman_1_3",
+    "style":{
+      "left": "20%",
+      "top": "70%",
+      "width": "9%",
+      "height": "15%"
+    }
+  },
+
+  {
+    "name": "superman_2_1",
+    "style":{
+      "left": "49%",
+      "top": "40%",
+      "width": "9%",
+      "height": "17%"
+    }
+  },
+
+  {
+    "name": "superman_2_2",
+    "style":{
+      "left": "49%",
+      "top": "40%",
+      "width": "9%",
+      "height": "17%"
+    }
+  },
+
+  {
+    "name": "superman_2_3",
+    "style":{
+      "left": "20%",
+      "top": "70%",
+      "width": "9%",
+      "height": "15%"
+    }
+  },
+
+  {
+    "name": "superman_3_1",
+    "style":{
+      "left": "24%",
+      "top": "49%",
+      "width": "9%",
+      "height": "15%"
+    }
+  },
+
+  {
+    "name": "superman_3_2",
+    "style":{
+      "left": "24%",
+      "top": "49%",
+      "width": "9%",
+      "height": "15%"
+    }
+  },
+
+  {
+    "name": "superman_3_3",
+    "style":{
+      "left": "46%",
+      "top": "40%",
+      "width": "9%",
+      "height": "17%"
+    }
+  },
+
+  {
+    "name": "farmer_1_1",
+    "style":{
+      "left": "29%",
+      "top": "30%",
+      "width": "14%",
+      "height": "17%"
+    }
+  },
+
+  {
+    "name": "farmer_1_2",
+    "style":{
+      "left": "29%",
+      "top": "30%",
+      "width": "14%",
+      "height": "17%"
+    }
+  },
+
+  {
+    "name": "farmer_1_3",
+    "style":{
+      "left": "34%",
+      "top": "39%",
+      "width": "14%",
+      "height": "17%"
+    }
+  },
+
+  {
+    "name": "farmer_2_1",
+    "style":{
+      "left": "19%",
+      "top": "74%",
+      "width": "14%",
+      "height": "17%"
+    }
+  },
+  
+  {
+    "name": "farmer_2_2",
+    "style":{
+      "left": "19%",
+      "top": "74%",
+      "width": "14%",
+      "height": "17%"
+    }
+  },
+
+  {
+    "name": "farmer_2_3",
+    "style":{
+      "left": "42%",
+      "top": "29%",
+      "width": "14%",
+      "height": "17%"
+    }
+  },
+
+  {
+    "name": "farmer_3_1",
+    "style":{
+      "left": "12%",
+      "top": "37%",
+      "width": "10%",
+      "height": "15%"
+    }
+  },
+
+  {
+    "name": "farmer_3_2",
+    "style":{
+      "left": "12%",
+      "top": "37%",
+      "width": "10%",
+      "height": "15%"
+    }
+  },
+
+  {
+    "name": "farmer_3_3",
+    "style":{
+      "left": "25%",
+      "top": "37%",
+      "width": "10%",
+      "height": "15%"
+    }
+  }
+
+];
 
 @Component({
   selector: 'app-gamezone',
@@ -56,7 +781,8 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
   private dataSvmFromDB: SvmVector[];
   private dataSet: Number[][] = [[]];
   private labels: Number[] = [];
-
+  private mapFace = new TSMap<String,ButtonStyle>();
+  private mapEyes = new TSMap<String,ButtonStyle>();
 
   constructor(private route: ActivatedRoute, private router:Router,
     private elementRef: ElementRef, private data: DataService,
@@ -79,6 +805,19 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
     var start = new Date();
     console.log(start);
     this.data.SetStartTime(start);
+    this.InitStyles();
+    this.SetFaceAndEyeButtonsStyle();
+  }
+
+  SetFaceAndEyeButtonsStyle(){
+    var stageKey = this.char + "_" + this.level + "_" + this.subLevel;
+
+    var styleFace = this.mapFace.get(stageKey);
+    var styleEyes = this.mapEyes.get(stageKey);
+
+    if(styleFace == undefined || styleEyes == undefined) { return; }
+    this.changeFaceBtnStyle("face",styleFace.left,styleFace.top,styleFace.width,styleFace.height);
+    this.changeFaceBtnStyle("eyes",styleEyes.left,styleEyes.top,styleEyes.width,styleEyes.height);
   }
 
   ngOnInit() {
@@ -86,7 +825,6 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
     this.gender = this.data.GetGender();
     this.data.UpdateCurrentComponent("gameZone");
     this.PlayDefaultStartAudio();
-    this.changeFaceBtnStyle("face","3%","3%","3%","3%");
   }
 
   ngOnDestroy(){
@@ -109,8 +847,12 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
       this.myFaceBtnStyles = JSON.parse(JSON.stringify(btnStyle));
     }
     else if(organ == "eyes"){
-      //this.myEyeBtnStyles={'left':left,'top':top,'width':width,'height':height};
-    }
+      var btnStyle = new ButtonStyle();
+      btnStyle.left = left;
+      btnStyle.top = top;
+      btnStyle.width = width;
+      btnStyle.height = height;
+      this.myEyeBtnStyles = JSON.parse(JSON.stringify(btnStyle));    }
   }
 
   private charType(videoName){
@@ -180,6 +922,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
       if(this.playManually==false){
         this.data.videoDuration += video.duration;
         this.ChangeSources();
+        this.SetFaceAndEyeButtonsStyle();
       }
       this.ShowImage();
       this.playManually = false;
@@ -264,6 +1007,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
         this.StopMedia();
         this.ChangeAudioSource();
         this.ChangeSources();
+        this.SetFaceAndEyeButtonsStyle();
         this.PlayDefaultStartAudio();
       }
       this.data.CancelLastAction();
@@ -282,6 +1026,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
         this.StopMedia();
         this.ChangeAudioSource();
         this.ChangeSources();
+        this.SetFaceAndEyeButtonsStyle();
         this.PlayDefaultStartAudio();
       }
       this.data.CancelLastAction();
@@ -406,6 +1151,16 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
       this.dataSet[i]=[x.total_time, x.video_duration,x.vagrancy_time,x.area1,x.area2,x.area3,x.area4,x.area5,x.area6,x.areaface,x.areaeyes];
       this.labels[i]=x.label;
     }
+  }
+
+  InitStyles(){
+    faceSTYLE.forEach(x=>{
+      this.mapFace.set(x.name, x.style);
+    });
+
+    eyesSTYLE.forEach(y=>{
+      this.mapEyes.set(y.name, y.style);
+    });
   }
 
 }
