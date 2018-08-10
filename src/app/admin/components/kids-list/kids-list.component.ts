@@ -25,7 +25,8 @@ export class KidsListComponent {
   set kids(kids: Kid[]) {
     this._kids = kids;
     const address = {};
-    const age = {};
+    const age = [0, 0, 0];
+    const gender = [0, 0, 0];
 
     this._kids.forEach(
       kid =>
@@ -33,13 +34,57 @@ export class KidsListComponent {
           ? (address[kid.address as any] = 1)
           : address[kid.address as any]++
     );
-    this._kids.forEach(
-      kid =>
-        typeof age[kid.age as any] === 'undefined'
-          ? (age[kid.age as any] = 1)
-          : age[kid.age as any]++
-    );
+    this.kids.forEach(function(kid) {
+      if (kid.gender.toLocaleLowerCase() === "male") {
+        gender[0]++;
+      } else if (kid.gender.toLocaleLowerCase() === "female"){
+        gender[1]++;
+      } else {
+        gender[2]++;
+      }
 
+      if (kid.age <= 4) {
+        age[0]++;
+      } else if (kid.age <= 8) {
+        age[1]++;
+      } else {
+        age[2]++;
+      }
+    });
+
+    this.pieChartData = [{
+      id: 0,
+      label: 'under 4',
+      value: age[0],
+      color: 'blue',
+    }, {
+      id: 1,
+      label: 'between 4-8',
+      value: age[1],
+      color: 'black',
+    }, {
+      id: 2,
+      label: 'over 8 ',
+      value: age[2],
+      color: 'red',
+    }];
+
+    this.pieChartGenderData = [{
+      id: 0,
+      label: 'male',
+      value: gender[0],
+      color: 'yellow',
+    }, {
+      id: 1,
+      label: 'female',
+      value: gender[1],
+      color: 'green',
+    }, {
+      id: 2,
+      label: 'unknown ',
+      value: gender[2],
+      color: 'purple',
+    }];
 
     const sumAddress = Object.keys(address).reduce((a, b) => a + address[b], 0);
     const sumAge = Object.keys(age).reduce((a, b) => a + age[b], 0);
@@ -51,20 +96,15 @@ export class KidsListComponent {
       value: address[label],
       color: colorArray[id]
     }));
-    this.chartDataAge = Object.keys(age).map((label, id) => ({
-      id,
-      // @ts-ignore
-      label: `Kid's age ${label} ${((age[label] / sumAge)*100).toFixed(1)}%` ,
-      value: age[label],
-      color: colorArray[id]
-    }));
   }
   ageFilter: Number;
   genderFilter: String;
   nameFilter: String;
   numOfKids: Number;
   public chartDataAddress;
-  public chartDataAge;
+  public pieChartData;
+  public pieChartGenderData;
+
 
   constructor(private kidsService: KidsService, private router: Router) {}
 
@@ -85,7 +125,7 @@ export class KidsListComponent {
   }
 
   onMap() {
-    this.router.navigate(["/admin/map"]);
+    this.router.navigate(['/admin/map']);
   }
 
   deleteKid(id) {

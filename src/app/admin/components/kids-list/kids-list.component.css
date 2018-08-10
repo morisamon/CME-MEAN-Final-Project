@@ -63,3 +63,6 @@ div, h2 {
         stroke-width: 2;
     }
 }
+angular-d3-pie,angular-d3-donut{
+    margin-top: -5em;
+}

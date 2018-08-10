@@ -14,7 +14,7 @@ import { AgmCoreModule } from '@agm/core';
 import { GeocodingService } from './services/geocoding.service';
 import { GameSessionService } from './services/gamesession.service';
 import { KidSessionsListComponent } from './components/kid-sessions-list/kid-sessions-list.component';
-import { PieChartComponent, DoughnutChartComponent} from 'angular-d3-charts';
+import { PieChartComponent, DoughnutChartComponent, BarChartComponent } from 'angular-d3-charts';
 import { SvmVectorService } from './services/svmvectors.service';
 
 @NgModule({
@@ -33,7 +33,7 @@ import { SvmVectorService } from './services/svmvectors.service';
       EditKidComponent,
       GoogleMapComponent,
       KidSessionsListComponent,
-      PieChartComponent,DoughnutChartComponent
+      PieChartComponent, DoughnutChartComponent, BarChartComponent
     ],
     providers: [
       AuthGuard,
