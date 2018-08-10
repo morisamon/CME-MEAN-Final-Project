@@ -20,27 +20,27 @@ export class CharactersComponent implements OnInit {
   ngOnInit() {
   }
 
-  private showRelevantLevel(params){
+  private showRelevantLevel(params) {
     console.log(params.levelNumber);
     this.data.SetLevel(params.levelNumber);
 
     switch(params.levelNumber){
       case "1":
-      console.log(this.level1);
-      this.level1 = false;
-      this.level2 = true;
-      this.level3 = true;
-      break;
+        console.log(this.level1);
+        this.level1 = false;
+        this.level2 = true;
+        this.level3 = true;
+        break;
       case "2":
-      this.level1 = true;
-      this.level2 = false;
-      this.level3 = true;
-      break;
+        this.level1 = true;
+        this.level2 = false;
+        this.level3 = true;
+        break;
       case "3":
-      this.level1 = true;
-      this.level2 = true;
-      this.level3 = false;
-      break;
+        this.level1 = true;
+        this.level2 = true;
+        this.level3 = false;
+        break;
     }
   }
 

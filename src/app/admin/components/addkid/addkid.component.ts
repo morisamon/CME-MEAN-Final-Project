@@ -18,6 +18,7 @@ export class AddKidComponent implements OnInit {
   address: String
   lat: number
   lng: number
+  message: String
 
   constructor(
     private kidsService: KidsService,
@@ -39,7 +40,7 @@ export class AddKidComponent implements OnInit {
       lng: this.lng
     }
 
-    if (kid.address != "") {
+    if (this.validateFields(kid)) {
       this.geocodingService.codeAddress(kid.address).subscribe(data => {
         console.log(data);
         if (data.status == "ZERO_RESULTS" || data.status == "OVER_QUERY_LIMIT") {
@@ -50,7 +51,7 @@ export class AddKidComponent implements OnInit {
           kid.lng = data.results[0].geometry.location.lng;
         }
         this.kidsService.addNewKid(kid).subscribe(data => {
-          console.log(data.msg);
+          alert(data.msg);
           if(data.success){
             this.router.navigate(['/admin/kidslist']);
           } else {
@@ -58,6 +59,24 @@ export class AddKidComponent implements OnInit {
           }
         });
       });
+    } else alert(this.message);
+  }
+
+  validateFields(kid) {
+    if (kid._id == undefined || kid.address == undefined || kid.name == undefined || kid.gender == undefined || kid.age == undefined) {
+      this.message = "Please fill all the fileds";
+      return false;
     }
+    else {
+      if (kid._id < 1 || kid._id > 999999999) {
+        this.message = "Please insert valid ID";
+        return false;
+      }
+      if (kid.age < 1 || kid.age > 30) {
+        this.message = "Please insert age between 1 and 30";
+        return false;
+      }
+    }
+    return true;
   }
 }

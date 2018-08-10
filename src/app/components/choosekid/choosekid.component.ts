@@ -14,12 +14,16 @@ export class ChoosekidComponent implements OnInit {
   kids: Kid[];
   kidChosen: Number;
   genderChosen: String;
+  messageToShare: String;
 
   constructor(
     private kidsService: KidsService,
     private router: Router,
     private dataService: DataService,
-  ) { }
+    ) {
+    this.kidChosen = 0;
+    this.messageToShare = "Try to play in CME now!!!";
+  }
 
   ngOnInit() {
     this.kidsService.getKids()
@@ -29,14 +33,17 @@ export class ChoosekidComponent implements OnInit {
   }
   
   onStart() {
-    this.kids.forEach(element => {
-      if (element._id == this.kidChosen) {
-        this.genderChosen = element.gender;
-      }
-    });
-    this.dataService.SetKidID(this.kidChosen);
-    this.dataService.SetGender(this.genderChosen);
-    this.router.navigate(['/home/levels']);
+    if (this.kidChosen != 0) {
+      this.kids.forEach(element => {
+        if (element._id == this.kidChosen) {
+          this.genderChosen = element.gender;
+        }
+      });
+      this.dataService.SetKidID(this.kidChosen);
+      this.dataService.SetGender(this.genderChosen);
+      this.router.navigate(['/home/levels']);
+    } else alert("Please choose kid");
   }
+
 
 }

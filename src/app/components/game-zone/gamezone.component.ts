@@ -5,6 +5,7 @@ import { GameSessionService } from '../../admin/services/gamesession.service';
 import { SVM } from 'svm';
 import { SvmVectorService } from '../../admin/services/svmvectors.service';
 import { SvmVector } from '../../models/SvmVector';
+import { ButtonStyle } from './button.style';
 
 const VIDEO_SRC: string="/assets/videos/";
 const AUDIO_SRC: string="/assets/voices/";
@@ -85,6 +86,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
     this.gender = this.data.GetGender();
     this.data.UpdateCurrentComponent("gameZone");
     this.PlayDefaultStartAudio();
+    this.changeFaceBtnStyle("face","3%","3%","3%","3%");
   }
 
   ngOnDestroy(){
@@ -99,7 +101,12 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
 
   changeFaceBtnStyle(organ, left, top, width, height){
     if(organ == "face"){
-      //this.myFaceBtnStyles={'left':left,'top':top,'width':width,'height':height};
+      var btnStyle = new ButtonStyle();
+      btnStyle.left = left;
+      btnStyle.top = top;
+      btnStyle.width = width;
+      btnStyle.height = height;
+      this.myFaceBtnStyles = JSON.parse(JSON.stringify(btnStyle));
     }
     else if(organ == "eyes"){
       //this.myEyeBtnStyles={'left':left,'top':top,'width':width,'height':height};

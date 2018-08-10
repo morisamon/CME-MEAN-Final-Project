@@ -1,4 +1,4 @@
-import { Component, OnInit, NgModule } from '@angular/core';
+import { Component, OnInit, NgModule, ViewChild } from '@angular/core';
 import { DataService } from '../../services/DataService/data.service';
 import { AuthService } from '../../authentication/services/authService/auth.service';
 import { Router } from '@angular/router';
@@ -10,13 +10,15 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./nav.component.css']
 })
     
+
 export class NavComponent  implements OnInit {
 
   flag: boolean;
   currentComponent: string;
-  messageToShare: String;
   city: string;
   cities: String[];
+
+  @ViewChild('myCanvas') myCanvas: any;
 
   constructor(
     private data: DataService,
@@ -34,27 +36,31 @@ export class NavComponent  implements OnInit {
         ];
     }
 
-  ngOnInit(){
+  ngOnInit() {
     this.data.currentButtonDisplayFlag.subscribe((flag) => {
       this.flag=flag;
       console.log("nav component: Activation of gameZone component is: " + this.flag);
-      this.messageToShare = "Try to play in CME now!!!";
     });
-
+    var ctx = this.myCanvas.nativeElement.getContext("2d");
+    ctx.font = "30px Tahoma";
+    ctx.strokeStyle="#0000b3";
+    ctx.strokeText("CMe", 5, 27);
   }
 
   getTemp() {
-    var string = 'https://api.openweathermap.org/data/2.5/weather?q='+ this.city +'&appid=5372c70cd09242d80449ec961e370962';
-    this.http.get(string).subscribe(data => {
-      var json = JSON.parse(JSON.stringify(data));
-      var message = "The tempeture in " + this.city + " is " + (json.main.temp-273.15) + "celsius";
-      alert(message);
-    });
+    if (this.city != undefined) {
+      var string = 'https://api.openweathermap.org/data/2.5/weather?q='+ this.city +'&appid=5372c70cd09242d80449ec961e370962';
+      this.http.get(string).subscribe(data => {
+        var json = JSON.parse(JSON.stringify(data));
+        var message = "The tempeture in " + this.city + " is " + (Math.round((json.main.temp-273.15)*100)/100) + " celsius";
+        alert(message);
+      });
+    } else alert("Please choose city");
   }
 
   onLogoutClick() {
     this.authService.logout();
-    console.log("You are logged out");
+    alert("You are logged out");
     this.router.navigate(['/home/login']);
     return false;
   }

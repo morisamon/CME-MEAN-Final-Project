@@ -5,95 +5,13 @@ import { SvmVector } from './models/SvmVector';
 import { SVM } from 'svm';
 import { SvmVectorService } from './admin/services/svmvectors.service';
 
-const svmVector: SvmVector[] = [{
-  "total_time" : 72.049,
-  "video_duration" : 31.557333,
-"vagrancy_time" : 10.491667,
-"area1" : 1,
-  "area2" : 4,
-"area3" : 0,
-"area4" : 0,
-  "area5" : 3,
-"area6" : 1,
-  "areaface" : 3,
-  "areaeyes" : 3,
-  "label" : 1
-},
-
-{
-  "total_time" : 81.141,
-  "video_duration" : 26.688,
-"vagrancy_time" : 28.453,
-"area1" : 2,
-"area2" : 3,
-"area3" : 0,
-"area4" : 0,
-  "area5" : 2,
-"area6" : 0,
-  "areaface" : 3,
-"areaeyes" : 3,
-"label" : 1
-},
-
-{
-  "total_time" : 50.12,
-  "video_duration" : 18.24,
-"vagrancy_time" : 28.453,
-  "area1" : 2,
-  "area2" : 0,
-  "area3" : 1,
-"area4" : 2,
-  "area5" : 0,
-  "area6" : 1,
-  "areaface" : 4,
-  "areaeyes" : 3,
-  "label" : 1
-},
-
-{
-  "total_time" : 509.887,
-  "video_duration" : 39.919999,
-"vagrancy_time" : 295.967001,
-"area1" : 31,
-  "area2" : 37,
-"area3" : 0,
-  "area4" : 2,
-  "area5" : 3,
-  "area6" : 0,
-  "areaface" : 11,
-  "areaeyes" : 3,
-  "label" : 1
-},
-
-{
-  "total_time" : 86.478,
-  "video_duration" : 21.744,
-"vagrancy_time" : 50.734,
-"area1" : 1,
-  "area2" : 1,
-  "area3" : 0,
-  "area4" : 0,
-  "area5" : 1,
-  "area6" : 0,
-  "areaface" : 1,
-"areaeyes" : 3,
-"label" : 1
-},
-
-{
-  "total_time" : 126.594,
-  "video_duration" : 15.92,
-"vagrancy_time" : 82.674,
-  "area1" : 2,
-  "area2" : 2,
-  "area3" : 2,
-  "area4" : 2,
-"area5" : 2,
-  "area6" : 0,
-  "areaface" : 1,
-  "areaeyes" : 3,
-  "label" : 1
-},
+const svmVector: SvmVector[] = [
+    { "total_time" : 72.049, "video_duration" : 31.557333, "vagrancy_time" : 10.491667, "area1" : 1, "area2" : 4, "area3" : 0, "area4" : 0, "area5" : 3, "area6" : 1, "areaface" : 3, "areaeyes" : 3, "label" : 1 },
+    { "total_time" : 81.141, "video_duration" : 26.688, "vagrancy_time" : 28.453, "area1" : 2, "area2" : 3, "area3" : 0, "area4" : 0, "area5" : 2, "area6" : 0, "areaface" : 3, "areaeyes" : 3, "label" : 1 },
+    { "total_time" : 50.12, "video_duration" : 18.24, "vagrancy_time" : 28.453, "area1" : 2, "area2" : 0, "area3" : 1, "area4" : 2, "area5" : 0, "area6" : 1, "areaface" : 4, "areaeyes" : 3, "label" : 1 },
+    { "total_time" : 509.887, "video_duration" : 39.919999, "vagrancy_time" : 295.967001, "area1" : 31, "area2" : 37, "area3" : 0, "area4" : 2, "area5" : 3, "area6" : 0, "areaface" : 11, "areaeyes" : 3, "label" : 1 },
+    { "total_time" : 86.478, "video_duration" : 21.744, "vagrancy_time" : 50.734, "area1" : 1, "area2" : 1, "area3" : 0, "area4" : 0, "area5" : 1, "area6" : 0, "areaface" : 1, "areaeyes" : 3, "label" : 1 },
+    { "total_time" : 126.594, "video_duration" : 15.92, "vagrancy_time" : 82.674, "area1" : 2, "area2" : 2, "area3" : 2, "area4" : 2, "area5" : 2, "area6" : 0, "areaface" : 1, "areaeyes" : 3, "label" : 1 },
 
 {
   "total_time" : 139.972,

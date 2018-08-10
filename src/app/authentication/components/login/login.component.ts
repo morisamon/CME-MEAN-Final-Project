@@ -28,10 +28,10 @@ export class LoginComponent implements OnInit {
     this.authService.authenticateUser(user).subscribe(data => {
       if(data.success){
         this.authService.storeUserData(data.token, data.user);
-        console.log("You are now logged in");
-        this.router.navigate(['/admin/dashboard']);
+        alert("You are now logged in");
+        this.router.navigate(['home/choosekid']);
       } else {
-        console.log(data.msg);
+        alert(data.msg);
         this.router.navigate(['/home/login']);
       }
     });

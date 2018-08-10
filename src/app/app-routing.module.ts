@@ -10,20 +10,13 @@ import { ChoosekidComponent } from './components/choosekid/choosekid.component';
 import { AuthGuard } from './admin/auth.guards';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'home', component: DisplayComponent},
-  { path: 'copyright', component: CopyrightComponent},
-  { path: 'home/levels', component: LevelsComponent, canActivate:[AuthGuard] },
-  { path: 'home', component: DisplayComponent},
+  { path: '', redirectTo: 'home/choosekid', pathMatch: 'full' },
+  { path: 'home', redirectTo: 'home/choosekid', pathMatch: 'full'},
+  { path: 'home/levels', redirectTo: 'home/levels/characters/1', pathMatch: 'full' },
   { path: 'home/levels/characters/:levelNumber', component: CharactersComponent, canActivate:[AuthGuard] },
   { path: 'home/game/:id', component: GameZoneAreaComponent, canActivate:[AuthGuard] },
   { path: 'home/register', component: RegisterComponent},
   { path: 'home/choosekid', component: ChoosekidComponent, canActivate:[AuthGuard] },
-  
-  { path: '',
-    redirectTo: '/home',
-    pathMatch: 'full'
-  },
 ];
 
 @NgModule({
@@ -39,5 +32,4 @@ export const routingComponents = [
   LevelsComponent,
   CharactersComponent,
   GameZoneAreaComponent,
-  
 ]
