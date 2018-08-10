@@ -70,15 +70,9 @@
             <br>
         </div>
     </div>
-    <div>
-        <div style="width: 50%;float: left;">
-            <angular-d3-pie *ngIf="chartDataAddress" [id]="donutChartId" [data]="chartDataAddress"></angular-d3-pie>
-
-        </div>
-        <div style="width: 50%;float: right;">
-            <angular-d3-donut *ngIf="chartDataAge" [id]="donutChartId" [data]="chartDataAge"></angular-d3-donut>
-
-        </div>
+    <div style="display: flex;">
+        <angular-d3-pie  *ngIf="pieChartGenderData" [outerRadius]=80  [width]=450 [id]="donutChartId" [data]="pieChartGenderData "></angular-d3-pie>
+        <angular-d3-donut [middleText]="'Cites'" *ngIf="chartDataAddress" [outerRadius]=80  [width]=450 [id]="donutChartId2" [data]="chartDataAddress"></angular-d3-donut>
+        <angular-d3-pie *ngIf="pieChartData"  [outerRadius]=80 [width]=450 [id]="donutChartId1" [data]="pieChartData"></angular-d3-pie>
     </div>
-
 </div>
