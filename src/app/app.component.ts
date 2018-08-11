@@ -4,6 +4,7 @@ import { DataService } from './services/DataService/data.service';
 import { SVM } from 'svm';
 import { SvmVectorService } from './admin/services/svmvectors.service';
 import { svmVector } from './components/game-zone/variables';
+import * as io from 'socket.io-client';
 
 @Component({
   selector: 'my-app',
@@ -13,12 +14,14 @@ import { svmVector } from './components/game-zone/variables';
 })
 
 export class AppComponent {
-
+  
+  socket;
   private svm: SVM = new SVM();
   private dataset: Number[][] = [[]];
   private labels: Number[] = [];
 
   constructor(private dataService : DataService, private svmVectorService : SvmVectorService) {
+    this.socket = io();
     svmVectorService.getDataSet().subscribe(data => {
       console.log(data);
       this.InitDataSetToVector();
