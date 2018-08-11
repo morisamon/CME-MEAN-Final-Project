@@ -21,13 +21,13 @@ button.btn.btn-primary.btn-lg {
     top: 30%;
     width: 9%;
     height: 15%;
-    background: red;
+    background: transparent; /*red*/
     border: black;
 }
 
 button#faceBtn {
     position: absolute;
-    background: blue;
+    background: transparent; /*blue*/
     border: black;
     left: 3%;
     height: 24%;

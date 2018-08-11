@@ -24,7 +24,7 @@ import { StatisticsComponent } from './components/statistics/statistics.componen
       FormsModule,
       AdminRoutingModule,
       AgmCoreModule.forRoot({
-        apiKey: 'AIzaSyBdbUxzkulMdgAO4HL8BpG5CkgTmSZODFs'
+        apiKey: 'AIzaSyDRdcaQEnNjEu__1n0o6fhdTfM0zZa--sA'
       })
     ],
     declarations: [
