@@ -43,7 +43,7 @@ export class AddKidComponent implements OnInit {
     if (this.validateFields(kid)) {
       this.geocodingService.codeAddress(kid.address).subscribe(data => {
         console.log(data);
-        if (data.status == "ZERO_RESULTS" || data.status == "OVER_QUERY_LIMIT") {
+        if (data.status == "ZERO_RESULTS" || data.status == "OVER_QUERY_LIMIT" || data.status == "REQUEST_DENIED") {
           kid.lat = 0;
           kid.lng = 0;
         } else {

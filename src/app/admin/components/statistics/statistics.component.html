@@ -1,0 +1,11 @@
+<div class="margin-auto width70 center">
+    <h2 class="page-header">Statistics</h2>
+    <div class="col-lg-6">
+      <h3>Gender Pie Chart</h3>
+      <angular-d3-pie *ngIf="pieChartGenderData" [outerRadius]=100 [width]=450 [id]="donutChartId" [data]="pieChartGenderData "></angular-d3-pie>
+    </div>
+    <div class="col-lg-6">
+      <h3>Age Donut Chart</h3>
+      <angular-d3-donut *ngIf="donutChartAgeData" [width]=700 [outerRadius]=100 [middleText]="'100%'" [middleTextFontSize]="'2em'" [middleTextColor]="'white'" [innerRadius]=60 [spreadSlice]=true [data]="donutChartAgeData" [iconWidth]=20 [iconHeight]=20 (centerImageEvent)="centerImageEvent()"></angular-d3-donut>
+    </div>
+</div>

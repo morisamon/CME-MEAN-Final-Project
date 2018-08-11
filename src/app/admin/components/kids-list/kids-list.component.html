@@ -2,7 +2,8 @@
     <h2 class="page-header">Kids List ({{ numOfKids }})</h2>
     <div class="margin-auto width95">
         <a class="btn btn-info" (click)="onAddKid()">Add Kid</a>&nbsp;
-        <a class="btn btn-info" (click)="onMap()">Map</a>
+        <a class="btn btn-info" (click)="onMap()">Map</a>&nbsp;
+        <a class="btn btn-info" (click)="onStatistics()">Statistics</a>
     </div>
     <div class="margin-auto width40">
         Max Age:
@@ -69,10 +70,5 @@
             <br>
             <br>
         </div>
-    </div>
-    <div style="display: flex;">
-        <angular-d3-pie  *ngIf="pieChartGenderData" [outerRadius]=80  [width]=450 [id]="donutChartId" [data]="pieChartGenderData "></angular-d3-pie>
-        <angular-d3-donut [middleText]="'Cites'" *ngIf="chartDataAddress" [outerRadius]=80  [width]=450 [id]="donutChartId2" [data]="chartDataAddress"></angular-d3-donut>
-        <angular-d3-pie *ngIf="pieChartData"  [outerRadius]=80 [width]=450 [id]="donutChartId1" [data]="pieChartData"></angular-d3-pie>
     </div>
 </div>
