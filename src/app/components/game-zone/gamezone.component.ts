@@ -61,6 +61,8 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
   private mapFace = new TSMap<String,ButtonStyle>();
   private mapEyes = new TSMap<String,ButtonStyle>();
 
+  private timeout;
+
   constructor(private route: ActivatedRoute, private router:Router,
     private elementRef: ElementRef, private data: DataService,
     private sessionService: GameSessionService,
@@ -97,7 +99,20 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
     this.changeFaceBtnStyle("eyes",styleEyes.left,styleEyes.top,styleEyes.width,styleEyes.height);
   }
 
+  mouseEnter(area) {
+    this.timeout = setTimeout(() => {
+      if (area === "eyes")
+        this.StartVideo();
+      else this.Click(area);
+    }, 2000);
+  }
+
+  mouseLeave() {
+    clearTimeout(this.timeout);
+  }
+
   ngOnInit() {
+
     this.kidid = this.data.GetKidID();
     this.gender = this.data.GetGender();
     this.data.UpdateCurrentComponent("gameZone");
