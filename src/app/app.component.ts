@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import {TaskService} from './services/task.service';
 import { DataService } from './services/DataService/data.service';
 import { SVM } from 'svm';
 import { SvmVectorService } from './admin/services/svmvectors.service';
@@ -10,7 +9,7 @@ import * as io from 'socket.io-client';
   selector: 'my-app',
   templateUrl: 'app.component.html',
   styleUrls:['./app.component.css'],
-  providers:[TaskService, DataService]
+  providers:[ DataService ]
 })
 
 export class AppComponent {
@@ -21,7 +20,6 @@ export class AppComponent {
   private labels: Number[] = [];
 
   constructor(private dataService : DataService, private svmVectorService : SvmVectorService) {
-    this.socket = io();
     svmVectorService.getDataSet().subscribe(data => {
       console.log(data);
       this.InitDataSetToVector();

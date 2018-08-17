@@ -8,6 +8,7 @@ import { SvmVector } from '../../models/SvmVector';
 import { ButtonStyle, LevelButtonStyle } from './button.style';
 import { TSMap } from "typescript-map";
 import { faceSTYLE, eyesSTYLE } from './variables';
+import * as io from 'socket.io-client';
 
 const VIDEO_SRC: string="/assets/videos/";
 const AUDIO_SRC: string="/assets/voices/";
@@ -62,6 +63,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
   private mapEyes = new TSMap<String,ButtonStyle>();
 
   private timeout;
+  private socket;
 
   constructor(private route: ActivatedRoute, private router:Router,
     private elementRef: ElementRef, private data: DataService,
@@ -86,6 +88,8 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
     this.data.SetStartTime(start);
     this.InitStyles();
     this.SetFaceAndEyeButtonsStyle();
+    this.socket = io();
+    this.socket.emit('openAlgorithm');
   }
 
   SetFaceAndEyeButtonsStyle(){
@@ -121,6 +125,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
 
   ngOnDestroy(){
     this.data.UpdateCurrentComponent("none");
+    this.socket.disconnect();
   }
 
   getSrcToShow(type: String){
@@ -224,6 +229,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
       this.ngIfButtons = false;
       this.data.end_time = new Date();
       console.log(this.data.end_time);
+      this.socket.emit("stopAlgorithm");
     }
     this.ngIfButtons = true;
   }
@@ -246,7 +252,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
     this.audioSRC = AUDIO_SRC + this.char + "_" + this.gender + "_" + this.level + "_" + this.startVoiceCount + '.wav';
     this.audioplayer.nativeElement.src = this.audioSRC;
 
-    /*var playPromise = this.audioplayer.nativeElement.play();
+    var playPromise = this.audioplayer.nativeElement.play();
 
     if (playPromise !== undefined) {
       playPromise.then(_ => {
@@ -258,11 +264,11 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
         this.ngIfButtons = true;
         this.startVoiceCount++;
       }); 
-    }*/
+    }
 
-    this.audioplayer.nativeElement.play();
+    /*this.audioplayer.nativeElement.play();
     this.ngIfButtons = false;
-    this.startVoiceCount++;
+    this.startVoiceCount++;*/
   }
 
   ShowImage(){
@@ -316,6 +322,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
         this.ChangeSources();
         this.SetFaceAndEyeButtonsStyle();
         this.PlayDefaultStartAudio();
+        this.socket.emit('openAlgorithm');
       }
       this.data.CancelLastAction();
       break;
@@ -335,6 +342,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
         this.ChangeSources();
         this.SetFaceAndEyeButtonsStyle();
         this.PlayDefaultStartAudio();
+        this.socket.emit('openAlgorithm');
       }
       this.data.CancelLastAction();
       break;

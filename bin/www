@@ -25,17 +25,27 @@ app.set('port', port);
 var server = http.createServer(app);
 var io = socketIO(server);
 io.on('connection', (socket) => {
-  console.info("User connected");
-  /*var theCWD = process.cwd();
-  var theCWD = theCWD +"\\"+"start.bat";
-  console.log("the CWD: " + theCWD)*/
-  exec("start.bat", function(err, data) {
-    if(err != null){
-      console.log(err)
-    }
-  });
-});
+  console.info("Sockect IO Connected");
 
+  socket.on('openAlgorithm', function (data) {
+    console.info("openAlgorithm opened");
+    exec("start.bat", function(err, data) {
+      if(err != null){
+        console.log(err)
+      }
+    });
+  });
+
+  socket.on('stopAlgorithm', function (data) {
+    console.info("Algorithm stopped");
+    exec("stop.bat", function(err, data) {
+      if(err != null){
+        console.log(err)
+      }
+    });
+  });
+
+});
 
 /**
  * Listen on provided port, on all network interfaces.

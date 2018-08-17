@@ -1,1 +1,1 @@
-start "" "C:\\Program Files (x86)\\Enable Viacam\\bin\\eviacam.exe"
+python python-algoritm/iMouse_test1.py
