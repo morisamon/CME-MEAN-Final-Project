@@ -17,7 +17,7 @@ const BOY: string = "boy";
 const GIRL: string = "girl";
 
 const AUDIO_DEFAULT_BOY_START_SRC:String = "/assets/voices/general_boy_choose_start.wav";
-const AUDIO_DEFAULT_GIRL_START_SRC:String = "/assets/voices/general_girl_choose_start.wma";
+const AUDIO_DEFAULT_GIRL_START_SRC:String = "/assets/voices/general_girl_choose_start.wav";
 
 const TIMEOUT_BETWEEN_AUDIO_VOID: number = 1200;
 
@@ -186,7 +186,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
     if(this.subLevel<=3){
       this.videoplayer.nativeElement.play();
       if(this.subLevel==3){
-        this.audioSRC = AUDIO_SRC + this.char + "/" + this.char + "_" + this.gender + "_" + this.level + "_" + this.startVoiceCount + '.mp3';
+        this.audioSRC = AUDIO_SRC + this.char + "/" + this.gender + "/" + this.char + "_" + this.gender + "_" + this.level + "_" + this.startVoiceCount + '.mp3';
         this.audioplayer.nativeElement.src = this.audioSRC;
         this.audioplayer.nativeElement.play();
       }
@@ -249,7 +249,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
 
   
   ChangeAudioSource(){
-    this.audioSRC = AUDIO_SRC + this.char + "/" + this.char + "_" + this.gender + "_" + this.level + "_" + this.startVoiceCount + '.mp3';
+    this.audioSRC = AUDIO_SRC + this.char + "/" + this.gender + "/" + this.char + "_" + this.gender + "_" + this.level + "_" + this.startVoiceCount + '.mp3';
     this.audioplayer.nativeElement.src = this.audioSRC;
 
     var playPromise = this.audioplayer.nativeElement.play();
