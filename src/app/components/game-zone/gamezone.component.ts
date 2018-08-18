@@ -363,8 +363,8 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
 
       case "stop":
       this.WriteAndResetSession();
-      this.router.navigate(["/home"]);
       this.data.CancelLastAction();
+      this.router.navigate(["/home"]);
       break;
 
       case "char":
