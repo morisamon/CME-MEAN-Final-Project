@@ -186,7 +186,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
     if(this.subLevel<=3){
       this.videoplayer.nativeElement.play();
       if(this.subLevel==3){
-        this.audioSRC = AUDIO_SRC + this.char + "_" + this.gender + "_" + this.level + "_" + this.startVoiceCount + '.wav';
+        this.audioSRC = AUDIO_SRC + this.char + "/" + this.char + "_" + this.gender + "_" + this.level + "_" + this.startVoiceCount + '.mp3';
         this.audioplayer.nativeElement.src = this.audioSRC;
         this.audioplayer.nativeElement.play();
       }
@@ -249,7 +249,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
 
   
   ChangeAudioSource(){
-    this.audioSRC = AUDIO_SRC + this.char + "_" + this.gender + "_" + this.level + "_" + this.startVoiceCount + '.wav';
+    this.audioSRC = AUDIO_SRC + this.char + "/" + this.char + "_" + this.gender + "_" + this.level + "_" + this.startVoiceCount + '.mp3';
     this.audioplayer.nativeElement.src = this.audioSRC;
 
     var playPromise = this.audioplayer.nativeElement.play();
