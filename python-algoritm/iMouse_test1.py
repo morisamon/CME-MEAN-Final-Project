@@ -95,10 +95,10 @@ while True:
         '''
         
         if start_flag == True:
-            upper_mx = mx + 35
-            lower_mx = mx - 20
-            upper_my = my + 35
-            lower_my = my - 20
+            upper_mx = mx + 80
+            lower_mx = mx - 60
+            upper_my = my + 80
+            lower_my = my - 60
             start_flag = False
             
         mx = np.interp(mx,[lower_mx,upper_mx],[0,width])
