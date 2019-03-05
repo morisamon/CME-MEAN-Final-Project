@@ -94,6 +94,7 @@ while True:
             cv2.rectangle(roi_color,(ex,ey),(ex+ew,ey+eh),(0,0,255),2)
         '''
         
+	# Updated by our team
         if start_flag == True:
             upper_mx = mx + 80
             lower_mx = mx - 60
