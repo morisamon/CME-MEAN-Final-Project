@@ -188,6 +188,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
       this.videoplayer.nativeElement.play();
       if(this.subLevel!=4){
         this.audioSRC = AUDIO_SRC + this.char + "/" + this.gender + "/" + this.char + "_" + this.gender + "_" + this.level + "_" + this.startVoiceCount + '.mp3';
+        this.startVoiceCount++;
         this.audioplayer.nativeElement.src = this.audioSRC;
         this.audioplayer.nativeElement.play();
       }
@@ -238,10 +239,13 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
   AudioEnded(e, audio){
     console.log('duration video: ', audio.duration);
     console.log("Audio is ended now");
+
     var counter = configAudioPerCharacter[this.char + "_" + this.gender + "_" + this.level + "_" + this.subLevel];
+    
     if(!counter){
       counter = 3;
     }
+
     if(this.startVoiceCount <= counter){
       this.data.videoDuration += audio.duration;
       setTimeout(() => {
@@ -249,7 +253,8 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
       }, TIMEOUT_BETWEEN_AUDIO_VOID);
 
     }
-    this.ngIfButtons = true;
+
+    this.startVoiceCount > counter ? this.ngIfButtons = true : this.ngIfButtons = false;
   }
 
   
@@ -315,6 +320,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
 
       var newnumber = Number(this.level);
       newnumber++;
+      
       if(newnumber<=3)
       {
         this.WriteAndResetSession();
@@ -327,6 +333,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
         this.ChangeSources();
         this.SetFaceAndEyeButtonsStyle();
         this.PlayDefaultStartAudio();
+        this.ShowImage();
         this.socket.emit('openAlgorithm');
       }
       this.data.CancelLastAction();
@@ -347,6 +354,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
         this.ChangeSources();
         this.SetFaceAndEyeButtonsStyle();
         this.PlayDefaultStartAudio();
+        this.ShowImage();
         this.socket.emit('openAlgorithm');
       }
       this.data.CancelLastAction();
