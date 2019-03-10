@@ -9,6 +9,7 @@ import { ButtonStyle, LevelButtonStyle } from './button.style';
 import { TSMap } from "typescript-map";
 import { faceSTYLE, eyesSTYLE } from './variables';
 import * as io from 'socket.io-client';
+import { configAudioPerCharacter } from 'src/app/helper/audioCounter';
 
 const VIDEO_SRC: string="/assets/videos/";
 const AUDIO_SRC: string="/assets/voices/";
@@ -185,7 +186,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
     this.Click("eyes");
     if(this.subLevel<=3){
       this.videoplayer.nativeElement.play();
-      if(this.subLevel==3){
+      if(this.subLevel!=4){
         this.audioSRC = AUDIO_SRC + this.char + "/" + this.gender + "/" + this.char + "_" + this.gender + "_" + this.level + "_" + this.startVoiceCount + '.mp3';
         this.audioplayer.nativeElement.src = this.audioSRC;
         this.audioplayer.nativeElement.play();
@@ -237,7 +238,11 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
   AudioEnded(e, audio){
     console.log('duration video: ', audio.duration);
     console.log("Audio is ended now");
-    if(this.startVoiceCount <= 3){
+    var counter = configAudioPerCharacter[this.char + "_" + this.gender + "_" + this.level + "_" + this.subLevel];
+    if(!counter){
+      counter = 3;
+    }
+    if(this.startVoiceCount <= counter){
       this.data.videoDuration += audio.duration;
       setTimeout(() => {
         this.ChangeAudioSource();
