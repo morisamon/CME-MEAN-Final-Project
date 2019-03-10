@@ -135,8 +135,11 @@ export class DataService {
         if(this.gender == "Male"){
             return "boy";
         }
-        else{
+        else if(this.gender == "Female"){
             return "girl";
+        }
+        else{
+            return null;
         }
     }
     ResetSessionMetaData(){

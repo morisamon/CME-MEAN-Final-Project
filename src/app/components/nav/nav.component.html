@@ -3,14 +3,14 @@
         <a routerLink="/home/choosekid"><canvas #myCanvas width="80" height="30"> Your browser does not support the HTML5 canvas tag.</canvas></a>
     </div>
     <div class="col-lg-3 background" align="right">
-        <select [(ngModel)]="city" class="form-control width30">
+        <!--<select [(ngModel)]="city" class="form-control width30">
             <option *ngFor='let item of cities' [value]="item">
                 {{item}}
             </option>
-        </select>
+        </select>-->
     </div>
     <div class="col-lg-1 background" align="left">
-        <a class="btn btn-info" (click)="getTemp()"><b>Get temp</b></a>
+        <!--<a class="btn btn-info" (click)="getTemp()"><b>Get temp</b></a>-->
     </div>
     <div class="col-lg-6 background" align="right">
         <a *ngIf="!flag" (click)="StopBtnClicked()" class="btn btn-info"><i class="glyphicon glyphicon-stop"></i></a>
