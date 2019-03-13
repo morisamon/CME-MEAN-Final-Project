@@ -49,6 +49,8 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
   public level: String;
   public char: String
   public playManually: Boolean;
+  public alertUrl: String;
+  public ngIsAlert: Boolean;
 
   private startVoiceCount: number = 1;
   private gender: String;
@@ -122,6 +124,9 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
     this.gender = this.data.GetGender();
     this.data.UpdateCurrentComponent("gameZone");
     this.PlayDefaultStartAudio();
+
+    this.alertUrl = 'http://pngimg.com/uploads/sign_stop/sign_stop_PNG25618.png';
+    this.ngIsAlert = true;
   }
 
   ngOnDestroy(){
@@ -204,7 +209,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
       else if (this.gender == GIRL){
         this.audioSRC = AUDIO_DEFAULT_GIRL_START_SRC;
       }
-    
+      
       this.audioplayer.nativeElement.src = this.audioSRC;
       this.audioplayer.nativeElement.play();
       this.ngIfButtons = false;

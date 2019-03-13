@@ -23,16 +23,32 @@ button.btn.btn-primary.btn-lg {
     height: 15%;
     background: transparent; /*red*/
     border: black;
+    opacity: 0.5 !important;
 }
 
-button#faceBtn {
+button#face {
     position: absolute;
-    background: transparent; /*blue*/
+    background: transparent !important; /*blue*/
     border: black;
     left: 3%;
     height: 24%;
     width: 15%;
     top: 30%;
     z-index: 99999;
+    opacity: 0.5 !important;
+}
 
+button#alert{
+    position: absolute;
+    z-index: 9999999;
+    top: 18%;
+    left: 29%;
+    width: 50%;
+    height: 50%;
+    background: transparent;
+    border: black;
+}
+
+.alertImage{
+    opacity: 1;
 }

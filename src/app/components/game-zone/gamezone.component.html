@@ -50,10 +50,13 @@
 
     </div>
 
+    <button *ngIf="ngIfButtons" [ngStyle] = "myEyeBtnStyles" id="eye" (mouseenter)="mouseEnter('eyes')" (mouseleave)="mouseLeave()" id="eyeBtn" (click)="StartVideo()" type="button" class="btn btn-primary btn-lg"></button>
+  
     <button *ngIf="ngIfButtons" [ngStyle] = "myFaceBtnStyles" id="face" (mouseenter)="mouseEnter('face')" (mouseleave)="mouseLeave()" (click)="Click('face');" type="button" class="btn btn-primary btn-lg"></button>
     
-    <button *ngIf="ngIfButtons" [ngStyle] = "myEyeBtnStyles" (mouseenter)="mouseEnter('eyes')" (mouseleave)="mouseLeave()" id="eyeBtn" (click)="StartVideo()" type="button" class="btn btn-primary btn-lg"></button>
-  
+    <button *ngIf="false" class="btn btn-primary btn-lg" id="alert" type="button">
+      <img [src]="alertUrl" class="alertImg" alt="Smiley face" height="100%" width="100%">
+    </button>
 
 
 </html>>
