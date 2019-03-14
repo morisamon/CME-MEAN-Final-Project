@@ -4,13 +4,14 @@ import { SVM } from 'svm';
 import { SvmVectorService } from './admin/services/svmvectors.service';
 import { svmVector } from './components/game-zone/variables';
 import * as io from 'socket.io-client';
+import { ExcelService } from './services/ExcelService/excel.service';
 
 
 @Component({
   selector: 'my-app',
   templateUrl: 'app.component.html',
   styleUrls:['./app.component.css'],
-  providers:[ DataService ]
+  providers:[ DataService, ExcelService ]
 })
 
 
@@ -57,5 +58,7 @@ export class AppComponent {
     console.log("Game");
 
   }
+
+
 
 }

@@ -10,15 +10,16 @@ import { TSMap } from "typescript-map";
 import { faceSTYLE, eyesSTYLE } from './variables';
 import * as io from 'socket.io-client';
 import { configAudioPerCharacter } from 'src/app/helper/audioCounter';
+import { ExcelService } from 'src/app/services/ExcelService/excel.service';
 
-const VIDEO_SRC: string="/assets/videos/";
-const AUDIO_SRC: string="/assets/voices/";
+const VIDEO_SRC: string = "/assets/videos/";
+const AUDIO_SRC: string = "/assets/voices/";
 
 const BOY: string = "boy";
 const GIRL: string = "girl";
 
-const AUDIO_DEFAULT_BOY_START_SRC:String = "/assets/voices/general_boy_choose_start.wav";
-const AUDIO_DEFAULT_GIRL_START_SRC:String = "/assets/voices/general_girl_choose_start.wav";
+const AUDIO_DEFAULT_BOY_START_SRC: String = "/assets/voices/general_boy_choose_start.wav";
+const AUDIO_DEFAULT_GIRL_START_SRC: String = "/assets/voices/general_girl_choose_start.wav";
 
 const TIMEOUT_BETWEEN_AUDIO_VOID: number = 1200;
 
@@ -28,7 +29,7 @@ const TIMEOUT_BETWEEN_AUDIO_VOID: number = 1200;
   styleUrls: ['./gamezone.component.css']
 })
 
-export class GameZoneAreaComponent implements OnInit, AfterViewInit{
+export class GameZoneAreaComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     //this.videoplayer.nativeElement.play(); //works!
@@ -62,18 +63,19 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
   private dataSvmFromDB: SvmVector[];
   private dataSet: Number[][] = [[]];
   private labels: Number[] = [];
-  private mapFace = new TSMap<String,ButtonStyle>();
-  private mapEyes = new TSMap<String,ButtonStyle>();
+  private mapFace = new TSMap<String, ButtonStyle>();
+  private mapEyes = new TSMap<String, ButtonStyle>();
 
   private timeout;
   private socket;
 
-  constructor(private route: ActivatedRoute, private router:Router,
+  constructor(private route: ActivatedRoute, private router: Router,
     private elementRef: ElementRef, private data: DataService,
     private sessionService: GameSessionService,
-    private svmVectorService : SvmVectorService) {
+    private svmVectorService: SvmVectorService,
+    private excelService: ExcelService) {
 
-    this.route.params.subscribe((params) =>{
+    this.route.params.subscribe((params) => {
       this.videoName = params
       this.char = params.id.split('_')[0];
       this.level = params.id.split('_')[1].split('.')[0];
@@ -95,15 +97,15 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
     this.socket.emit('openAlgorithm');
   }
 
-  SetFaceAndEyeButtonsStyle(){
+  SetFaceAndEyeButtonsStyle() {
     var stageKey = this.char + "_" + this.level + "_" + this.subLevel;
 
     var styleFace = this.mapFace.get(stageKey);
     var styleEyes = this.mapEyes.get(stageKey);
 
-    if(styleFace == undefined || styleEyes == undefined) { return; }
-    this.changeFaceBtnStyle("face",styleFace.left,styleFace.top,styleFace.width,styleFace.height);
-    this.changeFaceBtnStyle("eyes",styleEyes.left,styleEyes.top,styleEyes.width,styleEyes.height);
+    if (styleFace == undefined || styleEyes == undefined) { return; }
+    this.changeFaceBtnStyle("face", styleFace.left, styleFace.top, styleFace.width, styleFace.height);
+    this.changeFaceBtnStyle("eyes", styleEyes.left, styleEyes.top, styleEyes.width, styleEyes.height);
   }
 
   mouseEnter(area) {
@@ -129,19 +131,19 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
     this.ngIsAlert = true;
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.data.UpdateCurrentComponent("none");
     this.socket.disconnect();
   }
 
-  getSrcToShow(type: String){
-      var finalSRC = VIDEO_SRC + this.charType(this.videoName.id) + "/" + this.videoName.id + type;
-      console.log(finalSRC);
-      return finalSRC;
+  getSrcToShow(type: String) {
+    var finalSRC = VIDEO_SRC + this.charType(this.videoName.id) + "/" + this.videoName.id + type;
+    console.log(finalSRC);
+    return finalSRC;
   }
 
-  changeFaceBtnStyle(organ, left, top, width, height){
-    if(organ == "face"){
+  changeFaceBtnStyle(organ, left, top, width, height) {
+    if (organ == "face") {
       var btnStyle = new ButtonStyle();
       btnStyle.left = left;
       btnStyle.top = top;
@@ -149,49 +151,50 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
       btnStyle.height = height;
       this.myFaceBtnStyles = JSON.parse(JSON.stringify(btnStyle));
     }
-    else if(organ == "eyes"){
+    else if (organ == "eyes") {
       var btnStyle = new ButtonStyle();
       btnStyle.left = left;
       btnStyle.top = top;
       btnStyle.width = width;
       btnStyle.height = height;
-      this.myEyeBtnStyles = JSON.parse(JSON.stringify(btnStyle));    }
+      this.myEyeBtnStyles = JSON.parse(JSON.stringify(btnStyle));
+    }
   }
 
-  private charType(videoName){
-    if(videoName.includes('player'))
+  private charType(videoName) {
+    if (videoName.includes('player'))
       return "Player";
-    if(videoName.includes('fireman'))
+    if (videoName.includes('fireman'))
       return "Fireman";
-    if(videoName.includes('superman'))
+    if (videoName.includes('superman'))
       return "Superman";
-    if(videoName.includes('farmer'))
+    if (videoName.includes('farmer'))
       return "Farmer";
-    if(videoName.includes('superwoman'))
+    if (videoName.includes('superwoman'))
       return "Superwoman";
   }
 
-  Click(area){
-    
-    if(this.ngIfButtons == false || this.sessionIfFinished == true){
+  Click(area) {
+
+    if (this.ngIfButtons == false || this.sessionIfFinished == true) {
       return;
     }
 
     var clickarea = this.GetArea(area);
     var count: number = this.data.map.get(clickarea);
-    this.data.map.set(clickarea,count+1);
+    this.data.map.set(clickarea, count + 1);
   }
 
-  private GetArea(area) : string{
+  private GetArea(area): string {
     return "area" + area;
   }
 
-  StartVideo(){
+  StartVideo() {
     this.ShowVideo();
     this.Click("eyes");
-    if(this.subLevel<=3){
+    if (this.subLevel <= 3) {
       this.videoplayer.nativeElement.play();
-      if(this.subLevel!=4){
+      if (this.subLevel != 4) {
         this.audioSRC = AUDIO_SRC + this.char + "/" + this.gender + "/" + this.char + "_" + this.gender + "_" + this.level + "_" + this.startVoiceCount + '.mp3';
         this.startVoiceCount++;
         this.audioplayer.nativeElement.src = this.audioSRC;
@@ -201,15 +204,15 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
     this.ngIfButtons = false;
   }
 
-  PlayDefaultStartAudio(){
-    if(this.level == "1" && this.subLevel == 1){
-      if(this.gender == BOY){
+  PlayDefaultStartAudio() {
+    if (this.level == "1" && this.subLevel == 1) {
+      if (this.gender == BOY) {
         this.audioSRC = AUDIO_DEFAULT_BOY_START_SRC;
       }
-      else if (this.gender == GIRL){
+      else if (this.gender == GIRL) {
         this.audioSRC = AUDIO_DEFAULT_GIRL_START_SRC;
       }
-      
+
       this.audioplayer.nativeElement.src = this.audioSRC;
       this.audioplayer.nativeElement.play();
       this.ngIfButtons = false;
@@ -217,13 +220,13 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
 
   }
 
-  VideoEnded(e, video){
+  VideoEnded(e, video) {
     console.log('duration video: ', video.duration);
     console.log("The video is stopped");
 
     this.subLevel++;
-    if(this.subLevel<=3){
-      if(this.playManually==false){
+    if (this.subLevel <= 3) {
+      if (this.playManually == false) {
         this.data.videoDuration += video.duration;
         this.ChangeSources();
         this.SetFaceAndEyeButtonsStyle();
@@ -231,7 +234,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
       this.ShowImage();
       this.playManually = false;
     }
-    if(this.subLevel == 4){
+    if (this.subLevel == 4) {
       this.sessionIfFinished = true;
       this.ngIfButtons = false;
       this.data.end_time = new Date();
@@ -241,17 +244,17 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
     this.ngIfButtons = true;
   }
 
-  AudioEnded(e, audio){
+  AudioEnded(e, audio) {
     console.log('duration video: ', audio.duration);
     console.log("Audio is ended now");
 
     var counter = configAudioPerCharacter[this.char + "_" + this.gender + "_" + this.level + "_" + this.subLevel];
-    
-    if(!counter){
+
+    if (!counter) {
       counter = 3;
     }
 
-    if(this.startVoiceCount <= counter){
+    if (this.startVoiceCount <= counter) {
       this.data.videoDuration += audio.duration;
       setTimeout(() => {
         this.ChangeAudioSource();
@@ -262,8 +265,8 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
     this.startVoiceCount > counter ? this.ngIfButtons = true : this.ngIfButtons = false;
   }
 
-  
-  ChangeAudioSource(){
+
+  ChangeAudioSource() {
     this.audioSRC = AUDIO_SRC + this.char + "/" + this.gender + "/" + this.char + "_" + this.gender + "_" + this.level + "_" + this.startVoiceCount + '.mp3';
     this.audioplayer.nativeElement.src = this.audioSRC;
 
@@ -274,11 +277,11 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
         this.ngIfButtons = false;
         this.startVoiceCount++;
       })
-      .catch(error => {
-        console.log(error);
-        this.ngIfButtons = true;
-        this.startVoiceCount++;
-      }); 
+        .catch(error => {
+          console.log(error);
+          this.ngIfButtons = true;
+          this.startVoiceCount++;
+        });
     }
 
     /*this.audioplayer.nativeElement.play();
@@ -286,126 +289,124 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
     this.startVoiceCount++;*/
   }
 
-  ShowImage(){
+  ShowImage() {
     this.hiddenImage = false;
     this.hiddenVideo = true;
   }
 
-  ShowVideo(){
+  ShowVideo() {
     this.hiddenImage = true;
     this.hiddenVideo = false;
   }
 
-  ChangeSources(){
+  ChangeSources() {
     this.imageSRC = VIDEO_SRC + this.charType(this.videoName.id) + "/" + this.char + "_" + this.level + "." + this.subLevel + '.png';
     this.videoSRC = VIDEO_SRC + this.charType(this.videoName.id) + "/" + this.char + "_" + this.level + "." + this.subLevel + '.mp4';
-    if(this.videoplayer != undefined){
+    if (this.videoplayer != undefined) {
       this.videoplayer.nativeElement.src = this.videoSRC;
     }
-    else{
+    else {
       console.log("videoplayer is undefined!!!!")
     }
-    
+
   }
 
-  NextLevel(level){
+  NextLevel(level) {
     this.imageSRC = VIDEO_SRC + this.charType(this.videoName.id) + "/" + this.char + "_" + level + "." + 1 + '.png';
     this.videoSRC = VIDEO_SRC + this.charType(this.videoName.id) + "/" + this.char + "_" + level + "." + 1 + '.mp4';
-    if(this.videoplayer != undefined){
+    if (this.videoplayer != undefined) {
       this.videoplayer.nativeElement.src = this.videoSRC;
     }
-    else{
+    else {
       console.log("videoplayer is undefined!!!!")
     }
   }
 
-  ExecuteMessageCommand(command){
-    switch(command){
+  ExecuteMessageCommand(command) {
+    switch (command) {
       case "next":
 
-      var newnumber = Number(this.level);
-      newnumber++;
-      
-      if(newnumber<=3)
-      {
-        this.WriteAndResetSession();
-        this.level = String(newnumber);
-        this.subLevel = 1;
-        this.data.start_time = new Date();
-        this.startVoiceCount = 1;
-        this.StopMedia();
-        this.ChangeAudioSource();
-        this.ChangeSources();
-        this.SetFaceAndEyeButtonsStyle();
-        this.PlayDefaultStartAudio();
-        this.ShowImage();
-        this.socket.emit('openAlgorithm');
-      }
-      this.data.CancelLastAction();
-      break;
+        var newnumber = Number(this.level);
+        newnumber++;
+
+        if (newnumber <= 3) {
+          this.WriteAndResetSession();
+          this.level = String(newnumber);
+          this.subLevel = 1;
+          this.data.start_time = new Date();
+          this.startVoiceCount = 1;
+          this.StopMedia();
+          this.ChangeAudioSource();
+          this.ChangeSources();
+          this.SetFaceAndEyeButtonsStyle();
+          this.PlayDefaultStartAudio();
+          this.ShowImage();
+          this.socket.emit('openAlgorithm');
+        }
+        this.data.CancelLastAction();
+        break;
 
       case "prev":
-      var newnumber = Number(this.level);
-      newnumber--;
-      if(newnumber>0)
-      {
-        this.WriteAndResetSession();
-        this.level = String(newnumber);
-        this.subLevel = 1;
-        this.data.start_time = new Date();
-        this.startVoiceCount = 1;
-        this.StopMedia();
-        this.ChangeAudioSource();
-        this.ChangeSources();
-        this.SetFaceAndEyeButtonsStyle();
-        this.PlayDefaultStartAudio();
-        this.ShowImage();
-        this.socket.emit('openAlgorithm');
-      }
-      this.data.CancelLastAction();
-      break;
+        var newnumber = Number(this.level);
+        newnumber--;
+        if (newnumber > 0) {
+          this.WriteAndResetSession();
+          this.level = String(newnumber);
+          this.subLevel = 1;
+          this.data.start_time = new Date();
+          this.startVoiceCount = 1;
+          this.StopMedia();
+          this.ChangeAudioSource();
+          this.ChangeSources();
+          this.SetFaceAndEyeButtonsStyle();
+          this.PlayDefaultStartAudio();
+          this.ShowImage();
+          this.socket.emit('openAlgorithm');
+        }
+        this.data.CancelLastAction();
+        break;
 
       case "play":
-      this.playManually = true;
-      this.ShowVideo();
-      this.videoplayer.nativeElement.play();
-      this.ngIfButtons = false;
-      this.data.CancelLastAction();
-      break;
+        this.playManually = true;
+        this.ShowVideo();
+        this.videoplayer.nativeElement.play();
+        this.ngIfButtons = false;
+        this.data.CancelLastAction();
+        break;
 
       case "replay":
-      this.audioplayer.nativeElement.play();
-      this.ngIfButtons = false;
-      this.data.CancelLastAction();
-      break;
+        this.audioplayer.nativeElement.play();
+        this.ngIfButtons = false;
+        this.data.CancelLastAction();
+        break;
 
       case "stop":
-      this.WriteAndResetSession();
-      this.data.CancelLastAction();
-      this.router.navigate(["/home"]);
-      break;
+        this.WriteAndResetSession();
+        this.data.CancelLastAction();
+        this.router.navigate(["/home"]);
+        break;
 
       case "char":
-      this.WriteAndResetSession();
-      this.data.CancelLastAction();
-      this.router.navigate(['/home/levels/characters', this.data.currentLevel]);
-      break;
+        this.WriteAndResetSession();
+        this.data.CancelLastAction();
+        this.router.navigate(['/home/levels/characters', this.data.currentLevel]);
+        break;
 
       case "home":
-      this.WriteAndResetSession();
-      this.data.CancelLastAction();
-      this.router.navigate(["/home"]);
-      break;
+        this.WriteAndResetSession();
+        this.data.CancelLastAction();
+        this.router.navigate(["/home"]);
+        break;
     }
   }
 
-  WriteAndResetSession(){
-    if(this.sessionIfFinished == false){
+  WriteAndResetSession() {
+    if (this.sessionIfFinished == false) {
       return;
     }
 
     this.sessionIfFinished = false;
-    const session={
+    const session = {
       kidid: Number(this.data.GetKidID()),
       character: this.char,
       level: this.level,
@@ -414,18 +415,27 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
       areas: this.data.map.toJSON()
     }
 
+    //for test the excel
+    const data = {
+      kidid: Number(this.data.GetKidID()),
+      character: this.char,
+      level: this.level,
+      total_time: (this.data.end_time.getTime() - this.data.start_time.getTime()) / 1000.0,
+      video_duration: this.data.videoDuration,
+    }
+
     //predict the kid permormance
 
     //new vector
     this.vector = [this.BuildVector(session.total_time, session.video_duration)];
-    
+
     //get all dataset
     this.svmVectorService.getDataSet().subscribe(data => {
 
       this.dataSvmFromDB = data;
       this.InitDataSetToVector(this.dataSvmFromDB);
       //train
-      this.svm.train(this.dataSet, this.labels, {C: 1.0});
+      this.svm.train(this.dataSet, this.labels, { C: 1.0 });
       //classifier
       var testlabel = this.svm.predict(this.vector);
       alert("SVM Classifier: " + testlabel);
@@ -433,7 +443,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
       var svmVector = this.svmVectorService.ConvertVectorToObject(this.vector[0], testlabel[0]);
       this.svmVectorService.addNewVector(svmVector).subscribe(data => {
         console.log(data.msg);
-        if(data.success){
+        if (data.success) {
           console.log("svm vector inserted to mongo");
         } else {
           alert("Error while writting the svm vector to mongo db");
@@ -445,21 +455,32 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
     console.log(session);
     this.sessionService.addNewSessionForKid(session).subscribe(data => {
       console.log(data.msg);
-      if(data.success){
+      if (data.success) {
         console.log("session inserted to mongo");
       } else {
         alert("Error while writting the session to mongo db");
       }
       this.data.ResetSessionMetaData();
     });
+
+    try {
+      this.exportAsXLSX([data]);
+    }
+    catch (e) {
+      console.log("Error while exporting excel file!" + " " + e);
+    }
   }
 
-  StopMedia(){
+  exportAsXLSX(data): void {
+    this.excelService.exportAsExcelFile(data, 'sample');
+  }
+
+  StopMedia() {
     this.videoplayer.nativeElement.pause();
     this.audioplayer.nativeElement.pause();
   }
 
-  BuildVector(total_time, video_duration) : Number[]{
+  BuildVector(total_time, video_duration): Number[] {
     var sumAreas = 0;
 
     var area1 = this.data.map.get("area1");
@@ -472,26 +493,26 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit{
     var areaeyes = this.data.map.get("areaeyes");
     sumAreas = area1 + area2 + area3 + area4 + area5 + area6 + areaface + areaeyes;
 
-    var vagrancy_time = total_time - video_duration - (sumAreas*2);
+    var vagrancy_time = total_time - video_duration - (sumAreas * 2);
 
     return [total_time, video_duration, vagrancy_time, areaeyes, areaface,
-      area1, area2, area3, area4, area5 ,area6];
+      area1, area2, area3, area4, area5, area6];
   }
 
-  private InitDataSetToVector(dataSvmFromDB){
-    for(var i=0;i<dataSvmFromDB.length;i++){
+  private InitDataSetToVector(dataSvmFromDB) {
+    for (var i = 0; i < dataSvmFromDB.length; i++) {
       var x = dataSvmFromDB[i];
-      this.dataSet[i]=[x.total_time, x.video_duration,x.vagrancy_time,x.area1,x.area2,x.area3,x.area4,x.area5,x.area6,x.areaface,x.areaeyes];
-      this.labels[i]=x.label;
+      this.dataSet[i] = [x.total_time, x.video_duration, x.vagrancy_time, x.area1, x.area2, x.area3, x.area4, x.area5, x.area6, x.areaface, x.areaeyes];
+      this.labels[i] = x.label;
     }
   }
 
-  InitStyles(){
-    faceSTYLE.forEach(x=>{
+  InitStyles() {
+    faceSTYLE.forEach(x => {
       this.mapFace.set(x.name, x.style);
     });
 
-    eyesSTYLE.forEach(y=>{
+    eyesSTYLE.forEach(y => {
       this.mapEyes.set(y.name, y.style);
     });
   }
