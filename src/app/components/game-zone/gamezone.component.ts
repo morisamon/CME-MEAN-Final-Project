@@ -470,7 +470,6 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit {
 
     try {
       this.BuildExcelFileData();
-      debugger;
       this.exportAsXLSX(this.excelDataList);
     }
     catch (e) {
@@ -507,7 +506,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit {
         percentageWatch: (Number(details[2])/Number(details[0]))*100 + "%"
       },
       {
-        area: "vidoe time",
+        area: "video time",
         countWatch: "-",
         picture: "-",
         timeWatch: Number(details[1]),
