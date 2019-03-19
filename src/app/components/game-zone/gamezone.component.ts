@@ -69,6 +69,8 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit {
   private timeout;
   private socket;
 
+  private excelDataList : any[] = [];
+
   constructor(private route: ActivatedRoute, private router: Router,
     private elementRef: ElementRef, private data: DataService,
     private sessionService: GameSessionService,
@@ -464,15 +466,68 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit {
     });
 
     try {
-      this.exportAsXLSX([data]);
+      this.BuildExcelFileData();
+      debugger;
+      this.exportAsXLSX(this.excelDataList);
     }
     catch (e) {
       console.log("Error while exporting excel file!" + " " + e);
     }
   }
 
+  private BuildExcelFileData() {
+    var charLevel = this.char + " " + this.level;
+    var details = this.vector[0];
+    this.excelDataList.push({
+      area: charLevel + " " + "area " + "eyes",
+      countWatch: details[3],
+      picture: "",
+      timeWatch: Number(details[3]) * 2,
+      percentageWatch: (Number(details[3]) * 2 / Number(details[0]))*100 + "%"
+    }, {
+        area: charLevel + " " + "area " + "face",
+        countWatch: details[4],
+        picture: "",
+        timeWatch: Number(details[4]) * 2,
+        percentageWatch: (Number(details[4]) * 2 / Number(details[0]))*100 + "%"
+      });
+    var j = 5;
+    for (var i = 1; i <= 6; i++) {
+      this.excelDataList.push(this.excelBuilderHelper(charLevel, i, details[j], details[0]));
+      j++;
+    }
+    this.excelDataList.push({
+        area: "vagrancy time",
+        countWatch: "-",
+        picture: "-",
+        timeWatch: Number(details[2]),
+        percentageWatch: (Number(details[2])/Number(details[0]))*100 + "%"
+      },
+      {
+        area: "vidoe time",
+        countWatch: "-",
+        picture: "-",
+        timeWatch: Number(details[1]),
+        percentageWatch: (Number(details[1])/Number(details[0]))*100 + "%"
+      },
+      {
+        totalTime : Number(details[0])
+      }
+    )
+  }
+
+  excelBuilderHelper(charLevel, name, count, total): any{
+    return{
+      area : charLevel + " " + "area " + name,
+      countWatch : count,
+      picture : "",
+      timeWatch : Number(count)*2,
+      percentageWatch : (Number(count)*2 / Number(total))*100 + "%"
+    }
+  }
+
   exportAsXLSX(data): void {
-    this.excelService.exportAsExcelFile(data, 'sample');
+    this.excelService.exportAsExcelFile(data, this.kidid + "_" + this.char + "_" + this.level);
   }
 
   StopMedia() {
