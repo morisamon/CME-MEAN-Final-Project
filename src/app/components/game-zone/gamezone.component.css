@@ -23,7 +23,6 @@ button.btn.btn-primary.btn-lg {
     height: 15%;
     background: transparent; /*red*/
     border: black;
-    opacity: 0.5 !important;
 }
 
 button#face {
@@ -35,7 +34,6 @@ button#face {
     width: 15%;
     top: 30%;
     z-index: 99999;
-    opacity: 0.5 !important;
 }
 
 button#alert{
@@ -47,8 +45,5 @@ button#alert{
     height: 50%;
     background: transparent;
     border: black;
-}
-
-.alertImage{
-    opacity: 1;
+    opacity: 1 !important;
 }
