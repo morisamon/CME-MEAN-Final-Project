@@ -11,6 +11,7 @@ import { faceSTYLE, eyesSTYLE } from './variables';
 import * as io from 'socket.io-client';
 import { configAudioPerCharacter } from 'src/app/helper/audioCounter';
 import { ExcelService } from 'src/app/services/ExcelService/excel.service';
+import { configAlert } from 'src/app/helper/alert';
 
 const VIDEO_SRC: string = "/assets/videos/";
 const AUDIO_SRC: string = "/assets/voices/";
@@ -54,7 +55,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit {
   public char: String
   public playManually: Boolean;
   public alertUrl: String;
-  public ngIsAlert: Boolean;
+  public ngIfAlert: Boolean = false;
 
   private startVoiceCount: number = 1;
   private gender: String;
@@ -131,9 +132,6 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit {
     this.gender = this.data.GetGender();
     this.data.UpdateCurrentComponent("gameZone");
     this.PlayDefaultStartAudio();
-
-    this.alertUrl = 'http://pngimg.com/uploads/sign_stop/sign_stop_PNG25618.png';
-    this.ngIsAlert = true;
   }
 
   ngOnDestroy() {
@@ -200,6 +198,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit {
     if (this.subLevel <= 3) {
       this.videoplayer.nativeElement.play();
       if (this.subLevel != 4) {
+        this.CheckAlertPopupWindow();
         this.audioSRC = AUDIO_SRC + this.char + "/" + this.gender + "/" + this.char + "_" + this.gender + "_" + this.level + "_" + this.startVoiceCount + '.mp3';
         this.startVoiceCount++;
         this.audioplayer.nativeElement.src = this.audioSRC;
@@ -207,6 +206,22 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit {
       }
     }
     this.ngIfButtons = false;
+  }
+
+  private CheckAlertPopupWindow() {
+    var audioRelevantFileName = this.char + "_" + this.gender + "_" + this.level + "_" + this.startVoiceCount + '.mp3';
+    var isAlert = configAlert[audioRelevantFileName];
+    if (isAlert) {
+      if (isAlert == "stop")
+        this.alertUrl = stopPath;
+      else
+        this.alertUrl = eyesPath;
+
+      this.ngIfAlert = true;
+    }
+    else{
+      this.ngIfAlert = false;
+    }
   }
 
   PlayDefaultStartAudio() {
@@ -252,7 +267,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit {
   AudioEnded(e, audio) {
     console.log('duration video: ', audio.duration);
     console.log("Audio is ended now");
-
+    
     var counter = configAudioPerCharacter[this.char + "_" + this.gender + "_" + this.level + "_" + this.subLevel];
 
     if (!counter) {
@@ -266,8 +281,13 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit {
       }, TIMEOUT_BETWEEN_AUDIO_VOID);
 
     }
-
-    this.startVoiceCount > counter ? this.ngIfButtons = true : this.ngIfButtons = false;
+    
+    if(this.startVoiceCount > counter){
+      this.ngIfButtons = true
+      this.ngIfAlert = false;
+    }
+    else
+      this.ngIfButtons = false;
   }
 
 
@@ -276,7 +296,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit {
     this.audioplayer.nativeElement.src = this.audioSRC;
 
     var playPromise = this.audioplayer.nativeElement.play();
-
+    this.CheckAlertPopupWindow();
     if (playPromise !== undefined) {
       playPromise.then(_ => {
         this.ngIfButtons = false;
