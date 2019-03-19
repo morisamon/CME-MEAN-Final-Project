@@ -21,6 +21,9 @@ const GIRL: string = "girl";
 const AUDIO_DEFAULT_BOY_START_SRC: String = "/assets/voices/general_boy_choose_start.wav";
 const AUDIO_DEFAULT_GIRL_START_SRC: String = "/assets/voices/general_girl_choose_start.wav";
 
+const stopPath: String = "/assets/stopAlert.png";
+const eyesPath: String = "/assets/eyesAlert.png"
+
 const TIMEOUT_BETWEEN_AUDIO_VOID: number = 1200;
 
 @Component({
