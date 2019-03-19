@@ -8,6 +8,4 @@ export const configAlert = {
     "fireman_boy_1_7" : "stop",
     "fireman_boy_1_8" : "stop",
     "fireman_boy_1_9" : "stop",
-    "fireman_boy_1_10" : "stop",
-    "fireman_boy_1_11" : "stop"
 }
