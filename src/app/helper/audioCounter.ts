@@ -1,4 +1,5 @@
-export const configAudioPerCharacter = {"fireman_boy_1_1" : 5,
+export const configAudioPerCharacter = {
+                                        "fireman_boy_1_1" : 5,
                                         "fireman_boy_1_2" : 6,
                                         "fireman_boy_1_3" : 7,
                                         "fireman_boy_1_4" : 10,
