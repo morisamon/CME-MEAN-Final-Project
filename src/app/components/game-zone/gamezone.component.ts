@@ -22,6 +22,10 @@ const GIRL: string = "girl";
 const AUDIO_DEFAULT_BOY_START_SRC: String = "/assets/voices/general_boy_choose_start.wav";
 const AUDIO_DEFAULT_GIRL_START_SRC: String = "/assets/voices/general_girl_choose_start.wav";
 
+const AUDIO_DETECT_BOY_SRC: String = "/assets/voices/detect_boy.mp3";
+const AUDIO_DETECT_GIRL_SRC: String = "/assets/voices/detect_girl.mp3";
+const AUDIO_DETECT_GENERAL_DURATIONS: number = 7;
+
 const stopPath: String = "/assets/stopAlert.png";
 const eyesPath: String = "/assets/eyesAlert.png"
 
@@ -41,6 +45,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit {
 
   @ViewChild('videoPlayer') videoplayer: any;
   @ViewChild('audioPlayer') audioplayer: any;
+  @ViewChild('audioPlayerGeneral') audioplayerGeneral: any;
 
   public videoName: any;
   public hiddenImage: Boolean;
@@ -51,6 +56,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit {
   public videoSRC: String;
   public imageSRC: String;
   public audioSRC: String;
+  public audioSRCGeneral: String;
   public level: String;
   public char: String
   public playManually: Boolean;
@@ -69,6 +75,8 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit {
   private labels: Number[] = [];
   private mapFace = new TSMap<String, ButtonStyle>();
   private mapEyes = new TSMap<String, ButtonStyle>();
+
+  private timer : Date;
 
   private timeout;
   private socket;
@@ -118,8 +126,26 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit {
     this.timeout = setTimeout(() => {
       if (area === "eyes")
         this.StartVideo();
-      else this.Click(area);
+      else{
+        this.Click(area);
+        this.PlayDetectGeneralAudio();
+      }
     }, 2000);
+  }
+
+  PlayDetectGeneralAudio(): any {
+    var currentTime = new Date();
+    if((currentTime.getTime() - this.timer.getTime())/1000.0 >= AUDIO_DETECT_GENERAL_DURATIONS){
+      this.timer = new Date();
+      if(this.gender == BOY)
+        this.audioSRCGeneral = AUDIO_DETECT_BOY_SRC;
+      
+      else if(this.gender == GIRL)
+        this.audioSRCGeneral = AUDIO_DETECT_GIRL_SRC;
+      
+      this.audioplayerGeneral.nativeElement.src = this.audioSRCGeneral;
+      this.audioplayerGeneral.nativeElement.play();
+    }
   }
 
   mouseLeave() {
@@ -261,7 +287,8 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit {
       console.log(this.data.end_time);
       this.socket.emit("stopAlgorithm");
     }
-    this.ngIfButtons = true;
+
+    this.subLevel != 4 ? this.ngIfButtons = true : "" ;
   }
 
   AudioEnded(e, audio) {
@@ -283,13 +310,13 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit {
     }
     
     if(this.startVoiceCount > counter){
-      this.ngIfButtons = true
+      this.subLevel != 4 ? this.ngIfButtons = true : "";
       this.ngIfAlert = false;
+      this.timer = new Date();
     }
     else
       this.ngIfButtons = false;
   }
-
 
   ChangeAudioSource() {
     this.audioSRC = AUDIO_SRC + this.char + "/" + this.gender + "/" + this.char + "_" + this.gender + "_" + this.level + "_" + this.startVoiceCount + '.mp3';
@@ -304,7 +331,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit {
       })
         .catch(error => {
           console.log(error);
-          this.ngIfButtons = true;
+          this.subLevel != 4 ? this.ngIfButtons = true : "";
           this.startVoiceCount++;
         });
     }
@@ -463,7 +490,8 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit {
       this.svm.train(this.dataSet, this.labels, { C: 1.0 });
       //classifier
       var testlabel = this.svm.predict(this.vector);
-      alert("SVM Classifier: " + testlabel);
+      //alert("SVM Classifier: " + testlabel);
+      console.log("SVM Classifier: " + testlabel);
 
       var svmVector = this.svmVectorService.ConvertVectorToObject(this.vector[0], testlabel[0]);
       this.svmVectorService.addNewVector(svmVector).subscribe(data => {
@@ -504,14 +532,14 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit {
       area: charLevel + " " + "area " + "eyes",
       countWatch: details[3],
       picture: "",
-      timeWatch: Number(details[3]) * 2,
-      percentageWatch: (Number(details[3]) * 2 / Number(details[0]))*100 + "%"
+      timeWatch: Math.round((Number(details[3]) * 2)*100)/100,
+      percentageWatch: Math.round(((Number(details[3]) * 2 / Number(details[0]))*100)*100)/100 + "%"
     }, {
         area: charLevel + " " + "area " + "face",
         countWatch: details[4],
         picture: "",
-        timeWatch: Number(details[4]) * 2,
-        percentageWatch: (Number(details[4]) * 2 / Number(details[0]))*100 + "%"
+        timeWatch: Math.round((Number(details[4]) * 2)*100)/100,
+        percentageWatch: Math.round(((Number(details[4]) * 2 / Number(details[0]))*100)*100)/100 + "%"
       });
     var j = 5;
     for (var i = 1; i <= 6; i++) {
@@ -522,18 +550,18 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit {
         area: "vagrancy time",
         countWatch: "-",
         picture: "-",
-        timeWatch: Number(details[2]),
-        percentageWatch: (Number(details[2])/Number(details[0]))*100 + "%"
+        timeWatch: Math.round((Number(details[2]))*100)/100,
+        percentageWatch: Math.round(((Number(details[2])/Number(details[0]))*100)*100)/100 + "%"
       },
       {
         area: "video time",
         countWatch: "-",
         picture: "-",
-        timeWatch: Number(details[1]),
-        percentageWatch: (Number(details[1])/Number(details[0]))*100 + "%"
+        timeWatch: Math.round((Number(details[1]))*100)/100,
+        percentageWatch: Math.round(((Number(details[1])/Number(details[0]))*100)*100)/100 + "%"
       },
       {
-        totalTime : Number(details[0])
+        totalTime : Math.round((Number(details[0]))*100)/100
       }
     )
   }
@@ -543,8 +571,8 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit {
       area : charLevel + " " + "area " + name,
       countWatch : count,
       picture : "",
-      timeWatch : Number(count)*2,
-      percentageWatch : (Number(count)*2 / Number(total))*100 + "%"
+      timeWatch : Math.round((Number(count)*2)*100)/100,
+      percentageWatch : Math.round(((Number(count)*2 / Number(total))*100)*100)/100 + "%"
     }
   }
 

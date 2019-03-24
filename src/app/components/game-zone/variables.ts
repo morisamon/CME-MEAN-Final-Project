@@ -18,6 +18,7 @@ export var svmVector: SvmVector[] = [
     { "total_time" : 185.758, "video_duration" : 31.557333, "vagrancy_time" : 62.200667, "area1" : 0, "area2" : 5, "area3" : 23, "area4" : 1,"area5" : 3, "area6" : 10, "areaface" : 1, "areaeyes" : 3, "label" : -1 },
     { "total_time" : 190.342, "video_duration" : 15.92,"vagrancy_time" : 68.422, "area1" : 2,  "area2" : 1, "area3" : 18, "area4" : 2, "area5" : 2, "area6" : 21, "areaface" : 4, "areaeyes" : 3, "label" : -1
 }]
+
 export var faceSTYLE: LevelButtonStyle[] = [
     {
       "name": "player_1_1",
@@ -110,7 +111,7 @@ export var faceSTYLE: LevelButtonStyle[] = [
     },
   
     {
-      "name": "fireman_1_1", //eyes: l 17 t 40 w 11 h 17
+      "name": "fireman_1_1",
       "style":{
         "left": "12%",
         "top": "33%",
@@ -120,7 +121,7 @@ export var faceSTYLE: LevelButtonStyle[] = [
     },
   
     {
-      "name": "fireman_1_2", //eyes: l 17 t 40 w 11 h 17
+      "name": "fireman_1_2",
       "style":{
         "left": "12%",
         "top": "33%",
@@ -130,7 +131,7 @@ export var faceSTYLE: LevelButtonStyle[] = [
     },
   
     {
-      "name": "fireman_1_3", //eyes: l 17 t 40 w 11 h 17
+      "name": "fireman_1_3",
       "style":{
         "left": "12%",
         "top": "33%",
@@ -140,7 +141,7 @@ export var faceSTYLE: LevelButtonStyle[] = [
     },
   
     {
-      "name": "fireman_2_1", //eyes: l 24 t 37 w 15 h 22
+      "name": "fireman_2_1",
       "style":{
         "left": "20%",
         "top": "33%",
@@ -150,7 +151,7 @@ export var faceSTYLE: LevelButtonStyle[] = [
     },
   
     {
-      "name": "fireman_2_2", //eyes: l 24 t 37 w 15 h 22
+      "name": "fireman_2_2",
       "style":{
         "left": "51%",
         "top": "9%",
@@ -160,7 +161,7 @@ export var faceSTYLE: LevelButtonStyle[] = [
     },
   
     {
-      "name": "fireman_2_3", //eyes: l 54 t 20 w 15 h 22
+      "name": "fireman_2_3",
       "style":{
         "left": "51%",
         "top": "9%",
@@ -170,7 +171,7 @@ export var faceSTYLE: LevelButtonStyle[] = [
     },
   
     {
-      "name": "fireman_3_1", //eyes: l 41 t 47 w 9 h 15
+      "name": "fireman_3_1",
       "style":{
         "left": "38%",
         "top": "34%",
@@ -180,7 +181,7 @@ export var faceSTYLE: LevelButtonStyle[] = [
     },
   
     {
-      "name": "fireman_3_2", //eyes: l 41 t 28 w 9 h 15
+      "name": "fireman_3_2",
       "style":{
         "left": "40%",
         "top": "26%",
@@ -190,7 +191,7 @@ export var faceSTYLE: LevelButtonStyle[] = [
     },
   
     {
-      "name": "fireman_3_3", //eyes: l 41 t 28 w 9 h 15
+      "name": "fireman_3_3",
       "style":{
         "left": "40%",
         "top": "26%",
@@ -200,7 +201,7 @@ export var faceSTYLE: LevelButtonStyle[] = [
     },
   
     {
-      "name": "superman_1_1", //eyes: l 20 t 70 w 9 h 15
+      "name": "superman_1_1",
       "style":{
         "left": "17%",
         "top": "60%",
@@ -210,7 +211,7 @@ export var faceSTYLE: LevelButtonStyle[] = [
     },
   
     {
-      "name": "superman_1_2", //eyes: l 20 t 70 w 9 h 15
+      "name": "superman_1_2",
       "style":{
         "left": "17%",
         "top": "60%",
@@ -220,7 +221,7 @@ export var faceSTYLE: LevelButtonStyle[] = [
     },
   
     {
-      "name": "superman_1_3", //eyes: l 20 t 70 w 9 h 15
+      "name": "superman_1_3",
       "style":{
         "left": "17%",
         "top": "60%",
@@ -230,7 +231,7 @@ export var faceSTYLE: LevelButtonStyle[] = [
     },
   
     {
-      "name": "superman_2_1", //eyes: l 49 t 40 w 9 h 17
+      "name": "superman_2_1",
       "style":{
         "left": "46%",
         "top": "38%",
@@ -240,7 +241,7 @@ export var faceSTYLE: LevelButtonStyle[] = [
     },
   
     {
-      "name": "superman_2_2", //eyes: l 49 t 40 w 9 h 17
+      "name": "superman_2_2",
       "style":{
         "left": "46%",
         "top": "38%",
@@ -250,7 +251,7 @@ export var faceSTYLE: LevelButtonStyle[] = [
     },
   
     {
-      "name": "superman_2_3", //eyes: l 20 t 70 w 9 h 15
+      "name": "superman_2_3",
       "style":{
         "left": "45%",
         "top": "38%",
@@ -260,7 +261,7 @@ export var faceSTYLE: LevelButtonStyle[] = [
     },
   
     {
-      "name": "superman_3_1", //eyes: l 24 t 49 w 9 h 15
+      "name": "superman_3_1",
       "style":{
         "left": "20%",
         "top": "42%",
@@ -270,7 +271,7 @@ export var faceSTYLE: LevelButtonStyle[] = [
     },
   
     {
-      "name": "superman_3_2", //eyes: l 24 t 49 w 9 h 15
+      "name": "superman_3_2",
       "style":{
         "left": "36%",
         "top": "30%",
@@ -280,7 +281,7 @@ export var faceSTYLE: LevelButtonStyle[] = [
     },
   
     {
-      "name": "superman_3_3", //eyes: l 46 t 40 w 9 h 17
+      "name": "superman_3_3",
       "style":{
         "left": "43%",
         "top": "35%",
@@ -290,7 +291,7 @@ export var faceSTYLE: LevelButtonStyle[] = [
     },
   
     {
-      "name": "farmer_1_1", //eyes: l 29 t 30 w 14 h 17
+      "name": "farmer_1_1",
       "style":{
         "left": "24%",
         "top": "23%",
@@ -300,7 +301,7 @@ export var faceSTYLE: LevelButtonStyle[] = [
     },
   
     {
-      "name": "farmer_1_2", //eyes: l 29 t 30 w 14 h 17
+      "name": "farmer_1_2",
       "style":{
         "left": "24%",
         "top": "23%",
@@ -310,7 +311,7 @@ export var faceSTYLE: LevelButtonStyle[] = [
     },
   
     {
-      "name": "farmer_1_3", //eyes: l 34 t 39 w 14 h 17
+      "name": "farmer_1_3",
       "style":{
         "left": "31%",
         "top": "28%",
@@ -320,7 +321,7 @@ export var faceSTYLE: LevelButtonStyle[] = [
     },
   
     {
-      "name": "farmer_2_1", //eyes: l 19 t 74 w 14 h 17
+      "name": "farmer_2_1",
       "style":{
         "left": "17%",
         "top": "62%",
@@ -330,7 +331,7 @@ export var faceSTYLE: LevelButtonStyle[] = [
     },
   
     {
-      "name": "farmer_2_2", //eyes: l 19 t 74 w 14 h 17
+      "name": "farmer_2_2",
       "style":{
         "left": "39%",
         "top": "20%",
@@ -340,7 +341,7 @@ export var faceSTYLE: LevelButtonStyle[] = [
     },
   
     {
-      "name": "farmer_2_3", //eyes: l 42 t 29 w 14 h 17
+      "name": "farmer_2_3",
       "style":{
         "left": "39%",
         "top": "20%",
@@ -350,7 +351,7 @@ export var faceSTYLE: LevelButtonStyle[] = [
     },
   
     {
-      "name": "farmer_3_1", //eyes: l 12 t 37 w 10 h 15
+      "name": "farmer_3_1",
       "style":{
         "left": "9%",
         "top": "34%",
@@ -360,7 +361,7 @@ export var faceSTYLE: LevelButtonStyle[] = [
     },
   
     {
-      "name": "farmer_3_2", //eyes: l 12 t 37 w 10 h 15
+      "name": "farmer_3_2",
       "style":{
         "left": "21%",
         "top": "34%",
@@ -370,7 +371,7 @@ export var faceSTYLE: LevelButtonStyle[] = [
     },
   
     {
-      "name": "farmer_3_3", //eyes: l 24 t 37 w 10 h 15
+      "name": "farmer_3_3",
       "style":{
         "left": "21%",
         "top": "34%",
@@ -694,8 +695,8 @@ export var eyesSTYLE: LevelButtonStyle[] = [
     {
       "name": "farmer_2_2",
       "style":{
-        "left": "20%",
-        "top": "65%",
+        "left": "42%",
+        "top": "29%",
         "width": "14%",
         "height": "17%"
       }
