@@ -22,7 +22,7 @@ export const configAudioPerCharacter = {
                                         "farmer_boy_2_1" : 6,
                                         "farmer_boy_2_2" : 7,
                                         "farmer_boy_2_3" : 8,
-                                        "farmer_boy_2_4" : 11,
+                                        "farmer_boy_2_4" : 10,
 
                                         "farmer_boy_3_1" : 5,
                                         "farmer_boy_3_2" : 6,

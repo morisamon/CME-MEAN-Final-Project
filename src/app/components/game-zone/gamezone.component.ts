@@ -226,9 +226,14 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit {
       if (this.subLevel != 4) {
         this.CheckAlertPopupWindow();
         this.audioSRC = AUDIO_SRC + this.char + "/" + this.gender + "/" + this.char + "_" + this.gender + "_" + this.level + "_" + this.startVoiceCount + '.mp3';
-        this.startVoiceCount++;
         this.audioplayer.nativeElement.src = this.audioSRC;
         this.audioplayer.nativeElement.play();
+        if(this.char == "fireman" && this.level == "3" && this.startVoiceCount == 6){
+          this.audioSRC = "/assets/voices/fireman/boy/fireman_boy_2_6.mp3"; //kol hakavod
+          this.audioplayer.nativeElement.src = this.audioSRC;
+          this.audioplayer.nativeElement.play();
+        }
+        this.startVoiceCount++;
       }
     }
     this.ngIfButtons = false;
@@ -295,21 +300,28 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit {
     console.log('duration video: ', audio.duration);
     console.log("Audio is ended now");
     
-    var counter = configAudioPerCharacter[this.char + "_" + this.gender + "_" + this.level + "_" + this.subLevel];
+    if(this.char == "fireman" && this.level == "3" && this.subLevel == 3){
+      setTimeout(() => {
+        this.PlayNextAudioSet(audio);
+      }, 4000);
+    }
+    else{
+      this.PlayNextAudioSet(audio);
+    }
+  }
 
+  private PlayNextAudioSet(audio: any) {
+    var counter = configAudioPerCharacter[this.char + "_" + this.gender + "_" + this.level + "_" + this.subLevel];
     if (!counter) {
       counter = 3;
     }
-
     if (this.startVoiceCount <= counter) {
       this.data.videoDuration += audio.duration;
       setTimeout(() => {
         this.ChangeAudioSource();
       }, TIMEOUT_BETWEEN_AUDIO_VOID);
-
     }
-    
-    if(this.startVoiceCount > counter){
+    if (this.startVoiceCount > counter) {
       this.subLevel != 4 ? this.ngIfButtons = true : "";
       this.ngIfAlert = false;
       this.timer = new Date();
