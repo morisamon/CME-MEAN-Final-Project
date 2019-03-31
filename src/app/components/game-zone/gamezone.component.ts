@@ -77,12 +77,12 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit {
   private mapFace = new TSMap<String, ButtonStyle>();
   private mapEyes = new TSMap<String, ButtonStyle>();
 
-  private timer : Date;
+  private timer: Date;
 
   private timeout;
   private socket;
 
-  private excelDataList : any[] = [];
+  private excelDataList: any[] = [];
 
   constructor(private route: ActivatedRoute, private router: Router,
     private elementRef: ElementRef, private data: DataService,
@@ -127,7 +127,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit {
     this.timeout = setTimeout(() => {
       if (area === "eyes")
         this.StartVideo();
-      else{
+      else {
         this.Click(area);
         this.PlayDetectGeneralAudio();
       }
@@ -136,14 +136,14 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit {
 
   PlayDetectGeneralAudio(): any {
     var currentTime = new Date();
-    if((currentTime.getTime() - this.timer.getTime())/1000.0 >= AUDIO_DETECT_GENERAL_DURATIONS){
+    if ((currentTime.getTime() - this.timer.getTime()) / 1000.0 >= AUDIO_DETECT_GENERAL_DURATIONS) {
       this.timer = new Date();
-      if(this.gender == BOY)
+      if (this.gender == BOY)
         this.audioSRCGeneral = AUDIO_DETECT_BOY_SRC;
-      
-      else if(this.gender == GIRL)
+
+      else if (this.gender == GIRL)
         this.audioSRCGeneral = AUDIO_DETECT_GIRL_SRC;
-      
+
       this.audioplayerGeneral.nativeElement.src = this.audioSRCGeneral;
       this.audioplayerGeneral.nativeElement.play();
     }
@@ -256,7 +256,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit {
 
       this.ngIfAlert = true;
     }
-    else{
+    else {
       this.ngIfAlert = false;
     }
   }
@@ -298,22 +298,26 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit {
       console.log(this.data.end_time);
       this.socket.emit("stopAlgorithm");
     }
-
-    setTimeout(() => {
-      this.subLevel != 4 ? this.ngIfButtons = true : "" ;
-    }, DELAY_FOR_SCREEN_BUTTONS);
+    if (this.char != "player") {
+      setTimeout(() => {
+        this.subLevel != 4 ? this.ngIfButtons = true : "";
+      }, DELAY_FOR_SCREEN_BUTTONS);
+    }
+    else {
+      this.subLevel != 4 ? this.ngIfButtons = true : "";
+    }
   }
 
   AudioEnded(e, audio) {
     console.log('duration video: ', audio.duration);
     console.log("Audio is ended now");
-    
-    if(this.char == "fireman" && this.level == "3" && this.subLevel == 3){
+
+    if (this.char == "fireman" && this.level == "3" && this.subLevel == 3) {
       setTimeout(() => {
         this.PlayNextAudioSet(audio);
       }, 4000);
     }
-    else{
+    else {
       this.PlayNextAudioSet(audio);
     }
   }
@@ -330,11 +334,18 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit {
       }, TIMEOUT_BETWEEN_AUDIO_VOID);
     }
     if (this.startVoiceCount > counter) {
-      setTimeout(() => {
+      if (this.char != "player") {
+        setTimeout(() => {
+          this.subLevel != 4 ? this.ngIfButtons = true : "";
+          this.ngIfAlert = false;
+          this.timer = new Date();
+        }, DELAY_FOR_SCREEN_BUTTONS);
+      }
+      else {
         this.subLevel != 4 ? this.ngIfButtons = true : "";
         this.ngIfAlert = false;
         this.timer = new Date();
-      }, DELAY_FOR_SCREEN_BUTTONS);
+      }
     }
     else
       this.ngIfButtons = false;
@@ -353,10 +364,15 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit {
       })
         .catch(error => {
           console.log(error);
-          setTimeout(() => {
+          if (this.char != "player") {
+            setTimeout(() => {
+              this.subLevel != 4 ? this.ngIfButtons = true : "";
+            }, DELAY_FOR_SCREEN_BUTTONS);
+          }
+          else {
             this.subLevel != 4 ? this.ngIfButtons = true : "";
-          }, DELAY_FOR_SCREEN_BUTTONS);
-          if(this.char == "farmer" && this.level == "2" && this.startVoiceCount == 11){
+          }
+          if (this.char == "farmer" && this.level == "2" && this.startVoiceCount == 11) {
             this.audioSRC = "/assets/voices/farmer/boy/farmer_boy_3_10.mp3"; //lo nitbalbel
             this.audioplayer.nativeElement.src = this.audioSRC;
             this.audioplayer.nativeElement.play();
@@ -561,14 +577,14 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit {
       area: charLevel + " " + "area " + "eyes",
       countWatch: details[3],
       picture: "",
-      timeWatch: Math.round((Number(details[3]) * 2)*100)/100,
-      percentageWatch: Math.round(((Number(details[3]) * 2 / Number(details[0]))*100)*100)/100 + "%"
+      timeWatch: Math.round((Number(details[3]) * 2) * 100) / 100,
+      percentageWatch: Math.round(((Number(details[3]) * 2 / Number(details[0])) * 100) * 100) / 100 + "%"
     }, {
         area: charLevel + " " + "area " + "face",
         countWatch: details[4],
         picture: "",
-        timeWatch: Math.round((Number(details[4]) * 2)*100)/100,
-        percentageWatch: Math.round(((Number(details[4]) * 2 / Number(details[0]))*100)*100)/100 + "%"
+        timeWatch: Math.round((Number(details[4]) * 2) * 100) / 100,
+        percentageWatch: Math.round(((Number(details[4]) * 2 / Number(details[0])) * 100) * 100) / 100 + "%"
       });
     var j = 5;
     for (var i = 1; i <= 6; i++) {
@@ -576,32 +592,32 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit {
       j++;
     }
     this.excelDataList.push({
-        area: "vagrancy time",
-        countWatch: "-",
-        picture: "-",
-        timeWatch: Math.round((Number(details[2]))*100)/100,
-        percentageWatch: Math.round(((Number(details[2])/Number(details[0]))*100)*100)/100 + "%"
-      },
+      area: "vagrancy time",
+      countWatch: "-",
+      picture: "-",
+      timeWatch: Math.round((Number(details[2])) * 100) / 100,
+      percentageWatch: Math.round(((Number(details[2]) / Number(details[0])) * 100) * 100) / 100 + "%"
+    },
       {
         area: "video time",
         countWatch: "-",
         picture: "-",
-        timeWatch: Math.round((Number(details[1]))*100)/100,
-        percentageWatch: Math.round(((Number(details[1])/Number(details[0]))*100)*100)/100 + "%"
+        timeWatch: Math.round((Number(details[1])) * 100) / 100,
+        percentageWatch: Math.round(((Number(details[1]) / Number(details[0])) * 100) * 100) / 100 + "%"
       },
       {
-        totalTime : Math.round((Number(details[0]))*100)/100
+        totalTime: Math.round((Number(details[0])) * 100) / 100
       }
     )
   }
 
-  excelBuilderHelper(charLevel, name, count, total): any{
-    return{
-      area : charLevel + " " + "area " + name,
-      countWatch : count,
-      picture : "",
-      timeWatch : Math.round((Number(count)*2)*100)/100,
-      percentageWatch : Math.round(((Number(count)*2 / Number(total))*100)*100)/100 + "%"
+  excelBuilderHelper(charLevel, name, count, total): any {
+    return {
+      area: charLevel + " " + "area " + name,
+      countWatch: count,
+      picture: "",
+      timeWatch: Math.round((Number(count) * 2) * 100) / 100,
+      percentageWatch: Math.round(((Number(count) * 2 / Number(total)) * 100) * 100) / 100 + "%"
     }
   }
 

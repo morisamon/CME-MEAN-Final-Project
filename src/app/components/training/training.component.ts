@@ -18,8 +18,8 @@ export class TrainingComponent implements OnInit {
     private timeout;
     private socket;
 
-    public imageSrc = "/assets/videos/else/plane1.png"
-    public audioSrc = "/assets/videos/else/airplane.mp3";
+    public imageSrc = "/assets/videos/else/Ladybug.png"
+    public audioSrc = "/assets/videos/else/Ladybug.mp3";
 
     public ngIfButton: boolean = true;
 
