@@ -30,6 +30,7 @@ const stopPath: String = "/assets/stopAlert.png";
 const eyesPath: String = "/assets/eyesAlert.png"
 
 const TIMEOUT_BETWEEN_AUDIO_VOID: number = 1200;
+const DELAY_FOR_SCREEN_BUTTONS = 5500;
 
 @Component({
   selector: 'app-gamezone',
@@ -223,16 +224,21 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit {
     this.Click("eyes");
     if (this.subLevel <= 3) {
       this.videoplayer.nativeElement.play();
-      if (this.subLevel != 4) {
+      if (this.subLevel == 3 && this.char == "player") {
         this.CheckAlertPopupWindow();
         this.audioSRC = AUDIO_SRC + this.char + "/" + this.gender + "/" + this.char + "_" + this.gender + "_" + this.level + "_" + this.startVoiceCount + '.mp3';
         this.audioplayer.nativeElement.src = this.audioSRC;
         this.audioplayer.nativeElement.play();
-        if(this.char == "fireman" && this.level == "3" && this.startVoiceCount == 6){
-          this.audioSRC = "/assets/voices/fireman/boy/fireman_boy_2_6.mp3"; //kol hakavod
-          this.audioplayer.nativeElement.src = this.audioSRC;
-          this.audioplayer.nativeElement.play();
-        }
+        this.startVoiceCount++;
+      }
+    }
+    if (this.subLevel <= 3) {
+      this.videoplayer.nativeElement.play();
+      if (this.subLevel != 4 && this.char != "player") {
+        this.CheckAlertPopupWindow();
+        this.audioSRC = AUDIO_SRC + this.char + "/" + this.gender + "/" + this.char + "_" + this.gender + "_" + this.level + "_" + this.startVoiceCount + '.mp3';
+        this.audioplayer.nativeElement.src = this.audioSRC;
+        this.audioplayer.nativeElement.play();
         this.startVoiceCount++;
       }
     }
@@ -293,7 +299,9 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit {
       this.socket.emit("stopAlgorithm");
     }
 
-    this.subLevel != 4 ? this.ngIfButtons = true : "" ;
+    setTimeout(() => {
+      this.subLevel != 4 ? this.ngIfButtons = true : "" ;
+    }, DELAY_FOR_SCREEN_BUTTONS);
   }
 
   AudioEnded(e, audio) {
@@ -322,9 +330,11 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit {
       }, TIMEOUT_BETWEEN_AUDIO_VOID);
     }
     if (this.startVoiceCount > counter) {
-      this.subLevel != 4 ? this.ngIfButtons = true : "";
-      this.ngIfAlert = false;
-      this.timer = new Date();
+      setTimeout(() => {
+        this.subLevel != 4 ? this.ngIfButtons = true : "";
+        this.ngIfAlert = false;
+        this.timer = new Date();
+      }, DELAY_FOR_SCREEN_BUTTONS);
     }
     else
       this.ngIfButtons = false;
@@ -343,7 +353,14 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit {
       })
         .catch(error => {
           console.log(error);
-          this.subLevel != 4 ? this.ngIfButtons = true : "";
+          setTimeout(() => {
+            this.subLevel != 4 ? this.ngIfButtons = true : "";
+          }, DELAY_FOR_SCREEN_BUTTONS);
+          if(this.char == "farmer" && this.level == "2" && this.startVoiceCount == 11){
+            this.audioSRC = "/assets/voices/farmer/boy/farmer_boy_3_10.mp3"; //lo nitbalbel
+            this.audioplayer.nativeElement.src = this.audioSRC;
+            this.audioplayer.nativeElement.play();
+          }
           this.startVoiceCount++;
         });
     }

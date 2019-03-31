@@ -48,4 +48,9 @@ export class CharactersComponent implements OnInit {
     console.log(str);
     this.router.navigate(['home/game/', str]);
   }
+  
+  public PlayTraning(){
+    console.log("Traning started!!!!");
+    this.router.navigate(['home/traning']);
+  }
 }

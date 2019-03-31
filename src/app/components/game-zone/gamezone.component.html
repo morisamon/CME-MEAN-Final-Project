@@ -1,6 +1,6 @@
 <html>
 
-  <audio id="audio" #audioPlayer (ended)="AudioEnded($event, audioPlayer)" controls class="w3-right" hidden="true">
+  <audio id="audio" #audioPlayer (ended)="AudioEnded($event, audioPlayer)" controls class="w3-right">
     <source [(src)]="audioSRC" type="audio/mp3">
     Your browser does not support the audio element.
   </audio>

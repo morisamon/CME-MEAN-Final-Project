@@ -14,6 +14,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppRoutingModule, routingComponents } from './app-routing.module';
 import { ChoosekidComponent } from './components/choosekid/choosekid.component';
 import { HttpClientModule } from '@angular/common/http';
+import { TrainingComponent } from './components/training/training.component';
 
 @NgModule({
   imports:      [ 
@@ -31,7 +32,8 @@ import { HttpClientModule } from '@angular/common/http';
     DisplayComponent, 
     CopyrightComponent, 
     routingComponents,
-    ChoosekidComponent
+    ChoosekidComponent,
+    TrainingComponent
   ],
   providers: [
   ],
