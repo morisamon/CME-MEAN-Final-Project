@@ -1,0 +1,20 @@
+<html>
+    <body>
+        <div class="bgimg w3-display-container w3-animate-opacity w3-text-white">
+
+            <div id ="myContainer">
+
+            <div #myanimation id="myAnimation">
+                <img [src]="imageSrc" style="width:300px;height:200px;">
+                <button *ngIf="ngIfButton" #airplanebutton id="airplaneButton" class="btn" (mouseenter)="mouseEnter()" (mouseleave)="mouseLeave()" style="height:150px;left:52px;top:39px;"></button> 
+            </div>
+
+            </div>
+
+            <audio #airplanevoice id='airplane-voice' hidden controls>
+            <source [src]="audioSrc" type="audio/mpeg">
+            </audio>
+
+        </div>
+    </body>
+</html>

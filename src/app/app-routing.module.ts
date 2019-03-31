@@ -8,6 +8,7 @@ import { GameZoneAreaComponent } from './components/game-zone/gamezone.component
 import { RegisterComponent } from './authentication/components/register/register.component';
 import { ChoosekidComponent } from './components/choosekid/choosekid.component';
 import { AuthGuard } from './admin/auth.guards';
+import { TrainingComponent } from './components/training/training.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home/choosekid', pathMatch: 'full' },
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'home/game/:id', component: GameZoneAreaComponent, canActivate:[AuthGuard] },
   { path: 'home/register', component: RegisterComponent},
   { path: 'home/choosekid', component: ChoosekidComponent, canActivate:[AuthGuard] },
+  { path: 'home/traning', component: TrainingComponent, canActivate:[AuthGuard] },
 ];
 
 @NgModule({
@@ -32,4 +34,5 @@ export const routingComponents = [
   LevelsComponent,
   CharactersComponent,
   GameZoneAreaComponent,
+  TrainingComponent
 ]

@@ -52,4 +52,59 @@ export const configAlert = {
     "superman_boy_3_6.mp3" : "eyes",
     "superman_boy_3_10.mp3" : "stop",
     "superman_boy_3_11.mp3" : "stop",
+
+    "fireman_girl_1_3.mp3" : "eyes",
+    "fireman_girl_1_4.mp3" : "eyes",
+    "fireman_girl_1_5.mp3" : "eyes",
+    "fireman_girl_1_9.mp3" : "stop",
+    "fireman_girl_1_10.mp3" : "stop",
+
+    "fireman_girl_2_3.mp3" : "eyes",
+    "fireman_girl_2_4.mp3" : "eyes",
+    "fireman_girl_2_5.mp3" : "eyes",
+    "fireman_girl_2_9.mp3" : "stop",
+    "fireman_girl_2_10.mp3" : "stop",
+
+    "fireman_girl_3_3.mp3" : "eyes",
+    "fireman_girl_3_4.mp3" : "eyes",
+    "fireman_girl_3_5.mp3" : "eyes",
+    "fireman_girl_3_9.mp3" : "stop",
+    "fireman_girl_3_10.mp3" : "stop",
+
+    "farmer_girl_1_4.mp3" : "eyes",
+    "farmer_girl_1_5.mp3" : "eyes",
+    "farmer_girl_1_6.mp3" : "eyes",
+    "farmer_girl_1_10.mp3" : "stop",
+    "farmer_girl_1_11.mp3" : "stop",
+
+    "farmer_girl_2_4.mp3" : "eyes",
+    "farmer_girl_2_5.mp3" : "eyes",
+    "farmer_girl_2_6.mp3" : "eyes",
+    "farmer_girl_2_10.mp3" : "stop",
+    "farmer_girl_2_11.mp3" : "stop",
+
+    "farmer_girl_3_3.mp3" : "eyes",
+    "farmer_girl_3_4.mp3" : "eyes",
+    "farmer_girl_3_5.mp3" : "eyes",
+    "farmer_girl_3_9.mp3" : "stop",
+    "farmer_girl_3_10.mp3" : "stop",
+
+    "superman_girl_1_4.mp3" : "eyes",
+    "superman_girl_1_5.mp3" : "eyes",
+    "superman_girl_1_6.mp3" : "eyes",
+    "superman_girl_1_10.mp3" : "stop",
+    "superman_girl_1_11.mp3" : "stop",
+
+    "superman_girl_2_3.mp3" : "eyes",
+    "superman_girl_2_4.mp3" : "eyes",
+    "superman_girl_2_5.mp3" : "eyes",
+    "superman_girl_2_9.mp3" : "stop",
+    "superman_girl_2_10.mp3" : "stop",
+
+    "superman_girl_3_4.mp3" : "eyes",
+    "superman_girl_3_5.mp3" : "eyes",
+    "superman_girl_3_6.mp3" : "eyes",
+    "superman_girl_3_10.mp3" : "stop",
+    "superman_girl_3_11.mp3" : "stop",
+
 }
