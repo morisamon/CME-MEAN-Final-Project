@@ -1,5 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import * as io from 'socket.io-client';
+
+const KEY_CODE_START_ALGORITHM = 115; //"s" key
 
 @Component({
     selector: 'training',
@@ -22,10 +24,24 @@ export class TrainingComponent implements OnInit {
     public audioSrc = "/assets/videos/else/Ladybug.mp3";
 
     public ngIfButton: boolean = true;
+    public startRequest: boolean = true;
 
     ngOnInit(): void {
         this.socket = io();
-        this.socket.emit('openAlgorithm');
+        //this.socket.emit('openAlgorithm');
+    }
+
+    @HostListener('document:keypress', ['$event'])
+    handleKeyboardEvent(event: KeyboardEvent) {
+      if(event.charCode == KEY_CODE_START_ALGORITHM){
+        if(this.startRequest){
+          this.socket.emit('openAlgorithm');
+        }
+        else{
+          this.socket.emit('stopAlgorithm');
+        }
+        this.startRequest = !this.startRequest;
+      }
     }
 
     @ViewChild('myanimation') elem: any;

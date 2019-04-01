@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, NgModule, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, NgModule, ViewChild, ElementRef, AfterViewInit, HostListener } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { DataService } from '../../services/DataService/data.service';
 import { GameSessionService } from '../../admin/services/gamesession.service';
@@ -24,13 +24,14 @@ const AUDIO_DEFAULT_GIRL_START_SRC: String = "/assets/voices/general_girl_choose
 
 const AUDIO_DETECT_BOY_SRC: String = "/assets/voices/detect_boy.mp3";
 const AUDIO_DETECT_GIRL_SRC: String = "/assets/voices/detect_girl.mp3";
-const AUDIO_DETECT_GENERAL_DURATIONS: number = 7;
+const AUDIO_DETECT_GENERAL_DURATIONS: number = 8;
 
 const stopPath: String = "/assets/stopAlert.png";
 const eyesPath: String = "/assets/eyesAlert.png"
 
-const TIMEOUT_BETWEEN_AUDIO_VOID: number = 1200;
-const DELAY_FOR_SCREEN_BUTTONS = 5500;
+const TIMEOUT_BETWEEN_AUDIO_VOID: number = 2000;
+const DELAY_FOR_SCREEN_BUTTONS = 3000;
+const KEY_CODE_START_ALGORITHM = 115; //"s" key
 
 @Component({
   selector: 'app-gamezone',
@@ -79,6 +80,8 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit {
 
   private timer: Date;
 
+  private startRequest: boolean = true;
+
   private timeout;
   private socket;
 
@@ -108,8 +111,22 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit {
     this.data.SetStartTime(start);
     this.InitStyles();
     this.SetFaceAndEyeButtonsStyle();
+    this.startRequest = true;
     this.socket = io();
-    this.socket.emit('openAlgorithm');
+  }
+
+  
+  @HostListener('document:keypress', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if(event.charCode == KEY_CODE_START_ALGORITHM){
+      if(this.startRequest){
+        this.socket.emit('openAlgorithm');
+      }
+      else{
+        this.socket.emit('stopAlgorithm');
+      }
+      this.startRequest = !this.startRequest;
+    }
   }
 
   SetFaceAndEyeButtonsStyle() {
@@ -438,7 +455,8 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit {
           this.SetFaceAndEyeButtonsStyle();
           this.PlayDefaultStartAudio();
           this.ShowImage();
-          this.socket.emit('openAlgorithm');
+          //this.socket.emit('openAlgorithm');
+          this.startRequest = true;
         }
         this.data.CancelLastAction();
         break;
@@ -458,7 +476,8 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit {
           this.SetFaceAndEyeButtonsStyle();
           this.PlayDefaultStartAudio();
           this.ShowImage();
-          this.socket.emit('openAlgorithm');
+          //this.socket.emit('openAlgorithm');
+          this.startRequest = true;
         }
         this.data.CancelLastAction();
         break;
