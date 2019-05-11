@@ -61,7 +61,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit {
   public audioSRCGeneral: String;
   public level: String;
   public char: String
-  public playManually: Boolean;
+  public playManually: Boolean = false;
   public alertUrl: String;
   public ngIfAlert: Boolean = false;
 
@@ -79,8 +79,16 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit {
   private mapEyes = new TSMap<String, ButtonStyle>();
 
   private timer: Date;
-
+  
   private startRequest: boolean = true;
+  // Check if audio is paused 
+  private isAudioPaused: boolean = false;
+  private startPause: Date ; 
+
+  // Calc the "dead" time
+  private startDead: Date ; 
+
+
 
   private timeout;
   private socket;
@@ -118,11 +126,14 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit {
   
   @HostListener('document:keypress', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
+
     if(event.charCode == KEY_CODE_START_ALGORITHM){
-      if(this.startRequest){
+      if(this.startRequest) {
+        this.data.deadTime += (new Date().getTime() - this.startDead.getTime()) / 1000.0;
         this.socket.emit('openAlgorithm');
       }
       else{
+        this.startDead = new Date();
         this.socket.emit('stopAlgorithm');
       }
       this.startRequest = !this.startRequest;
@@ -280,6 +291,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit {
 
   PlayDefaultStartAudio() {
     if (this.level == "1" && this.subLevel == 1) {
+      console.log("play first");
       if (this.gender == BOY) {
         this.audioSRC = AUDIO_DEFAULT_BOY_START_SRC;
       }
@@ -289,6 +301,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit {
 
       this.audioplayer.nativeElement.src = this.audioSRC;
       this.audioplayer.nativeElement.play();
+      console.log("after play command");
       this.ngIfButtons = false;
     }
 
@@ -297,21 +310,22 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit {
   VideoEnded(e, video) {
     console.log('duration video: ', video.duration);
     console.log("The video is stopped");
+    this.data.videoDuration += video.duration;
 
     this.subLevel++;
     if (this.subLevel <= 3) {
-      if (this.playManually == false) {
-        this.data.videoDuration += video.duration;
+      
+      if (this.playManually == false) {  
         this.ChangeSources();
         this.SetFaceAndEyeButtonsStyle();
       }
+
       this.ShowImage();
       this.playManually = false;
     }
     if (this.subLevel == 4) {
       this.sessionIfFinished = true;
       this.ngIfButtons = false;
-      this.data.end_time = new Date();
       console.log(this.data.end_time);
       this.socket.emit("stopAlgorithm");
     }
@@ -326,8 +340,14 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit {
   }
 
   AudioEnded(e, audio) {
-    console.log('duration video: ', audio.duration);
-    console.log("Audio is ended now");
+    console.log('duration audio: ', audio.duration);
+    console.log("Audio is ended now" , this.isAudioPaused);
+    this.data.audioDuration += audio.duration;
+
+
+    if (this.subLevel == 4) {
+      this.data.end_time = new Date();
+    }
 
     if (this.char == "fireman" && this.level == "3" && this.subLevel == 3) {
       setTimeout(() => {
@@ -339,19 +359,42 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit {
     }
   }
 
+  AudioPaused(e, audio) {
+    if (!audio.ended) {
+      console.log("In the AudioPaused function " + audio.paused);
+      this.isAudioPaused = true; 
+      this.startPause = new Date(); 
+    }
+  }
+
+  AudioPlay(e, audio){
+    if(this.isAudioPaused == true) {
+    console.log("Remain from pause position..." + this.isAudioPaused);
+     this.data.pauseTime += (new Date().getTime() - this.startPause.getTime()) / 1000.0 ;
+     this.isAudioPaused = false;
+     this.startPause = new Date(); 
+    }
+    else {
+      console.log("In the else condition in AudioPlay");
+      this.startPause = new Date(); 
+    }
+  }
+
   private PlayNextAudioSet(audio: any) {
     var counter = configAudioPerCharacter[this.char + "_" + this.gender + "_" + this.level + "_" + this.subLevel];
     if (!counter) {
       counter = 3;
     }
     if (this.startVoiceCount <= counter) {
-      this.data.videoDuration += audio.duration;
+      //this.data.videoDuration += audio.duration;
+     // this.data.audioDuration += audio.duration; 
       setTimeout(() => {
         this.ChangeAudioSource();
       }, TIMEOUT_BETWEEN_AUDIO_VOID);
     }
     if (this.startVoiceCount > counter) {
       if (this.char != "player") {
+        this.startDead = new Date();
         setTimeout(() => {
           this.subLevel != 4 ? this.ngIfButtons = true : "";
           this.ngIfAlert = false;
@@ -439,11 +482,10 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit {
   ExecuteMessageCommand(command) {
     switch (command) {
       case "next":
-
         var newnumber = Number(this.level);
         newnumber++;
-
         if (newnumber <= 3) {
+          console.log("in the next..");
           this.WriteAndResetSession();
           this.level = String(newnumber);
           this.subLevel = 1;
@@ -526,8 +568,11 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit {
       kidid: Number(this.data.GetKidID()),
       character: this.char,
       level: this.level,
-      total_time: (this.data.end_time.getTime() - this.data.start_time.getTime()) / 1000.0,
+      total_time: (this.data.end_time.getTime() - this.data.start_time.getTime()) / 1000.0 +  this.data.pauseTime + this.data.deadTime,
       video_duration: this.data.videoDuration,
+      audioDuration: this.data.audioDuration,
+      pause_time: this.data.pauseTime,
+      deadTime: this.data.deadTime,
       areas: this.data.map.toJSON()
     }
 
@@ -536,8 +581,11 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit {
       kidid: Number(this.data.GetKidID()),
       character: this.char,
       level: this.level,
-      total_time: (this.data.end_time.getTime() - this.data.start_time.getTime()) / 1000.0,
+      total_time: (this.data.end_time.getTime() - this.data.start_time.getTime()) / 1000.0 +  this.data.pauseTime,
       video_duration: this.data.videoDuration,
+      audioDuration: this.data.audioDuration,
+      deadTime: this.data.deadTime,
+      pause_time: this.data.pauseTime,
     }
 
     //predict the kid permormance
@@ -615,8 +663,30 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit {
       countWatch: "-",
       picture: "-",
       timeWatch: Math.round((Number(details[2])) * 100) / 100,
+      //timeWatch: Math.round(Number(details[2])),
       percentageWatch: Math.round(((Number(details[2]) / Number(details[0])) * 100) * 100) / 100 + "%"
     },
+    {
+      area: "pause time",
+      countWatch: "-",
+      picture: "-",
+      timeWatch: Math.round((Number(this.data.pauseTime)) * 100) / 100,
+      percentageWatch: Math.round(((Number(this.data.pauseTime) / Number(details[0])) * 100) * 100) / 100 + "%"
+    },
+    {
+    area: "dead time",
+      countWatch: "-",
+      picture: "-",
+      timeWatch: Math.round((Number(this.data.deadTime)) * 100) / 100,
+      percentageWatch: Math.round(((Number(this.data.deadTime) / Number(details[0])) * 100) * 100) / 100 + "%"
+    },
+    {
+      area: "audio time",
+        countWatch: "-",
+        picture: "-",
+        timeWatch: Math.round((Number(this.data.audioDuration)) * 100) / 100,
+        percentageWatch: Math.round(((Number(this.data.audioDuration) / Number(details[0])) * 100) * 100) / 100 + "%"
+      },
       {
         area: "video time",
         countWatch: "-",
@@ -645,8 +715,10 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit {
   }
 
   StopMedia() {
+    console.log("Going to stop..")
     this.videoplayer.nativeElement.pause();
     this.audioplayer.nativeElement.pause();
+
   }
 
   BuildVector(total_time, video_duration): Number[] {
@@ -660,6 +732,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit {
     var area6 = this.data.map.get("area6");
     var areaface = this.data.map.get("areaface");
     var areaeyes = this.data.map.get("areaeyes");
+   
     sumAreas = area1 + area2 + area3 + area4 + area5 + area6 + areaface + areaeyes;
 
     var vagrancy_time = total_time - video_duration - (sumAreas * 2);

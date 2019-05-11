@@ -28,6 +28,12 @@ export class DataService {
     public start_time: Date;
     public end_time: Date;
     public videoDuration: Number = 0;
+    public audioDuration: number = 0;
+
+    //public pauseTime: Number = 0;
+    public pauseTime: number = 0;
+    public deadTime: number = 0;
+
     public map = new TSMap<String,number>();
 
     constructor(private route: ActivatedRoute, private router:Router, private http: HttpClient) {
@@ -145,6 +151,12 @@ export class DataService {
     ResetSessionMetaData(){
         this.InitMap();
         this.videoDuration = 0;
+        this.audioDuration = 0;
+        
+        this.pauseTime = 0;
+        this.deadTime = 0;
+
+    
         this.start_time = new Date();
     }
     UpdateCurrentComponent(component){
