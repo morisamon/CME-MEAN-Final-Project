@@ -312,7 +312,8 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit {
     console.log("The video is stopped");
     this.data.videoDuration += video.duration;
 
-    this.subLevel++;
+    this.playManually == false ? this.subLevel++ : "";
+    
     if (this.subLevel <= 3) {
       
       if (this.playManually == false) {  
