@@ -394,8 +394,8 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit {
       }, TIMEOUT_BETWEEN_AUDIO_VOID);
     }
     if (this.startVoiceCount > counter) {
+      this.startDead = new Date();
       if (this.char != "player") {
-        this.startDead = new Date();
         setTimeout(() => {
           this.subLevel != 4 ? this.ngIfButtons = true : "";
           this.ngIfAlert = false;
@@ -736,7 +736,7 @@ export class GameZoneAreaComponent implements OnInit, AfterViewInit {
    
     sumAreas = area1 + area2 + area3 + area4 + area5 + area6 + areaface + areaeyes;
 
-    var vagrancy_time = total_time - video_duration - (sumAreas * 2);
+    var vagrancy_time = total_time - video_duration - (sumAreas * 2) - this.data.audioDuration - this.data.deadTime - this.data.pauseTime;
 
     return [total_time, video_duration, vagrancy_time, areaeyes, areaface,
       area1, area2, area3, area4, area5, area6];
